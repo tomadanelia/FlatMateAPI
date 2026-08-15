@@ -1,5 +1,9 @@
-import { AlgorithmKey, PrismaClient, TestType } from '@prisma/client';
-const prisma = new PrismaClient();
+import 'dotenv/config';
+import { PrismaPg } from '@prisma/adapter-pg';
+import { AlgorithmKey, PrismaClient, TestType } from '../src/generated/prisma/client';
+const connectionString = process.env.DATABASE_URL;
+if (!connectionString) throw new Error('DATABASE_URL is required');
+const prisma = new PrismaClient({ adapter: new PrismaPg({ connectionString }) });
 const questions = [
   ['O1', 'I enjoy exploring new ideas.', 'openness', false], ['O2', 'I prefer familiar routines.', 'openness', true],
   ['C1', 'I keep my space organized.', 'conscientiousness', false], ['C2', 'I often leave tasks unfinished.', 'conscientiousness', true],

@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { AlgorithmKey, MatchRunStatus, Prisma } from '@prisma/client';
+import { MatchRunStatus, Prisma } from '../../generated/prisma/client';
 import { PrismaService } from '../../prisma/prisma.service';
 import { AlgorithmRegistry } from './algorithm.registry';
 import { matchProfileInclude } from './algorithms/matching-algorithm';

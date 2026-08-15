@@ -1,11 +1,13 @@
 generator client {
-  provider = "prisma-client-js"
+  provider               = "prisma-client"
+  output                 = "../src/generated/prisma"
+  moduleFormat           = "cjs"
+  generatedFileExtension = "ts"
+  importFileExtension    = ""
 }
 
 datasource db {
   provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
 }
 
 enum UserRole {
@@ -64,6 +66,7 @@ enum MatchRunStatus {
 model User {
   id                 String                @id @db.Uuid
   email              String                @unique
+  passwordHash       String?               @map("password_hash")
   role               UserRole              @default(USER)
   displayName        String?               @map("display_name")
   birthDate          DateTime?             @map("birth_date") @db.Date

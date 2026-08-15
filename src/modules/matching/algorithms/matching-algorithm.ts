@@ -1,11 +1,11 @@
-import { AlgorithmKey, Prisma } from '@prisma/client';
+import { AlgorithmKey, Prisma } from '../../../generated/prisma/client';
 
-export const matchProfileInclude = Prisma.validator<Prisma.UserInclude>()({
+export const matchProfileInclude = {
   housingPreference: true,
   lifestyleProfile: true,
   tasteItems: true,
   testAttempts: { where: { completedAt: { not: null } }, orderBy: { completedAt: 'desc' }, take: 1, include: { traitScores: true } },
-});
+} as const satisfies Prisma.UserInclude;
 export type MatchProfile = Prisma.UserGetPayload<{ include: typeof matchProfileInclude }>;
 export interface AlgorithmScore { score: number; explanation: Record<string, unknown>; }
 export interface MatchingAlgorithm {

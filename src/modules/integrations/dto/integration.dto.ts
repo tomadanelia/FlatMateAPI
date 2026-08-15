@@ -1,4 +1,4 @@
-import { IntegrationProvider } from '@prisma/client';
+import { IntegrationProvider } from '../../../generated/prisma/client';
 import { IsArray, IsEnum, IsNumber, IsOptional, IsString, IsUUID, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
 

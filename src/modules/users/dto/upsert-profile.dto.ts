@@ -1,4 +1,4 @@
-import { Gender } from '@prisma/client';
+import { Gender } from '../../../generated/prisma/client';
 import { IsArray, IsBoolean, IsDateString, IsEmail, IsEnum, IsInt, IsOptional, IsString, IsUUID, Length, Max, Min } from 'class-validator';
 
 export class UpsertProfileDto {

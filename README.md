@@ -1,6 +1,6 @@
 # Flatmate backend
 
-NestJS + TypeScript API for finding compatible roommates. PostgreSQL is hosted by Supabase and accessed through Prisma.
+NestJS + TypeScript API for finding compatible roommates. PostgreSQL is hosted by Supabase and accessed through Prisma 7.
 
 ## Architecture
 
@@ -19,7 +19,7 @@ To add or replace an algorithm, implement `MatchingAlgorithm`, register the clas
 ## Setup
 
 1. Create a Supabase project and copy `.env.example` to `.env`.
-2. Put the pooled Supabase PostgreSQL URL in `DATABASE_URL` and direct port-5432 URL in `DIRECT_URL`.
+2. Put the pooled Supabase PostgreSQL URL in `DATABASE_URL` and direct port-5432 URL in `DIRECT_URL`. Runtime queries use `DATABASE_URL` through Prisma 7's `@prisma/adapter-pg`; Prisma CLI migrations use `DIRECT_URL` from `prisma.config.ts`. Set `JWT_SECRET` to a separate long random value and optionally change `JWT_EXPIRES_IN` (defaults to `7d`).
 3. Run:
 
 ```bash
@@ -34,6 +34,8 @@ The initial migration creates users, housing/lifestyle profiles, versioned tests
 
 ## Main endpoints
 
+- `POST /api/auth/signup` — create an account and receive a JWT.
+- `POST /api/auth/login` — authenticate with email/password and receive a JWT.
 - `PUT /api/users/profile` — create/update onboarding, rent and lifestyle data.
 - `GET /api/tests` and `GET /api/tests/:slug` — available tests/questions.
 - `POST /api/tests/submissions` — score and store a completed test.
@@ -41,6 +43,37 @@ The initial migration creates users, housing/lifestyle profiles, versioned tests
 - `POST /api/integrations/taste/sync` — ingestion boundary for normalized provider data.
 - `POST /api/matches/search` — run enabled strategies. Pass `algorithms` to run only selected ones.
 - `GET /admin` — small algorithm control page; enter `ADMIN_API_KEY` to load/save.
+- `POST /api/admin/tests/:testDefinitionId/questions` — bulk-create questions (protected by `x-admin-key`).
+- `PATCH /api/admin/questions/:id` — edit a question (protected by `x-admin-key`).
+
+Signup request:
+
+```json
+{
+  "email": "person@example.com",
+  "password": "StrongPass1",
+  "displayName": "Taylor"
+}
+```
+
+Bulk question upload request:
+
+```json
+{
+  "questions": [
+    {
+      "code": "C3",
+      "prompt": "I plan chores ahead of time.",
+      "kind": "LIKERT",
+      "trait": "conscientiousness",
+      "position": 11,
+      "minValue": 1,
+      "maxValue": 5,
+      "weight": 1
+    }
+  ]
+}
+```
 
 Example single-algorithm request:
 
@@ -56,7 +89,7 @@ Example single-algorithm request:
 
 The backend intentionally exposes a provider-neutral taste ingestion endpoint; Spotify OAuth callbacks, token encryption/refresh, and Letterboxd scraping/API ingestion should be implemented as provider adapters around it. Letterboxd has no general public API, so confirm its current terms before choosing an ingestion method. Never store provider tokens unencrypted.
 
-Before exposing this API, add a Supabase JWT guard and derive `userId` from the verified token instead of trusting IDs in request bodies. The admin API is protected by `x-admin-key`; replace it with Supabase role/claim authorization when the main auth guard is added. The included 10-question Big Five seed is only a development questionnaire, not a validated psychological instrument.
+The authentication endpoints issue local JWTs. Before exposing all user-scoped endpoints publicly, add a JWT guard and derive `userId` from the verified token instead of trusting IDs in request bodies. The admin API is protected by `x-admin-key`; it can later be replaced with role/claim authorization. The included 10-question Big Five seed is only a development questionnaire, not a validated psychological instrument.
 
 ## Verification
 

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { AlgorithmKey } from '@prisma/client';
+import { AlgorithmKey } from '../../generated/prisma/client';
 import { LifestyleAlgorithm } from './algorithms/lifestyle.algorithm';
 import { MatchingAlgorithm } from './algorithms/matching-algorithm';
 import { PersonalityAlgorithm } from './algorithms/personality.algorithm';

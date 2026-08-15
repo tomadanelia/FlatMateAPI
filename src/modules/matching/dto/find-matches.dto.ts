@@ -1,4 +1,4 @@
-import { AlgorithmKey } from '@prisma/client';
+import { AlgorithmKey } from '../../../generated/prisma/client';
 import { IsArray, IsEnum, IsInt, IsOptional, IsUUID, Max, Min } from 'class-validator';
 export class FindMatchesDto {
   @IsUUID() userId: string;
