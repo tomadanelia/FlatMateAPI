@@ -42,9 +42,11 @@ The initial migration creates users, housing/lifestyle profiles, versioned tests
 - `POST /api/integrations/connect` — record a Spotify or Letterboxd identity.
 - `POST /api/integrations/taste/sync` — ingestion boundary for normalized provider data.
 - `POST /api/matches/search` — run enabled strategies. Pass `algorithms` to run only selected ones.
-- `GET /admin` — small algorithm control page; enter `ADMIN_API_KEY` to load/save.
-- `POST /api/admin/tests/:testDefinitionId/questions` — bulk-create questions (protected by `x-admin-key`).
-- `PATCH /api/admin/questions/:id` — edit a question (protected by `x-admin-key`).
+- `GET /admin` — algorithm control page (requires an admin Bearer token).
+- `GET/PATCH /api/admin/algorithms[/:key]` — list or update matching algorithms (admin only).
+- `POST /api/admin/tests/:testDefinitionId/questions` — bulk-create questions (admin only).
+- `PATCH /api/admin/questions/:id` — edit a question (admin only).
+- `PATCH /api/admin/users/:id/role` — grant or revoke a user's admin role (admin only).
 
 Signup request:
 
@@ -54,6 +56,32 @@ Signup request:
   "password": "StrongPass1",
   "displayName": "Taylor"
 }
+```
+
+Login and use the returned JWT:
+
+```bash
+curl -X POST http://localhost:3000/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"admin@example.com","password":"StrongPass1"}'
+
+curl http://localhost:3000/api/admin/algorithms \
+  -H "Authorization: Bearer <accessToken>"
+```
+
+Grant admin access to another user:
+
+```bash
+curl -X PATCH http://localhost:3000/api/admin/users/00000000-0000-0000-0000-000000000000/role \
+  -H "Authorization: Bearer <adminAccessToken>" \
+  -H "Content-Type: application/json" \
+  -d '{"role":"ADMIN"}'
+```
+
+The promoted user must log in again to receive a token containing the new `ADMIN` role. To bootstrap the first admin manually in PostgreSQL:
+
+```sql
+UPDATE users SET role = 'ADMIN' WHERE email = 'admin@example.com';
 ```
 
 Bulk question upload request:
@@ -89,7 +117,7 @@ Example single-algorithm request:
 
 The backend intentionally exposes a provider-neutral taste ingestion endpoint; Spotify OAuth callbacks, token encryption/refresh, and Letterboxd scraping/API ingestion should be implemented as provider adapters around it. Letterboxd has no general public API, so confirm its current terms before choosing an ingestion method. Never store provider tokens unencrypted.
 
-The authentication endpoints issue local JWTs. Before exposing all user-scoped endpoints publicly, add a JWT guard and derive `userId` from the verified token instead of trusting IDs in request bodies. The admin API is protected by `x-admin-key`; it can later be replaced with role/claim authorization. The included 10-question Big Five seed is only a development questionnaire, not a validated psychological instrument.
+The authentication endpoints issue signed JWTs containing `sub` (the user ID), `email`, and `role`. Every admin route requires a valid `Authorization: Bearer <token>` header and the `ADMIN` role. Before exposing all other user-scoped endpoints publicly, apply JWT authentication there too and derive `userId` from the verified token instead of trusting IDs in request bodies. The included 10-question Big Five seed is only a development questionnaire, not a validated psychological instrument.
 
 ## Verification
 

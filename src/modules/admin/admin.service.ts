@@ -1,28 +1,73 @@
-import { BadRequestException, ConflictException, Injectable, NotFoundException } from '@nestjs/common';
-import { AlgorithmKey, Prisma } from '../../generated/prisma/client';
+import {
+  BadRequestException,
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
+import { AlgorithmKey, Prisma, UserRole } from '../../generated/prisma/client';
 import { PrismaService } from '../../prisma/prisma.service';
 import { UpdateAlgorithmDto } from './dto/update-algorithm.dto';
-import { CreateQuestionDto, UpdateQuestionDto, UploadQuestionsDto } from './dto/question.dto';
+import {
+  CreateQuestionDto,
+  UpdateQuestionDto,
+  UploadQuestionsDto,
+} from './dto/question.dto';
 @Injectable()
 export class AdminService {
   constructor(private readonly prisma: PrismaService) {}
-  list() { return this.prisma.algorithmConfig.findMany({ orderBy: { key: 'asc' } }); }
-  update(key: AlgorithmKey, dto: UpdateAlgorithmDto) { return this.prisma.algorithmConfig.upsert({ where: { key }, create: { key, enabled: dto.enabled ?? true, weight: dto.weight ?? 1, version: dto.version ?? '1.0.0', settings: (dto.settings ?? {}) as Prisma.InputJsonValue }, update: { ...dto, settings: dto.settings as Prisma.InputJsonValue | undefined } }); }
+  list() {
+    return this.prisma.algorithmConfig.findMany({ orderBy: { key: 'asc' } });
+  }
+  update(key: AlgorithmKey, dto: UpdateAlgorithmDto) {
+    return this.prisma.algorithmConfig.upsert({
+      where: { key },
+      create: {
+        key,
+        enabled: dto.enabled ?? true,
+        weight: dto.weight ?? 1,
+        version: dto.version ?? '1.0.0',
+        settings: (dto.settings ?? {}) as Prisma.InputJsonValue,
+      },
+      update: {
+        ...dto,
+        settings: dto.settings as Prisma.InputJsonValue | undefined,
+      },
+    });
+  }
+
+  async updateUserRole(id: string, role: UserRole) {
+    const user = await this.prisma.user.findUnique({
+      where: { id },
+      select: { id: true },
+    });
+    if (!user) throw new NotFoundException('User not found');
+
+    return this.prisma.user.update({
+      where: { id },
+      data: { role },
+      select: { id: true, email: true, displayName: true, role: true },
+    });
+  }
 
   async uploadQuestions(testDefinitionId: string, dto: UploadQuestionsDto) {
-    const definition = await this.prisma.testDefinition.findUnique({ where: { id: testDefinitionId }, select: { id: true } });
+    const definition = await this.prisma.testDefinition.findUnique({
+      where: { id: testDefinitionId },
+      select: { id: true },
+    });
     if (!definition) throw new NotFoundException('Test definition not found');
     dto.questions.forEach((question) => this.validateRange(question));
 
     try {
       return await this.prisma.$transaction(
-        dto.questions.map((question) => this.prisma.question.create({
-          data: {
-            ...question,
-            testDefinitionId,
-            options: question.options as Prisma.InputJsonValue | undefined,
-          },
-        })),
+        dto.questions.map((question) =>
+          this.prisma.question.create({
+            data: {
+              ...question,
+              testDefinitionId,
+              options: question.options as Prisma.InputJsonValue | undefined,
+            },
+          }),
+        ),
       );
     } catch (error) {
       this.rethrowQuestionConflict(error);
@@ -55,15 +100,28 @@ export class AdminService {
     }
   }
 
-  private validateRange(question: Pick<CreateQuestionDto, 'minValue' | 'maxValue'>) {
-    if (question.minValue !== undefined && question.maxValue !== undefined && question.minValue > question.maxValue) {
+  private validateRange(
+    question: Pick<CreateQuestionDto, 'minValue' | 'maxValue'>,
+  ) {
+    if (
+      question.minValue !== undefined &&
+      question.maxValue !== undefined &&
+      question.minValue > question.maxValue
+    ) {
       throw new BadRequestException('minValue cannot exceed maxValue');
     }
   }
 
   private rethrowQuestionConflict(error: unknown) {
-    if (typeof error === 'object' && error !== null && 'code' in error && error.code === 'P2002') {
-      throw new ConflictException('Question code and position must be unique within a test');
+    if (
+      typeof error === 'object' &&
+      error !== null &&
+      'code' in error &&
+      error.code === 'P2002'
+    ) {
+      throw new ConflictException(
+        'Question code and position must be unique within a test',
+      );
     }
   }
 }

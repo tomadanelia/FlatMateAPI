@@ -1,6 +1,11 @@
 import { Module } from '@nestjs/common';
-import { AdminApiKeyGuard } from '../../common/guards/admin-api-key.guard';
+import { AuthModule } from '../auth/auth.module';
 import { AdminController } from './admin.controller';
 import { AdminService } from './admin.service';
-@Module({ controllers: [AdminController], providers: [AdminService, AdminApiKeyGuard] })
+
+@Module({
+  imports: [AuthModule],
+  controllers: [AdminController],
+  providers: [AdminService],
+})
 export class AdminModule {}

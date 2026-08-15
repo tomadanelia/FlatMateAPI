@@ -6,6 +6,7 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import { compare, hash } from 'bcryptjs';
 import { randomUUID } from 'crypto';
+import { UserRole } from '../../generated/prisma/client';
 import { PrismaService } from '../../prisma/prisma.service';
 import { LoginDto } from './dto/login.dto';
 import { SignUpDto } from './dto/sign-up.dto';
@@ -20,7 +21,8 @@ export class AuthService {
   async signUp(dto: SignUpDto) {
     const email = dto.email.trim().toLowerCase();
     const existing = await this.prisma.user.findUnique({ where: { email } });
-    if (existing) throw new ConflictException('An account with this email already exists');
+    if (existing)
+      throw new ConflictException('An account with this email already exists');
 
     const passwordHash = await hash(dto.password, 12);
     try {
@@ -36,7 +38,9 @@ export class AuthService {
       return this.issueToken(user);
     } catch (error) {
       if (this.isUniqueConstraintError(error)) {
-        throw new ConflictException('An account with this email already exists');
+        throw new ConflictException(
+          'An account with this email already exists',
+        );
       }
       throw error;
     }
@@ -53,7 +57,10 @@ export class AuthService {
         passwordHash: true,
       },
     });
-    if (!user?.passwordHash || !(await compare(dto.password, user.passwordHash))) {
+    if (
+      !user?.passwordHash ||
+      !(await compare(dto.password, user.passwordHash))
+    ) {
       throw new UnauthorizedException('Invalid email or password');
     }
     const { passwordHash: _, ...safeUser } = user;
@@ -64,7 +71,7 @@ export class AuthService {
     id: string;
     email: string;
     displayName: string | null;
-    role: string;
+    role: UserRole;
   }) {
     const accessToken = await this.jwt.signAsync({
       sub: user.id,
