@@ -1,0 +1,288 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
+enum Gender {
+  WOMAN
+  MAN
+  NON_BINARY
+  OTHER
+  PREFER_NOT_TO_SAY
+}
+
+enum TestType {
+  BIG_FIVE
+  HEXACO
+  CUSTOM
+}
+
+enum QuestionKind {
+  LIKERT
+  SINGLE_CHOICE
+  MULTIPLE_CHOICE
+  BOOLEAN
+  NUMBER
+  TEXT
+}
+
+enum IntegrationProvider {
+  SPOTIFY
+  LETTERBOXD
+}
+
+enum IntegrationStatus {
+  PENDING
+  CONNECTED
+  EXPIRED
+  ERROR
+  DISCONNECTED
+}
+
+enum AlgorithmKey {
+  PERSONALITY
+  TASTE
+  LIFESTYLE
+}
+
+enum MatchRunStatus {
+  PENDING
+  COMPLETED
+  FAILED
+}
+
+model User {
+  id                 String                @id @db.Uuid
+  email              String                @unique
+  role               UserRole              @default(USER)
+  displayName        String?               @map("display_name")
+  birthDate          DateTime?             @map("birth_date") @db.Date
+  gender             Gender?
+  bio                String?
+  avatarUrl          String?               @map("avatar_url")
+  isDiscoverable     Boolean               @default(true) @map("is_discoverable")
+  onboardingComplete Boolean               @default(false) @map("onboarding_complete")
+  createdAt          DateTime              @default(now()) @map("created_at")
+  updatedAt          DateTime              @updatedAt @map("updated_at")
+  housingPreference  HousingPreference?
+  lifestyleProfile   LifestyleProfile?
+  testAttempts       TestAttempt[]
+  integrations       ExternalIntegration[]
+  tasteItems         TasteItem[]
+  initiatedRuns      MatchRun[]            @relation("RunSubject")
+  subjectMatches     MatchResult[]         @relation("MatchSubject")
+  candidateMatches   MatchResult[]         @relation("MatchCandidate")
+
+  @@map("users")
+}
+
+model HousingPreference {
+  id               String    @id @default(uuid()) @db.Uuid
+  userId           String    @unique @map("user_id") @db.Uuid
+  city             String
+  countryCode      String    @map("country_code") @db.Char(2)
+  minMonthlyBudget Int       @map("min_monthly_budget")
+  maxMonthlyBudget Int       @map("max_monthly_budget")
+  currency         String    @default("USD") @db.Char(3)
+  moveInDate       DateTime? @map("move_in_date") @db.Date
+  preferredAreas   String[]  @default([]) @map("preferred_areas")
+  user             User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([city, maxMonthlyBudget])
+  @@map("housing_preferences")
+}
+
+model LifestyleProfile {
+  id              String  @id @default(uuid()) @db.Uuid
+  userId          String  @unique @map("user_id") @db.Uuid
+  cleanliness     Int
+  socialLevel     Int     @map("social_level")
+  sleepSchedule   Int     @map("sleep_schedule")
+  noiseTolerance  Int     @map("noise_tolerance")
+  guestsFrequency Int     @map("guests_frequency")
+  smokingAllowed  Boolean @default(false) @map("smoking_allowed")
+  petsAllowed     Boolean @default(true) @map("pets_allowed")
+  hasPets         Boolean @default(false) @map("has_pets")
+  user            User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("lifestyle_profiles")
+}
+
+model TestDefinition {
+  id          String        @id @default(uuid()) @db.Uuid
+  slug        String        @unique
+  name        String
+  type        TestType
+  version     Int           @default(1)
+  description String?
+  isActive    Boolean       @default(true) @map("is_active")
+  createdAt   DateTime      @default(now()) @map("created_at")
+  questions   Question[]
+  attempts    TestAttempt[]
+
+  @@unique([type, version])
+  @@map("test_definitions")
+}
+
+model Question {
+  id               String         @id @default(uuid()) @db.Uuid
+  testDefinitionId String         @map("test_definition_id") @db.Uuid
+  code             String
+  prompt           String
+  kind             QuestionKind   @default(LIKERT)
+  trait            String
+  reverseScored    Boolean        @default(false) @map("reverse_scored")
+  position         Int
+  options          Json?
+  minValue         Int?           @map("min_value")
+  maxValue         Int?           @map("max_value")
+  weight           Float          @default(1)
+  testDefinition   TestDefinition @relation(fields: [testDefinitionId], references: [id], onDelete: Cascade)
+  responses        TestResponse[]
+
+  @@unique([testDefinitionId, code])
+  @@unique([testDefinitionId, position])
+  @@map("questions")
+}
+
+model TestAttempt {
+  id               String         @id @default(uuid()) @db.Uuid
+  userId           String         @map("user_id") @db.Uuid
+  testDefinitionId String         @map("test_definition_id") @db.Uuid
+  completedAt      DateTime?      @map("completed_at")
+  createdAt        DateTime       @default(now()) @map("created_at")
+  user             User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  testDefinition   TestDefinition @relation(fields: [testDefinitionId], references: [id])
+  responses        TestResponse[]
+  traitScores      TraitScore[]
+
+  @@index([userId, completedAt])
+  @@map("test_attempts")
+}
+
+model TestResponse {
+  id         String      @id @default(uuid()) @db.Uuid
+  attemptId  String      @map("attempt_id") @db.Uuid
+  questionId String      @map("question_id") @db.Uuid
+  value      Json
+  attempt    TestAttempt @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+  question   Question    @relation(fields: [questionId], references: [id])
+
+  @@unique([attemptId, questionId])
+  @@map("test_responses")
+}
+
+model TraitScore {
+  id        String      @id @default(uuid()) @db.Uuid
+  attemptId String      @map("attempt_id") @db.Uuid
+  trait     String
+  score     Float
+  attempt   TestAttempt @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+
+  @@unique([attemptId, trait])
+  @@map("trait_scores")
+}
+
+model ExternalIntegration {
+  id                    String              @id @default(uuid()) @db.Uuid
+  userId                String              @map("user_id") @db.Uuid
+  provider              IntegrationProvider
+  externalUserId        String?             @map("external_user_id")
+  username              String?
+  accessTokenEncrypted  String?             @map("access_token_encrypted")
+  refreshTokenEncrypted String?             @map("refresh_token_encrypted")
+  tokenExpiresAt        DateTime?           @map("token_expires_at")
+  status                IntegrationStatus   @default(PENDING)
+  lastSyncedAt          DateTime?           @map("last_synced_at")
+  metadata              Json?
+  user                  User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, provider])
+  @@map("external_integrations")
+}
+
+model TasteItem {
+  id         String              @id @default(uuid()) @db.Uuid
+  userId     String              @map("user_id") @db.Uuid
+  provider   IntegrationProvider
+  externalId String              @map("external_id")
+  kind       String
+  name       String
+  artists    String[]            @default([])
+  genres     String[]            @default([])
+  score      Float               @default(1)
+  metadata   Json?
+  user       User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, provider, externalId, kind])
+  @@index([userId, provider])
+  @@map("taste_items")
+}
+
+model AlgorithmConfig {
+  id        String       @id @default(uuid()) @db.Uuid
+  key       AlgorithmKey @unique
+  enabled   Boolean      @default(true)
+  weight    Float        @default(1)
+  version   String       @default("1.0.0")
+  settings  Json         @default("{}")
+  updatedAt DateTime     @updatedAt @map("updated_at")
+
+  @@map("algorithm_configs")
+}
+
+model MatchRun {
+  id        String         @id @default(uuid()) @db.Uuid
+  subjectId String         @map("subject_id") @db.Uuid
+  status    MatchRunStatus @default(PENDING)
+  context   Json?
+  error     String?
+  createdAt DateTime       @default(now()) @map("created_at")
+  subject   User           @relation("RunSubject", fields: [subjectId], references: [id], onDelete: Cascade)
+  results   MatchResult[]
+
+  @@index([subjectId, createdAt])
+  @@map("match_runs")
+}
+
+model MatchResult {
+  id          String                @id @default(uuid()) @db.Uuid
+  matchRunId  String                @map("match_run_id") @db.Uuid
+  subjectId   String                @map("subject_id") @db.Uuid
+  candidateId String                @map("candidate_id") @db.Uuid
+  totalScore  Float                 @map("total_score")
+  rank        Int
+  explanation Json?
+  matchRun    MatchRun              @relation(fields: [matchRunId], references: [id], onDelete: Cascade)
+  subject     User                  @relation("MatchSubject", fields: [subjectId], references: [id], onDelete: Cascade)
+  candidate   User                  @relation("MatchCandidate", fields: [candidateId], references: [id], onDelete: Cascade)
+  scores      MatchAlgorithmScore[]
+
+  @@unique([matchRunId, candidateId])
+  @@index([subjectId, totalScore])
+  @@map("match_results")
+}
+
+model MatchAlgorithmScore {
+  id            String       @id @default(uuid()) @db.Uuid
+  matchResultId String       @map("match_result_id") @db.Uuid
+  algorithmKey  AlgorithmKey @map("algorithm_key")
+  score         Float
+  weight        Float
+  version       String
+  explanation   Json?
+  matchResult   MatchResult  @relation(fields: [matchResultId], references: [id], onDelete: Cascade)
+
+  @@unique([matchResultId, algorithmKey])
+  @@map("match_algorithm_scores")
+}
