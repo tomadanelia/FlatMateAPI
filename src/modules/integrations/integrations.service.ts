@@ -61,13 +61,15 @@ export class IntegrationsService {
 
     try {
       response = await fetch(profileUrl, {
-        headers: {
-          accept: "text/html,application/xhtml+xml",
-          "user-agent": "Flatmate/1.0 Letterboxd profile integration",
-        },
-        redirect: "follow",
-        signal: AbortSignal.timeout(10_000),
-      });
+  headers: {
+    accept: "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8",
+    "accept-language": "en-US,en;q=0.9",
+    "cache-control": "no-cache",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+  },
+  redirect: "follow",
+  signal: AbortSignal.timeout(10_000),
+});
     } catch {
       throw new BadGatewayException("Could not reach Letterboxd");
     }
