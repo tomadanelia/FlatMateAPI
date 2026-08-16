@@ -40,6 +40,8 @@ The initial migration creates users, housing/lifestyle profiles, versioned tests
 - `GET /api/tests` and `GET /api/tests/:slug` — available tests/questions.
 - `POST /api/tests/submissions` — score and store a completed test.
 - `POST /api/integrations/connect` — record a Spotify or Letterboxd identity.
+- `POST /api/integrations/letterboxd/connect` — verify a public Letterboxd username and sync its favorite films.
+- `GET /api/integrations/letterboxd/:userId/favorites` — return a user's stored Letterboxd favorite films and poster URLs.
 - `POST /api/integrations/taste/sync` — ingestion boundary for normalized provider data.
 - `POST /api/matches/search` — run enabled strategies. Pass `algorithms` to run only selected ones.
 - `GET /admin` — algorithm control page (requires an admin Bearer token).

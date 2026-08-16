@@ -590,6 +590,31 @@ Response schema:
 
 There is no minimum item count, so `items: []` clears all items for that provider. Missing integrations and duplicate `(externalId, kind)` pairs are not currently mapped to stable 4xx errors.
 
+## 9a. Connect and sync Letterboxd
+
+`POST /api/integrations/letterboxd/connect` — currently public — HTTP `201`
+
+Checks that `https://letterboxd.com/{username}/` is a public member profile, replaces the user's stored Letterboxd favorite films, and returns the data needed by the profile UI.
+
+Request:
+
+```json
+{
+  "userId": "00000000-0000-4000-8000-000000000000",
+  "username": "letterboxd_username"
+}
+```
+
+The response contains `provider`, `username`, `profileUrl`, `lastSyncedAt`, and a `favorites` array. Each favorite contains `externalId`, `title`, nullable `year`, nullable `posterUrl`, and `filmUrl`.
+
+Errors: `400` for an invalid UUID or username, `404` when no public member profile is found, and `502` when Letterboxd cannot be reached or returns another error status.
+
+## 9b. Get stored Letterboxd favorites
+
+`GET /api/integrations/letterboxd/:userId/favorites` — currently public — HTTP `200`
+
+Returns the same response shape as the connect endpoint from stored data without requesting Letterboxd. Returns `404` if the user has no connected Letterboxd integration.
+
 ## 10. Search for roommate matches
 
 `POST /api/matches/search` — currently public — HTTP `201`
