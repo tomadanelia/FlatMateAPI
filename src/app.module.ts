@@ -4,6 +4,7 @@ import { AdminModule } from './modules/admin/admin.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { IntegrationsModule } from './modules/integrations/integrations.module';
 import { MatchingModule } from './modules/matching/matching.module';
+import { MessagingModule } from './modules/messaging/messaging.module';
 import { TestsModule } from './modules/tests/tests.module';
 import { UsersModule } from './modules/users/users.module';
 import { PrismaModule } from './prisma/prisma.module';
@@ -17,6 +18,7 @@ import { PrismaModule } from './prisma/prisma.module';
     TestsModule,
     IntegrationsModule,
     MatchingModule,
+    MessagingModule,
     AdminModule,
   ],
 })

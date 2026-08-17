@@ -9,6 +9,8 @@
  * 🟢 You can import this file directly.
  */
 export type * from './models/User'
+export type * from './models/Conversation'
+export type * from './models/Message'
 export type * from './models/HousingPreference'
 export type * from './models/LifestyleProfile'
 export type * from './models/TestDefinition'

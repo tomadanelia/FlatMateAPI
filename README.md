@@ -30,7 +30,7 @@ npx prisma db seed
 npm run start:dev
 ```
 
-The initial migration creates users, housing/lifestyle profiles, versioned tests and questions, attempts/responses/trait scores, external integrations and taste items, algorithm configuration, match runs/results, and per-algorithm score audit records.
+The migrations create users, housing/lifestyle profiles, versioned tests and questions, attempts/responses/trait scores, external integrations and taste items, algorithm configuration, match runs/results, direct conversations, and messages.
 
 ## Main endpoints
 
@@ -44,11 +44,17 @@ The initial migration creates users, housing/lifestyle profiles, versioned tests
 - `GET /api/integrations/letterboxd/:userId/favorites` — return a user's stored Letterboxd favorite films and poster URLs.
 - `POST /api/integrations/taste/sync` — ingestion boundary for normalized provider data.
 - `POST /api/matches/search` — run enabled strategies. Pass `algorithms` to run only selected ones.
+- `POST /api/messages/conversations` — get or create a direct conversation (JWT required).
+- `GET /api/messages/conversations` — list the current user's conversations (JWT required).
+- `GET /api/messages/conversations/:id` — page through newest-first message history (JWT required).
+- `POST /api/messages/conversations/:id` — persist and broadcast a message (JWT required).
+- `PATCH /api/messages/conversations/:id/read` — mark received messages as read (JWT required).
 - `GET /admin` — algorithm control page (requires an admin Bearer token).
 - `GET/PATCH /api/admin/algorithms[/:key]` — list or update matching algorithms (admin only).
 - `POST /api/admin/tests/:testDefinitionId/questions` — bulk-create questions (admin only).
 - `PATCH /api/admin/questions/:id` — edit a question (admin only).
 - `PATCH /api/admin/users/:id/role` — grant or revoke a user's admin role (admin only).
+- `DELETE /api/admin/messages` — delete every message and retain empty conversations (admin only).
 
 Signup request:
 
@@ -85,6 +91,24 @@ The promoted user must log in again to receive a token containing the new `ADMIN
 ```sql
 UPDATE users SET role = 'ADMIN' WHERE email = 'admin@example.com';
 ```
+
+## Realtime messaging
+
+Socket.IO is exposed at the `/chat` namespace using WebSocket transport. Mount the connection in the website's authenticated app shell, not in the chat page. This lets `message:new` update a global notification badge or toast from any page. The server creates sockets only for browser sessions that currently have the website open; offline accounts consume no socket resources.
+
+```ts
+const socket = io(`${apiOrigin}/chat`, {
+  transports: ['websocket'],
+  auth: { token: accessToken },
+});
+
+socket.on('message:new', (message) => showGlobalMessageNotification(message));
+
+// Run from the app-shell cleanup on logout or when it unmounts.
+socket.disconnect();
+```
+
+Socket.IO automatically reconnects after temporary network loss while the app shell remains mounted. A connection emits `realtime:ready` after authentication. The server also emits `message:new` and `conversation:read`; HTTP sends and read updates produce the same realtime events as their Socket.IO equivalents. Socket.IO's transport-level ping/pong detects dead sessions and releases them automatically, including when a browser closes without running application cleanup.
 
 Bulk question upload request:
 

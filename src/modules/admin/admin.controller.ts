@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Header,
   Param,
@@ -57,5 +58,10 @@ export class AdminController {
   @Patch('users/:id/role')
   updateUserRole(@Param('id') id: string, @Body() dto: UpdateUserRoleDto) {
     return this.admin.updateUserRole(id, dto.role);
+  }
+
+  @Delete('messages')
+  clearMessages() {
+    return this.admin.clearMessages();
   }
 }

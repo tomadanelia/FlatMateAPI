@@ -950,6 +950,19 @@ Response schema:
 
 Errors: `400` validation failure; `404` with `"User not found"`. Role changes do not invalidate already-issued JWTs.
 
+## Messaging API
+
+All messaging endpoints require `Authorization: Bearer <accessToken>` and derive the user ID from that token.
+
+- `POST /api/messages/conversations` with `{ "recipientId": "<uuid>" }` gets or creates the unique direct conversation.
+- `GET /api/messages/conversations` lists conversations, participants, the latest message, and unread counts.
+- `GET /api/messages/conversations/:id?limit=50&cursor=<messageUuid>` returns newest-first `{ items, nextCursor }` history.
+- `POST /api/messages/conversations/:id` with `{ "body": "Hello" }` stores a message and broadcasts `message:new`.
+- `PATCH /api/messages/conversations/:id/read` marks unread messages from the other participant as read and broadcasts `conversation:read`.
+- `DELETE /api/admin/messages` requires an admin JWT and deletes all messages while retaining empty conversations.
+
+Socket.IO uses the `/chat` namespace and WebSocket-only transport. The authenticated application shell should connect with `auth: { token: accessToken }` while the website is open, regardless of the current page, and disconnect on logout/unmount. Supported client events are `message:send` and `conversation:read`; emitted server events are `realtime:ready`, `message:new`, `conversation:read`, and `realtime:error`. Transport ping/pong automatically removes dead sessions, and offline users have no server-side socket.
+
 ## Frontend integration notes
 
 - Check `response.ok` before parsing a response as a success model. Error bodies use the common error shape above.

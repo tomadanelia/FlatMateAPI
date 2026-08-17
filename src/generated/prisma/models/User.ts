@@ -254,6 +254,9 @@ export type UserWhereInput = {
   initiatedRuns?: Prisma.MatchRunListRelationFilter
   subjectMatches?: Prisma.MatchResultListRelationFilter
   candidateMatches?: Prisma.MatchResultListRelationFilter
+  conversationsAsOne?: Prisma.ConversationListRelationFilter
+  conversationsAsTwo?: Prisma.ConversationListRelationFilter
+  sentMessages?: Prisma.MessageListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -278,6 +281,9 @@ export type UserOrderByWithRelationInput = {
   initiatedRuns?: Prisma.MatchRunOrderByRelationAggregateInput
   subjectMatches?: Prisma.MatchResultOrderByRelationAggregateInput
   candidateMatches?: Prisma.MatchResultOrderByRelationAggregateInput
+  conversationsAsOne?: Prisma.ConversationOrderByRelationAggregateInput
+  conversationsAsTwo?: Prisma.ConversationOrderByRelationAggregateInput
+  sentMessages?: Prisma.MessageOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -305,6 +311,9 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   initiatedRuns?: Prisma.MatchRunListRelationFilter
   subjectMatches?: Prisma.MatchResultListRelationFilter
   candidateMatches?: Prisma.MatchResultListRelationFilter
+  conversationsAsOne?: Prisma.ConversationListRelationFilter
+  conversationsAsTwo?: Prisma.ConversationListRelationFilter
+  sentMessages?: Prisma.MessageListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -367,6 +376,9 @@ export type UserCreateInput = {
   initiatedRuns?: Prisma.MatchRunCreateNestedManyWithoutSubjectInput
   subjectMatches?: Prisma.MatchResultCreateNestedManyWithoutSubjectInput
   candidateMatches?: Prisma.MatchResultCreateNestedManyWithoutCandidateInput
+  conversationsAsOne?: Prisma.ConversationCreateNestedManyWithoutParticipantOneInput
+  conversationsAsTwo?: Prisma.ConversationCreateNestedManyWithoutParticipantTwoInput
+  sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -391,6 +403,9 @@ export type UserUncheckedCreateInput = {
   initiatedRuns?: Prisma.MatchRunUncheckedCreateNestedManyWithoutSubjectInput
   subjectMatches?: Prisma.MatchResultUncheckedCreateNestedManyWithoutSubjectInput
   candidateMatches?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCandidateInput
+  conversationsAsOne?: Prisma.ConversationUncheckedCreateNestedManyWithoutParticipantOneInput
+  conversationsAsTwo?: Prisma.ConversationUncheckedCreateNestedManyWithoutParticipantTwoInput
+  sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
 }
 
 export type UserUpdateInput = {
@@ -415,6 +430,9 @@ export type UserUpdateInput = {
   initiatedRuns?: Prisma.MatchRunUpdateManyWithoutSubjectNestedInput
   subjectMatches?: Prisma.MatchResultUpdateManyWithoutSubjectNestedInput
   candidateMatches?: Prisma.MatchResultUpdateManyWithoutCandidateNestedInput
+  conversationsAsOne?: Prisma.ConversationUpdateManyWithoutParticipantOneNestedInput
+  conversationsAsTwo?: Prisma.ConversationUpdateManyWithoutParticipantTwoNestedInput
+  sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -439,6 +457,9 @@ export type UserUncheckedUpdateInput = {
   initiatedRuns?: Prisma.MatchRunUncheckedUpdateManyWithoutSubjectNestedInput
   subjectMatches?: Prisma.MatchResultUncheckedUpdateManyWithoutSubjectNestedInput
   candidateMatches?: Prisma.MatchResultUncheckedUpdateManyWithoutCandidateNestedInput
+  conversationsAsOne?: Prisma.ConversationUncheckedUpdateManyWithoutParticipantOneNestedInput
+  conversationsAsTwo?: Prisma.ConversationUncheckedUpdateManyWithoutParticipantTwoNestedInput
+  sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -570,6 +591,48 @@ export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
 }
 
+export type UserCreateNestedOneWithoutConversationsAsOneInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutConversationsAsOneInput, Prisma.UserUncheckedCreateWithoutConversationsAsOneInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutConversationsAsOneInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserCreateNestedOneWithoutConversationsAsTwoInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutConversationsAsTwoInput, Prisma.UserUncheckedCreateWithoutConversationsAsTwoInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutConversationsAsTwoInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutConversationsAsOneNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutConversationsAsOneInput, Prisma.UserUncheckedCreateWithoutConversationsAsOneInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutConversationsAsOneInput
+  upsert?: Prisma.UserUpsertWithoutConversationsAsOneInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutConversationsAsOneInput, Prisma.UserUpdateWithoutConversationsAsOneInput>, Prisma.UserUncheckedUpdateWithoutConversationsAsOneInput>
+}
+
+export type UserUpdateOneRequiredWithoutConversationsAsTwoNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutConversationsAsTwoInput, Prisma.UserUncheckedCreateWithoutConversationsAsTwoInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutConversationsAsTwoInput
+  upsert?: Prisma.UserUpsertWithoutConversationsAsTwoInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutConversationsAsTwoInput, Prisma.UserUpdateWithoutConversationsAsTwoInput>, Prisma.UserUncheckedUpdateWithoutConversationsAsTwoInput>
+}
+
+export type UserCreateNestedOneWithoutSentMessagesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSentMessagesInput, Prisma.UserUncheckedCreateWithoutSentMessagesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSentMessagesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutSentMessagesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSentMessagesInput, Prisma.UserUncheckedCreateWithoutSentMessagesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSentMessagesInput
+  upsert?: Prisma.UserUpsertWithoutSentMessagesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSentMessagesInput, Prisma.UserUpdateWithoutSentMessagesInput>, Prisma.UserUncheckedUpdateWithoutSentMessagesInput>
+}
+
 export type UserCreateNestedOneWithoutHousingPreferenceInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutHousingPreferenceInput, Prisma.UserUncheckedCreateWithoutHousingPreferenceInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutHousingPreferenceInput
@@ -682,6 +745,366 @@ export type UserUpdateOneRequiredWithoutCandidateMatchesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCandidateMatchesInput, Prisma.UserUpdateWithoutCandidateMatchesInput>, Prisma.UserUncheckedUpdateWithoutCandidateMatchesInput>
 }
 
+export type UserCreateWithoutConversationsAsOneInput = {
+  id: string
+  email: string
+  passwordHash?: string | null
+  role?: $Enums.UserRole
+  displayName?: string | null
+  birthDate?: Date | string | null
+  gender?: $Enums.Gender | null
+  bio?: string | null
+  avatarUrl?: string | null
+  isDiscoverable?: boolean
+  onboardingComplete?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  housingPreference?: Prisma.HousingPreferenceCreateNestedOneWithoutUserInput
+  lifestyleProfile?: Prisma.LifestyleProfileCreateNestedOneWithoutUserInput
+  testAttempts?: Prisma.TestAttemptCreateNestedManyWithoutUserInput
+  integrations?: Prisma.ExternalIntegrationCreateNestedManyWithoutUserInput
+  tasteItems?: Prisma.TasteItemCreateNestedManyWithoutUserInput
+  initiatedRuns?: Prisma.MatchRunCreateNestedManyWithoutSubjectInput
+  subjectMatches?: Prisma.MatchResultCreateNestedManyWithoutSubjectInput
+  candidateMatches?: Prisma.MatchResultCreateNestedManyWithoutCandidateInput
+  conversationsAsTwo?: Prisma.ConversationCreateNestedManyWithoutParticipantTwoInput
+  sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+}
+
+export type UserUncheckedCreateWithoutConversationsAsOneInput = {
+  id: string
+  email: string
+  passwordHash?: string | null
+  role?: $Enums.UserRole
+  displayName?: string | null
+  birthDate?: Date | string | null
+  gender?: $Enums.Gender | null
+  bio?: string | null
+  avatarUrl?: string | null
+  isDiscoverable?: boolean
+  onboardingComplete?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  housingPreference?: Prisma.HousingPreferenceUncheckedCreateNestedOneWithoutUserInput
+  lifestyleProfile?: Prisma.LifestyleProfileUncheckedCreateNestedOneWithoutUserInput
+  testAttempts?: Prisma.TestAttemptUncheckedCreateNestedManyWithoutUserInput
+  integrations?: Prisma.ExternalIntegrationUncheckedCreateNestedManyWithoutUserInput
+  tasteItems?: Prisma.TasteItemUncheckedCreateNestedManyWithoutUserInput
+  initiatedRuns?: Prisma.MatchRunUncheckedCreateNestedManyWithoutSubjectInput
+  subjectMatches?: Prisma.MatchResultUncheckedCreateNestedManyWithoutSubjectInput
+  candidateMatches?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCandidateInput
+  conversationsAsTwo?: Prisma.ConversationUncheckedCreateNestedManyWithoutParticipantTwoInput
+  sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+}
+
+export type UserCreateOrConnectWithoutConversationsAsOneInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutConversationsAsOneInput, Prisma.UserUncheckedCreateWithoutConversationsAsOneInput>
+}
+
+export type UserCreateWithoutConversationsAsTwoInput = {
+  id: string
+  email: string
+  passwordHash?: string | null
+  role?: $Enums.UserRole
+  displayName?: string | null
+  birthDate?: Date | string | null
+  gender?: $Enums.Gender | null
+  bio?: string | null
+  avatarUrl?: string | null
+  isDiscoverable?: boolean
+  onboardingComplete?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  housingPreference?: Prisma.HousingPreferenceCreateNestedOneWithoutUserInput
+  lifestyleProfile?: Prisma.LifestyleProfileCreateNestedOneWithoutUserInput
+  testAttempts?: Prisma.TestAttemptCreateNestedManyWithoutUserInput
+  integrations?: Prisma.ExternalIntegrationCreateNestedManyWithoutUserInput
+  tasteItems?: Prisma.TasteItemCreateNestedManyWithoutUserInput
+  initiatedRuns?: Prisma.MatchRunCreateNestedManyWithoutSubjectInput
+  subjectMatches?: Prisma.MatchResultCreateNestedManyWithoutSubjectInput
+  candidateMatches?: Prisma.MatchResultCreateNestedManyWithoutCandidateInput
+  conversationsAsOne?: Prisma.ConversationCreateNestedManyWithoutParticipantOneInput
+  sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+}
+
+export type UserUncheckedCreateWithoutConversationsAsTwoInput = {
+  id: string
+  email: string
+  passwordHash?: string | null
+  role?: $Enums.UserRole
+  displayName?: string | null
+  birthDate?: Date | string | null
+  gender?: $Enums.Gender | null
+  bio?: string | null
+  avatarUrl?: string | null
+  isDiscoverable?: boolean
+  onboardingComplete?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  housingPreference?: Prisma.HousingPreferenceUncheckedCreateNestedOneWithoutUserInput
+  lifestyleProfile?: Prisma.LifestyleProfileUncheckedCreateNestedOneWithoutUserInput
+  testAttempts?: Prisma.TestAttemptUncheckedCreateNestedManyWithoutUserInput
+  integrations?: Prisma.ExternalIntegrationUncheckedCreateNestedManyWithoutUserInput
+  tasteItems?: Prisma.TasteItemUncheckedCreateNestedManyWithoutUserInput
+  initiatedRuns?: Prisma.MatchRunUncheckedCreateNestedManyWithoutSubjectInput
+  subjectMatches?: Prisma.MatchResultUncheckedCreateNestedManyWithoutSubjectInput
+  candidateMatches?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCandidateInput
+  conversationsAsOne?: Prisma.ConversationUncheckedCreateNestedManyWithoutParticipantOneInput
+  sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+}
+
+export type UserCreateOrConnectWithoutConversationsAsTwoInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutConversationsAsTwoInput, Prisma.UserUncheckedCreateWithoutConversationsAsTwoInput>
+}
+
+export type UserUpsertWithoutConversationsAsOneInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutConversationsAsOneInput, Prisma.UserUncheckedUpdateWithoutConversationsAsOneInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutConversationsAsOneInput, Prisma.UserUncheckedCreateWithoutConversationsAsOneInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutConversationsAsOneInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutConversationsAsOneInput, Prisma.UserUncheckedUpdateWithoutConversationsAsOneInput>
+}
+
+export type UserUpdateWithoutConversationsAsOneInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDiscoverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  housingPreference?: Prisma.HousingPreferenceUpdateOneWithoutUserNestedInput
+  lifestyleProfile?: Prisma.LifestyleProfileUpdateOneWithoutUserNestedInput
+  testAttempts?: Prisma.TestAttemptUpdateManyWithoutUserNestedInput
+  integrations?: Prisma.ExternalIntegrationUpdateManyWithoutUserNestedInput
+  tasteItems?: Prisma.TasteItemUpdateManyWithoutUserNestedInput
+  initiatedRuns?: Prisma.MatchRunUpdateManyWithoutSubjectNestedInput
+  subjectMatches?: Prisma.MatchResultUpdateManyWithoutSubjectNestedInput
+  candidateMatches?: Prisma.MatchResultUpdateManyWithoutCandidateNestedInput
+  conversationsAsTwo?: Prisma.ConversationUpdateManyWithoutParticipantTwoNestedInput
+  sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+}
+
+export type UserUncheckedUpdateWithoutConversationsAsOneInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDiscoverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  housingPreference?: Prisma.HousingPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  lifestyleProfile?: Prisma.LifestyleProfileUncheckedUpdateOneWithoutUserNestedInput
+  testAttempts?: Prisma.TestAttemptUncheckedUpdateManyWithoutUserNestedInput
+  integrations?: Prisma.ExternalIntegrationUncheckedUpdateManyWithoutUserNestedInput
+  tasteItems?: Prisma.TasteItemUncheckedUpdateManyWithoutUserNestedInput
+  initiatedRuns?: Prisma.MatchRunUncheckedUpdateManyWithoutSubjectNestedInput
+  subjectMatches?: Prisma.MatchResultUncheckedUpdateManyWithoutSubjectNestedInput
+  candidateMatches?: Prisma.MatchResultUncheckedUpdateManyWithoutCandidateNestedInput
+  conversationsAsTwo?: Prisma.ConversationUncheckedUpdateManyWithoutParticipantTwoNestedInput
+  sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+}
+
+export type UserUpsertWithoutConversationsAsTwoInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutConversationsAsTwoInput, Prisma.UserUncheckedUpdateWithoutConversationsAsTwoInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutConversationsAsTwoInput, Prisma.UserUncheckedCreateWithoutConversationsAsTwoInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutConversationsAsTwoInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutConversationsAsTwoInput, Prisma.UserUncheckedUpdateWithoutConversationsAsTwoInput>
+}
+
+export type UserUpdateWithoutConversationsAsTwoInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDiscoverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  housingPreference?: Prisma.HousingPreferenceUpdateOneWithoutUserNestedInput
+  lifestyleProfile?: Prisma.LifestyleProfileUpdateOneWithoutUserNestedInput
+  testAttempts?: Prisma.TestAttemptUpdateManyWithoutUserNestedInput
+  integrations?: Prisma.ExternalIntegrationUpdateManyWithoutUserNestedInput
+  tasteItems?: Prisma.TasteItemUpdateManyWithoutUserNestedInput
+  initiatedRuns?: Prisma.MatchRunUpdateManyWithoutSubjectNestedInput
+  subjectMatches?: Prisma.MatchResultUpdateManyWithoutSubjectNestedInput
+  candidateMatches?: Prisma.MatchResultUpdateManyWithoutCandidateNestedInput
+  conversationsAsOne?: Prisma.ConversationUpdateManyWithoutParticipantOneNestedInput
+  sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+}
+
+export type UserUncheckedUpdateWithoutConversationsAsTwoInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDiscoverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  housingPreference?: Prisma.HousingPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  lifestyleProfile?: Prisma.LifestyleProfileUncheckedUpdateOneWithoutUserNestedInput
+  testAttempts?: Prisma.TestAttemptUncheckedUpdateManyWithoutUserNestedInput
+  integrations?: Prisma.ExternalIntegrationUncheckedUpdateManyWithoutUserNestedInput
+  tasteItems?: Prisma.TasteItemUncheckedUpdateManyWithoutUserNestedInput
+  initiatedRuns?: Prisma.MatchRunUncheckedUpdateManyWithoutSubjectNestedInput
+  subjectMatches?: Prisma.MatchResultUncheckedUpdateManyWithoutSubjectNestedInput
+  candidateMatches?: Prisma.MatchResultUncheckedUpdateManyWithoutCandidateNestedInput
+  conversationsAsOne?: Prisma.ConversationUncheckedUpdateManyWithoutParticipantOneNestedInput
+  sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+}
+
+export type UserCreateWithoutSentMessagesInput = {
+  id: string
+  email: string
+  passwordHash?: string | null
+  role?: $Enums.UserRole
+  displayName?: string | null
+  birthDate?: Date | string | null
+  gender?: $Enums.Gender | null
+  bio?: string | null
+  avatarUrl?: string | null
+  isDiscoverable?: boolean
+  onboardingComplete?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  housingPreference?: Prisma.HousingPreferenceCreateNestedOneWithoutUserInput
+  lifestyleProfile?: Prisma.LifestyleProfileCreateNestedOneWithoutUserInput
+  testAttempts?: Prisma.TestAttemptCreateNestedManyWithoutUserInput
+  integrations?: Prisma.ExternalIntegrationCreateNestedManyWithoutUserInput
+  tasteItems?: Prisma.TasteItemCreateNestedManyWithoutUserInput
+  initiatedRuns?: Prisma.MatchRunCreateNestedManyWithoutSubjectInput
+  subjectMatches?: Prisma.MatchResultCreateNestedManyWithoutSubjectInput
+  candidateMatches?: Prisma.MatchResultCreateNestedManyWithoutCandidateInput
+  conversationsAsOne?: Prisma.ConversationCreateNestedManyWithoutParticipantOneInput
+  conversationsAsTwo?: Prisma.ConversationCreateNestedManyWithoutParticipantTwoInput
+}
+
+export type UserUncheckedCreateWithoutSentMessagesInput = {
+  id: string
+  email: string
+  passwordHash?: string | null
+  role?: $Enums.UserRole
+  displayName?: string | null
+  birthDate?: Date | string | null
+  gender?: $Enums.Gender | null
+  bio?: string | null
+  avatarUrl?: string | null
+  isDiscoverable?: boolean
+  onboardingComplete?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  housingPreference?: Prisma.HousingPreferenceUncheckedCreateNestedOneWithoutUserInput
+  lifestyleProfile?: Prisma.LifestyleProfileUncheckedCreateNestedOneWithoutUserInput
+  testAttempts?: Prisma.TestAttemptUncheckedCreateNestedManyWithoutUserInput
+  integrations?: Prisma.ExternalIntegrationUncheckedCreateNestedManyWithoutUserInput
+  tasteItems?: Prisma.TasteItemUncheckedCreateNestedManyWithoutUserInput
+  initiatedRuns?: Prisma.MatchRunUncheckedCreateNestedManyWithoutSubjectInput
+  subjectMatches?: Prisma.MatchResultUncheckedCreateNestedManyWithoutSubjectInput
+  candidateMatches?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCandidateInput
+  conversationsAsOne?: Prisma.ConversationUncheckedCreateNestedManyWithoutParticipantOneInput
+  conversationsAsTwo?: Prisma.ConversationUncheckedCreateNestedManyWithoutParticipantTwoInput
+}
+
+export type UserCreateOrConnectWithoutSentMessagesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutSentMessagesInput, Prisma.UserUncheckedCreateWithoutSentMessagesInput>
+}
+
+export type UserUpsertWithoutSentMessagesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutSentMessagesInput, Prisma.UserUncheckedUpdateWithoutSentMessagesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutSentMessagesInput, Prisma.UserUncheckedCreateWithoutSentMessagesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutSentMessagesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutSentMessagesInput, Prisma.UserUncheckedUpdateWithoutSentMessagesInput>
+}
+
+export type UserUpdateWithoutSentMessagesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDiscoverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  housingPreference?: Prisma.HousingPreferenceUpdateOneWithoutUserNestedInput
+  lifestyleProfile?: Prisma.LifestyleProfileUpdateOneWithoutUserNestedInput
+  testAttempts?: Prisma.TestAttemptUpdateManyWithoutUserNestedInput
+  integrations?: Prisma.ExternalIntegrationUpdateManyWithoutUserNestedInput
+  tasteItems?: Prisma.TasteItemUpdateManyWithoutUserNestedInput
+  initiatedRuns?: Prisma.MatchRunUpdateManyWithoutSubjectNestedInput
+  subjectMatches?: Prisma.MatchResultUpdateManyWithoutSubjectNestedInput
+  candidateMatches?: Prisma.MatchResultUpdateManyWithoutCandidateNestedInput
+  conversationsAsOne?: Prisma.ConversationUpdateManyWithoutParticipantOneNestedInput
+  conversationsAsTwo?: Prisma.ConversationUpdateManyWithoutParticipantTwoNestedInput
+}
+
+export type UserUncheckedUpdateWithoutSentMessagesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDiscoverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  housingPreference?: Prisma.HousingPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  lifestyleProfile?: Prisma.LifestyleProfileUncheckedUpdateOneWithoutUserNestedInput
+  testAttempts?: Prisma.TestAttemptUncheckedUpdateManyWithoutUserNestedInput
+  integrations?: Prisma.ExternalIntegrationUncheckedUpdateManyWithoutUserNestedInput
+  tasteItems?: Prisma.TasteItemUncheckedUpdateManyWithoutUserNestedInput
+  initiatedRuns?: Prisma.MatchRunUncheckedUpdateManyWithoutSubjectNestedInput
+  subjectMatches?: Prisma.MatchResultUncheckedUpdateManyWithoutSubjectNestedInput
+  candidateMatches?: Prisma.MatchResultUncheckedUpdateManyWithoutCandidateNestedInput
+  conversationsAsOne?: Prisma.ConversationUncheckedUpdateManyWithoutParticipantOneNestedInput
+  conversationsAsTwo?: Prisma.ConversationUncheckedUpdateManyWithoutParticipantTwoNestedInput
+}
+
 export type UserCreateWithoutHousingPreferenceInput = {
   id: string
   email: string
@@ -703,6 +1126,9 @@ export type UserCreateWithoutHousingPreferenceInput = {
   initiatedRuns?: Prisma.MatchRunCreateNestedManyWithoutSubjectInput
   subjectMatches?: Prisma.MatchResultCreateNestedManyWithoutSubjectInput
   candidateMatches?: Prisma.MatchResultCreateNestedManyWithoutCandidateInput
+  conversationsAsOne?: Prisma.ConversationCreateNestedManyWithoutParticipantOneInput
+  conversationsAsTwo?: Prisma.ConversationCreateNestedManyWithoutParticipantTwoInput
+  sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
 }
 
 export type UserUncheckedCreateWithoutHousingPreferenceInput = {
@@ -726,6 +1152,9 @@ export type UserUncheckedCreateWithoutHousingPreferenceInput = {
   initiatedRuns?: Prisma.MatchRunUncheckedCreateNestedManyWithoutSubjectInput
   subjectMatches?: Prisma.MatchResultUncheckedCreateNestedManyWithoutSubjectInput
   candidateMatches?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCandidateInput
+  conversationsAsOne?: Prisma.ConversationUncheckedCreateNestedManyWithoutParticipantOneInput
+  conversationsAsTwo?: Prisma.ConversationUncheckedCreateNestedManyWithoutParticipantTwoInput
+  sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
 }
 
 export type UserCreateOrConnectWithoutHousingPreferenceInput = {
@@ -765,6 +1194,9 @@ export type UserUpdateWithoutHousingPreferenceInput = {
   initiatedRuns?: Prisma.MatchRunUpdateManyWithoutSubjectNestedInput
   subjectMatches?: Prisma.MatchResultUpdateManyWithoutSubjectNestedInput
   candidateMatches?: Prisma.MatchResultUpdateManyWithoutCandidateNestedInput
+  conversationsAsOne?: Prisma.ConversationUpdateManyWithoutParticipantOneNestedInput
+  conversationsAsTwo?: Prisma.ConversationUpdateManyWithoutParticipantTwoNestedInput
+  sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
 }
 
 export type UserUncheckedUpdateWithoutHousingPreferenceInput = {
@@ -788,6 +1220,9 @@ export type UserUncheckedUpdateWithoutHousingPreferenceInput = {
   initiatedRuns?: Prisma.MatchRunUncheckedUpdateManyWithoutSubjectNestedInput
   subjectMatches?: Prisma.MatchResultUncheckedUpdateManyWithoutSubjectNestedInput
   candidateMatches?: Prisma.MatchResultUncheckedUpdateManyWithoutCandidateNestedInput
+  conversationsAsOne?: Prisma.ConversationUncheckedUpdateManyWithoutParticipantOneNestedInput
+  conversationsAsTwo?: Prisma.ConversationUncheckedUpdateManyWithoutParticipantTwoNestedInput
+  sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
 }
 
 export type UserCreateWithoutLifestyleProfileInput = {
@@ -811,6 +1246,9 @@ export type UserCreateWithoutLifestyleProfileInput = {
   initiatedRuns?: Prisma.MatchRunCreateNestedManyWithoutSubjectInput
   subjectMatches?: Prisma.MatchResultCreateNestedManyWithoutSubjectInput
   candidateMatches?: Prisma.MatchResultCreateNestedManyWithoutCandidateInput
+  conversationsAsOne?: Prisma.ConversationCreateNestedManyWithoutParticipantOneInput
+  conversationsAsTwo?: Prisma.ConversationCreateNestedManyWithoutParticipantTwoInput
+  sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
 }
 
 export type UserUncheckedCreateWithoutLifestyleProfileInput = {
@@ -834,6 +1272,9 @@ export type UserUncheckedCreateWithoutLifestyleProfileInput = {
   initiatedRuns?: Prisma.MatchRunUncheckedCreateNestedManyWithoutSubjectInput
   subjectMatches?: Prisma.MatchResultUncheckedCreateNestedManyWithoutSubjectInput
   candidateMatches?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCandidateInput
+  conversationsAsOne?: Prisma.ConversationUncheckedCreateNestedManyWithoutParticipantOneInput
+  conversationsAsTwo?: Prisma.ConversationUncheckedCreateNestedManyWithoutParticipantTwoInput
+  sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
 }
 
 export type UserCreateOrConnectWithoutLifestyleProfileInput = {
@@ -873,6 +1314,9 @@ export type UserUpdateWithoutLifestyleProfileInput = {
   initiatedRuns?: Prisma.MatchRunUpdateManyWithoutSubjectNestedInput
   subjectMatches?: Prisma.MatchResultUpdateManyWithoutSubjectNestedInput
   candidateMatches?: Prisma.MatchResultUpdateManyWithoutCandidateNestedInput
+  conversationsAsOne?: Prisma.ConversationUpdateManyWithoutParticipantOneNestedInput
+  conversationsAsTwo?: Prisma.ConversationUpdateManyWithoutParticipantTwoNestedInput
+  sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
 }
 
 export type UserUncheckedUpdateWithoutLifestyleProfileInput = {
@@ -896,6 +1340,9 @@ export type UserUncheckedUpdateWithoutLifestyleProfileInput = {
   initiatedRuns?: Prisma.MatchRunUncheckedUpdateManyWithoutSubjectNestedInput
   subjectMatches?: Prisma.MatchResultUncheckedUpdateManyWithoutSubjectNestedInput
   candidateMatches?: Prisma.MatchResultUncheckedUpdateManyWithoutCandidateNestedInput
+  conversationsAsOne?: Prisma.ConversationUncheckedUpdateManyWithoutParticipantOneNestedInput
+  conversationsAsTwo?: Prisma.ConversationUncheckedUpdateManyWithoutParticipantTwoNestedInput
+  sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
 }
 
 export type UserCreateWithoutTestAttemptsInput = {
@@ -919,6 +1366,9 @@ export type UserCreateWithoutTestAttemptsInput = {
   initiatedRuns?: Prisma.MatchRunCreateNestedManyWithoutSubjectInput
   subjectMatches?: Prisma.MatchResultCreateNestedManyWithoutSubjectInput
   candidateMatches?: Prisma.MatchResultCreateNestedManyWithoutCandidateInput
+  conversationsAsOne?: Prisma.ConversationCreateNestedManyWithoutParticipantOneInput
+  conversationsAsTwo?: Prisma.ConversationCreateNestedManyWithoutParticipantTwoInput
+  sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
 }
 
 export type UserUncheckedCreateWithoutTestAttemptsInput = {
@@ -942,6 +1392,9 @@ export type UserUncheckedCreateWithoutTestAttemptsInput = {
   initiatedRuns?: Prisma.MatchRunUncheckedCreateNestedManyWithoutSubjectInput
   subjectMatches?: Prisma.MatchResultUncheckedCreateNestedManyWithoutSubjectInput
   candidateMatches?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCandidateInput
+  conversationsAsOne?: Prisma.ConversationUncheckedCreateNestedManyWithoutParticipantOneInput
+  conversationsAsTwo?: Prisma.ConversationUncheckedCreateNestedManyWithoutParticipantTwoInput
+  sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
 }
 
 export type UserCreateOrConnectWithoutTestAttemptsInput = {
@@ -981,6 +1434,9 @@ export type UserUpdateWithoutTestAttemptsInput = {
   initiatedRuns?: Prisma.MatchRunUpdateManyWithoutSubjectNestedInput
   subjectMatches?: Prisma.MatchResultUpdateManyWithoutSubjectNestedInput
   candidateMatches?: Prisma.MatchResultUpdateManyWithoutCandidateNestedInput
+  conversationsAsOne?: Prisma.ConversationUpdateManyWithoutParticipantOneNestedInput
+  conversationsAsTwo?: Prisma.ConversationUpdateManyWithoutParticipantTwoNestedInput
+  sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTestAttemptsInput = {
@@ -1004,6 +1460,9 @@ export type UserUncheckedUpdateWithoutTestAttemptsInput = {
   initiatedRuns?: Prisma.MatchRunUncheckedUpdateManyWithoutSubjectNestedInput
   subjectMatches?: Prisma.MatchResultUncheckedUpdateManyWithoutSubjectNestedInput
   candidateMatches?: Prisma.MatchResultUncheckedUpdateManyWithoutCandidateNestedInput
+  conversationsAsOne?: Prisma.ConversationUncheckedUpdateManyWithoutParticipantOneNestedInput
+  conversationsAsTwo?: Prisma.ConversationUncheckedUpdateManyWithoutParticipantTwoNestedInput
+  sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
 }
 
 export type UserCreateWithoutIntegrationsInput = {
@@ -1027,6 +1486,9 @@ export type UserCreateWithoutIntegrationsInput = {
   initiatedRuns?: Prisma.MatchRunCreateNestedManyWithoutSubjectInput
   subjectMatches?: Prisma.MatchResultCreateNestedManyWithoutSubjectInput
   candidateMatches?: Prisma.MatchResultCreateNestedManyWithoutCandidateInput
+  conversationsAsOne?: Prisma.ConversationCreateNestedManyWithoutParticipantOneInput
+  conversationsAsTwo?: Prisma.ConversationCreateNestedManyWithoutParticipantTwoInput
+  sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
 }
 
 export type UserUncheckedCreateWithoutIntegrationsInput = {
@@ -1050,6 +1512,9 @@ export type UserUncheckedCreateWithoutIntegrationsInput = {
   initiatedRuns?: Prisma.MatchRunUncheckedCreateNestedManyWithoutSubjectInput
   subjectMatches?: Prisma.MatchResultUncheckedCreateNestedManyWithoutSubjectInput
   candidateMatches?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCandidateInput
+  conversationsAsOne?: Prisma.ConversationUncheckedCreateNestedManyWithoutParticipantOneInput
+  conversationsAsTwo?: Prisma.ConversationUncheckedCreateNestedManyWithoutParticipantTwoInput
+  sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
 }
 
 export type UserCreateOrConnectWithoutIntegrationsInput = {
@@ -1089,6 +1554,9 @@ export type UserUpdateWithoutIntegrationsInput = {
   initiatedRuns?: Prisma.MatchRunUpdateManyWithoutSubjectNestedInput
   subjectMatches?: Prisma.MatchResultUpdateManyWithoutSubjectNestedInput
   candidateMatches?: Prisma.MatchResultUpdateManyWithoutCandidateNestedInput
+  conversationsAsOne?: Prisma.ConversationUpdateManyWithoutParticipantOneNestedInput
+  conversationsAsTwo?: Prisma.ConversationUpdateManyWithoutParticipantTwoNestedInput
+  sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
 }
 
 export type UserUncheckedUpdateWithoutIntegrationsInput = {
@@ -1112,6 +1580,9 @@ export type UserUncheckedUpdateWithoutIntegrationsInput = {
   initiatedRuns?: Prisma.MatchRunUncheckedUpdateManyWithoutSubjectNestedInput
   subjectMatches?: Prisma.MatchResultUncheckedUpdateManyWithoutSubjectNestedInput
   candidateMatches?: Prisma.MatchResultUncheckedUpdateManyWithoutCandidateNestedInput
+  conversationsAsOne?: Prisma.ConversationUncheckedUpdateManyWithoutParticipantOneNestedInput
+  conversationsAsTwo?: Prisma.ConversationUncheckedUpdateManyWithoutParticipantTwoNestedInput
+  sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
 }
 
 export type UserCreateWithoutTasteItemsInput = {
@@ -1135,6 +1606,9 @@ export type UserCreateWithoutTasteItemsInput = {
   initiatedRuns?: Prisma.MatchRunCreateNestedManyWithoutSubjectInput
   subjectMatches?: Prisma.MatchResultCreateNestedManyWithoutSubjectInput
   candidateMatches?: Prisma.MatchResultCreateNestedManyWithoutCandidateInput
+  conversationsAsOne?: Prisma.ConversationCreateNestedManyWithoutParticipantOneInput
+  conversationsAsTwo?: Prisma.ConversationCreateNestedManyWithoutParticipantTwoInput
+  sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
 }
 
 export type UserUncheckedCreateWithoutTasteItemsInput = {
@@ -1158,6 +1632,9 @@ export type UserUncheckedCreateWithoutTasteItemsInput = {
   initiatedRuns?: Prisma.MatchRunUncheckedCreateNestedManyWithoutSubjectInput
   subjectMatches?: Prisma.MatchResultUncheckedCreateNestedManyWithoutSubjectInput
   candidateMatches?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCandidateInput
+  conversationsAsOne?: Prisma.ConversationUncheckedCreateNestedManyWithoutParticipantOneInput
+  conversationsAsTwo?: Prisma.ConversationUncheckedCreateNestedManyWithoutParticipantTwoInput
+  sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
 }
 
 export type UserCreateOrConnectWithoutTasteItemsInput = {
@@ -1197,6 +1674,9 @@ export type UserUpdateWithoutTasteItemsInput = {
   initiatedRuns?: Prisma.MatchRunUpdateManyWithoutSubjectNestedInput
   subjectMatches?: Prisma.MatchResultUpdateManyWithoutSubjectNestedInput
   candidateMatches?: Prisma.MatchResultUpdateManyWithoutCandidateNestedInput
+  conversationsAsOne?: Prisma.ConversationUpdateManyWithoutParticipantOneNestedInput
+  conversationsAsTwo?: Prisma.ConversationUpdateManyWithoutParticipantTwoNestedInput
+  sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTasteItemsInput = {
@@ -1220,6 +1700,9 @@ export type UserUncheckedUpdateWithoutTasteItemsInput = {
   initiatedRuns?: Prisma.MatchRunUncheckedUpdateManyWithoutSubjectNestedInput
   subjectMatches?: Prisma.MatchResultUncheckedUpdateManyWithoutSubjectNestedInput
   candidateMatches?: Prisma.MatchResultUncheckedUpdateManyWithoutCandidateNestedInput
+  conversationsAsOne?: Prisma.ConversationUncheckedUpdateManyWithoutParticipantOneNestedInput
+  conversationsAsTwo?: Prisma.ConversationUncheckedUpdateManyWithoutParticipantTwoNestedInput
+  sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
 }
 
 export type UserCreateWithoutInitiatedRunsInput = {
@@ -1243,6 +1726,9 @@ export type UserCreateWithoutInitiatedRunsInput = {
   tasteItems?: Prisma.TasteItemCreateNestedManyWithoutUserInput
   subjectMatches?: Prisma.MatchResultCreateNestedManyWithoutSubjectInput
   candidateMatches?: Prisma.MatchResultCreateNestedManyWithoutCandidateInput
+  conversationsAsOne?: Prisma.ConversationCreateNestedManyWithoutParticipantOneInput
+  conversationsAsTwo?: Prisma.ConversationCreateNestedManyWithoutParticipantTwoInput
+  sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
 }
 
 export type UserUncheckedCreateWithoutInitiatedRunsInput = {
@@ -1266,6 +1752,9 @@ export type UserUncheckedCreateWithoutInitiatedRunsInput = {
   tasteItems?: Prisma.TasteItemUncheckedCreateNestedManyWithoutUserInput
   subjectMatches?: Prisma.MatchResultUncheckedCreateNestedManyWithoutSubjectInput
   candidateMatches?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCandidateInput
+  conversationsAsOne?: Prisma.ConversationUncheckedCreateNestedManyWithoutParticipantOneInput
+  conversationsAsTwo?: Prisma.ConversationUncheckedCreateNestedManyWithoutParticipantTwoInput
+  sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
 }
 
 export type UserCreateOrConnectWithoutInitiatedRunsInput = {
@@ -1305,6 +1794,9 @@ export type UserUpdateWithoutInitiatedRunsInput = {
   tasteItems?: Prisma.TasteItemUpdateManyWithoutUserNestedInput
   subjectMatches?: Prisma.MatchResultUpdateManyWithoutSubjectNestedInput
   candidateMatches?: Prisma.MatchResultUpdateManyWithoutCandidateNestedInput
+  conversationsAsOne?: Prisma.ConversationUpdateManyWithoutParticipantOneNestedInput
+  conversationsAsTwo?: Prisma.ConversationUpdateManyWithoutParticipantTwoNestedInput
+  sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
 }
 
 export type UserUncheckedUpdateWithoutInitiatedRunsInput = {
@@ -1328,6 +1820,9 @@ export type UserUncheckedUpdateWithoutInitiatedRunsInput = {
   tasteItems?: Prisma.TasteItemUncheckedUpdateManyWithoutUserNestedInput
   subjectMatches?: Prisma.MatchResultUncheckedUpdateManyWithoutSubjectNestedInput
   candidateMatches?: Prisma.MatchResultUncheckedUpdateManyWithoutCandidateNestedInput
+  conversationsAsOne?: Prisma.ConversationUncheckedUpdateManyWithoutParticipantOneNestedInput
+  conversationsAsTwo?: Prisma.ConversationUncheckedUpdateManyWithoutParticipantTwoNestedInput
+  sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
 }
 
 export type UserCreateWithoutSubjectMatchesInput = {
@@ -1351,6 +1846,9 @@ export type UserCreateWithoutSubjectMatchesInput = {
   tasteItems?: Prisma.TasteItemCreateNestedManyWithoutUserInput
   initiatedRuns?: Prisma.MatchRunCreateNestedManyWithoutSubjectInput
   candidateMatches?: Prisma.MatchResultCreateNestedManyWithoutCandidateInput
+  conversationsAsOne?: Prisma.ConversationCreateNestedManyWithoutParticipantOneInput
+  conversationsAsTwo?: Prisma.ConversationCreateNestedManyWithoutParticipantTwoInput
+  sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
 }
 
 export type UserUncheckedCreateWithoutSubjectMatchesInput = {
@@ -1374,6 +1872,9 @@ export type UserUncheckedCreateWithoutSubjectMatchesInput = {
   tasteItems?: Prisma.TasteItemUncheckedCreateNestedManyWithoutUserInput
   initiatedRuns?: Prisma.MatchRunUncheckedCreateNestedManyWithoutSubjectInput
   candidateMatches?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCandidateInput
+  conversationsAsOne?: Prisma.ConversationUncheckedCreateNestedManyWithoutParticipantOneInput
+  conversationsAsTwo?: Prisma.ConversationUncheckedCreateNestedManyWithoutParticipantTwoInput
+  sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
 }
 
 export type UserCreateOrConnectWithoutSubjectMatchesInput = {
@@ -1402,6 +1903,9 @@ export type UserCreateWithoutCandidateMatchesInput = {
   tasteItems?: Prisma.TasteItemCreateNestedManyWithoutUserInput
   initiatedRuns?: Prisma.MatchRunCreateNestedManyWithoutSubjectInput
   subjectMatches?: Prisma.MatchResultCreateNestedManyWithoutSubjectInput
+  conversationsAsOne?: Prisma.ConversationCreateNestedManyWithoutParticipantOneInput
+  conversationsAsTwo?: Prisma.ConversationCreateNestedManyWithoutParticipantTwoInput
+  sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
 }
 
 export type UserUncheckedCreateWithoutCandidateMatchesInput = {
@@ -1425,6 +1929,9 @@ export type UserUncheckedCreateWithoutCandidateMatchesInput = {
   tasteItems?: Prisma.TasteItemUncheckedCreateNestedManyWithoutUserInput
   initiatedRuns?: Prisma.MatchRunUncheckedCreateNestedManyWithoutSubjectInput
   subjectMatches?: Prisma.MatchResultUncheckedCreateNestedManyWithoutSubjectInput
+  conversationsAsOne?: Prisma.ConversationUncheckedCreateNestedManyWithoutParticipantOneInput
+  conversationsAsTwo?: Prisma.ConversationUncheckedCreateNestedManyWithoutParticipantTwoInput
+  sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
 }
 
 export type UserCreateOrConnectWithoutCandidateMatchesInput = {
@@ -1464,6 +1971,9 @@ export type UserUpdateWithoutSubjectMatchesInput = {
   tasteItems?: Prisma.TasteItemUpdateManyWithoutUserNestedInput
   initiatedRuns?: Prisma.MatchRunUpdateManyWithoutSubjectNestedInput
   candidateMatches?: Prisma.MatchResultUpdateManyWithoutCandidateNestedInput
+  conversationsAsOne?: Prisma.ConversationUpdateManyWithoutParticipantOneNestedInput
+  conversationsAsTwo?: Prisma.ConversationUpdateManyWithoutParticipantTwoNestedInput
+  sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSubjectMatchesInput = {
@@ -1487,6 +1997,9 @@ export type UserUncheckedUpdateWithoutSubjectMatchesInput = {
   tasteItems?: Prisma.TasteItemUncheckedUpdateManyWithoutUserNestedInput
   initiatedRuns?: Prisma.MatchRunUncheckedUpdateManyWithoutSubjectNestedInput
   candidateMatches?: Prisma.MatchResultUncheckedUpdateManyWithoutCandidateNestedInput
+  conversationsAsOne?: Prisma.ConversationUncheckedUpdateManyWithoutParticipantOneNestedInput
+  conversationsAsTwo?: Prisma.ConversationUncheckedUpdateManyWithoutParticipantTwoNestedInput
+  sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
 }
 
 export type UserUpsertWithoutCandidateMatchesInput = {
@@ -1521,6 +2034,9 @@ export type UserUpdateWithoutCandidateMatchesInput = {
   tasteItems?: Prisma.TasteItemUpdateManyWithoutUserNestedInput
   initiatedRuns?: Prisma.MatchRunUpdateManyWithoutSubjectNestedInput
   subjectMatches?: Prisma.MatchResultUpdateManyWithoutSubjectNestedInput
+  conversationsAsOne?: Prisma.ConversationUpdateManyWithoutParticipantOneNestedInput
+  conversationsAsTwo?: Prisma.ConversationUpdateManyWithoutParticipantTwoNestedInput
+  sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCandidateMatchesInput = {
@@ -1544,6 +2060,9 @@ export type UserUncheckedUpdateWithoutCandidateMatchesInput = {
   tasteItems?: Prisma.TasteItemUncheckedUpdateManyWithoutUserNestedInput
   initiatedRuns?: Prisma.MatchRunUncheckedUpdateManyWithoutSubjectNestedInput
   subjectMatches?: Prisma.MatchResultUncheckedUpdateManyWithoutSubjectNestedInput
+  conversationsAsOne?: Prisma.ConversationUncheckedUpdateManyWithoutParticipantOneNestedInput
+  conversationsAsTwo?: Prisma.ConversationUncheckedUpdateManyWithoutParticipantTwoNestedInput
+  sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
 }
 
 
@@ -1558,6 +2077,9 @@ export type UserCountOutputType = {
   initiatedRuns: number
   subjectMatches: number
   candidateMatches: number
+  conversationsAsOne: number
+  conversationsAsTwo: number
+  sentMessages: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1567,6 +2089,9 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   initiatedRuns?: boolean | UserCountOutputTypeCountInitiatedRunsArgs
   subjectMatches?: boolean | UserCountOutputTypeCountSubjectMatchesArgs
   candidateMatches?: boolean | UserCountOutputTypeCountCandidateMatchesArgs
+  conversationsAsOne?: boolean | UserCountOutputTypeCountConversationsAsOneArgs
+  conversationsAsTwo?: boolean | UserCountOutputTypeCountConversationsAsTwoArgs
+  sentMessages?: boolean | UserCountOutputTypeCountSentMessagesArgs
 }
 
 /**
@@ -1621,6 +2146,27 @@ export type UserCountOutputTypeCountCandidateMatchesArgs<ExtArgs extends runtime
   where?: Prisma.MatchResultWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountConversationsAsOneArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ConversationWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountConversationsAsTwoArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ConversationWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountSentMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MessageWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1644,6 +2190,9 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   initiatedRuns?: boolean | Prisma.User$initiatedRunsArgs<ExtArgs>
   subjectMatches?: boolean | Prisma.User$subjectMatchesArgs<ExtArgs>
   candidateMatches?: boolean | Prisma.User$candidateMatchesArgs<ExtArgs>
+  conversationsAsOne?: boolean | Prisma.User$conversationsAsOneArgs<ExtArgs>
+  conversationsAsTwo?: boolean | Prisma.User$conversationsAsTwoArgs<ExtArgs>
+  sentMessages?: boolean | Prisma.User$sentMessagesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1705,6 +2254,9 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   initiatedRuns?: boolean | Prisma.User$initiatedRunsArgs<ExtArgs>
   subjectMatches?: boolean | Prisma.User$subjectMatchesArgs<ExtArgs>
   candidateMatches?: boolean | Prisma.User$candidateMatchesArgs<ExtArgs>
+  conversationsAsOne?: boolean | Prisma.User$conversationsAsOneArgs<ExtArgs>
+  conversationsAsTwo?: boolean | Prisma.User$conversationsAsTwoArgs<ExtArgs>
+  sentMessages?: boolean | Prisma.User$sentMessagesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1721,6 +2273,9 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     initiatedRuns: Prisma.$MatchRunPayload<ExtArgs>[]
     subjectMatches: Prisma.$MatchResultPayload<ExtArgs>[]
     candidateMatches: Prisma.$MatchResultPayload<ExtArgs>[]
+    conversationsAsOne: Prisma.$ConversationPayload<ExtArgs>[]
+    conversationsAsTwo: Prisma.$ConversationPayload<ExtArgs>[]
+    sentMessages: Prisma.$MessagePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2138,6 +2693,9 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   initiatedRuns<T extends Prisma.User$initiatedRunsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$initiatedRunsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MatchRunPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   subjectMatches<T extends Prisma.User$subjectMatchesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$subjectMatchesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MatchResultPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   candidateMatches<T extends Prisma.User$candidateMatchesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$candidateMatchesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MatchResultPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  conversationsAsOne<T extends Prisma.User$conversationsAsOneArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$conversationsAsOneArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  conversationsAsTwo<T extends Prisma.User$conversationsAsTwoArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$conversationsAsTwoArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  sentMessages<T extends Prisma.User$sentMessagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sentMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2752,6 +3310,78 @@ export type User$candidateMatchesArgs<ExtArgs extends runtime.Types.Extensions.I
   take?: number
   skip?: number
   distinct?: Prisma.MatchResultScalarFieldEnum | Prisma.MatchResultScalarFieldEnum[]
+}
+
+/**
+ * User.conversationsAsOne
+ */
+export type User$conversationsAsOneArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Conversation
+   */
+  select?: Prisma.ConversationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Conversation
+   */
+  omit?: Prisma.ConversationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ConversationInclude<ExtArgs> | null
+  where?: Prisma.ConversationWhereInput
+  orderBy?: Prisma.ConversationOrderByWithRelationInput | Prisma.ConversationOrderByWithRelationInput[]
+  cursor?: Prisma.ConversationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ConversationScalarFieldEnum | Prisma.ConversationScalarFieldEnum[]
+}
+
+/**
+ * User.conversationsAsTwo
+ */
+export type User$conversationsAsTwoArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Conversation
+   */
+  select?: Prisma.ConversationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Conversation
+   */
+  omit?: Prisma.ConversationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ConversationInclude<ExtArgs> | null
+  where?: Prisma.ConversationWhereInput
+  orderBy?: Prisma.ConversationOrderByWithRelationInput | Prisma.ConversationOrderByWithRelationInput[]
+  cursor?: Prisma.ConversationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ConversationScalarFieldEnum | Prisma.ConversationScalarFieldEnum[]
+}
+
+/**
+ * User.sentMessages
+ */
+export type User$sentMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Message
+   */
+  select?: Prisma.MessageSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Message
+   */
+  omit?: Prisma.MessageOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MessageInclude<ExtArgs> | null
+  where?: Prisma.MessageWhereInput
+  orderBy?: Prisma.MessageOrderByWithRelationInput | Prisma.MessageOrderByWithRelationInput[]
+  cursor?: Prisma.MessageWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MessageScalarFieldEnum | Prisma.MessageScalarFieldEnum[]
 }
 
 /**

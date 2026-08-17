@@ -49,6 +49,16 @@ export class AdminService {
     });
   }
 
+  async clearMessages() {
+    return this.prisma.$transaction(async (tx) => {
+      // Lock/reset conversations first so a concurrent sender either finishes
+      // before the delete or updates lastMessageAt after this transaction.
+      await tx.conversation.updateMany({ data: { lastMessageAt: null } });
+      const deleted = await tx.message.deleteMany();
+      return { deletedMessages: deleted.count };
+    });
+  }
+
   async uploadQuestions(testDefinitionId: string, dto: UploadQuestionsDto) {
     const definition = await this.prisma.testDefinition.findUnique({
       where: { id: testDefinitionId },
