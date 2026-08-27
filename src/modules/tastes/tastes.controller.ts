@@ -8,7 +8,8 @@ import {
   Query,
 } from "@nestjs/common";
 import { CatalogQueryDto } from "./dto/catalog-query.dto";
-import { UpdateTastesDto } from "./dto/update-tastes.dto";
+import { UpdateMusicTastesDto } from "./dto/update-music-tastes.dto";
+import { UpdateMovieTastesDto } from "./dto/update-movie-tastes.dto";
 import { TastesService } from "./tastes.service";
 
 @Controller()
@@ -34,10 +35,17 @@ export class TastesController {
     return this.tastes.getUserTastes(userId);
   }
 
-  @Put("tastes/:userId") updateUserTastes(
-    @Param("userId", ParseUUIDPipe) userId: string,
-    @Body() dto: UpdateTastesDto,
+  @Put("users/:id/music-tastes") updateMusicTastes(
+    @Param("id", ParseUUIDPipe) userId: string,
+    @Body() dto: UpdateMusicTastesDto,
   ) {
-    return this.tastes.updateUserTastes(userId, dto);
+    return this.tastes.updateMusicTastes(userId, dto);
+  }
+
+  @Put("users/:id/movie-tastes") updateMovieTastes(
+    @Param("id", ParseUUIDPipe) userId: string,
+    @Body() dto: UpdateMovieTastesDto,
+  ) {
+    return this.tastes.updateMovieTastes(userId, dto);
   }
 }

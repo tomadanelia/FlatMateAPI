@@ -1,7 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import { PrismaService } from "../../prisma/prisma.service";
 import { CatalogQueryDto } from "./dto/catalog-query.dto";
-import { UpdateTastesDto } from "./dto/update-tastes.dto";
+import { UpdateMusicTastesDto } from "./dto/update-music-tastes.dto";
+import { UpdateMovieTastesDto } from "./dto/update-movie-tastes.dto";
 
 const genreSelect = { id: true, name: true } as const;
 
@@ -69,12 +70,10 @@ export class TastesService {
     });
   }
 
-  async updateUserTastes(userId: string, dto: UpdateTastesDto) {
+  async updateMusicTastes(userId: string, dto: UpdateMusicTastesDto) {
     await this.prisma.$transaction(async (tx) => {
       await tx.userMusicGenre.deleteMany({ where: { userId } });
       await tx.userArtist.deleteMany({ where: { userId } });
-      await tx.userMovieGenre.deleteMany({ where: { userId } });
-      await tx.userMovie.deleteMany({ where: { userId } });
       if (dto.musicGenreIds.length)
         await tx.userMusicGenre.createMany({
           data: dto.musicGenreIds.map((musicGenreId) => ({
@@ -86,6 +85,14 @@ export class TastesService {
         await tx.userArtist.createMany({
           data: dto.artistIds.map((artistId) => ({ userId, artistId })),
         });
+    });
+    return this.getUserTastes(userId);
+  }
+
+  async updateMovieTastes(userId: string, dto: UpdateMovieTastesDto) {
+    await this.prisma.$transaction(async (tx) => {
+      await tx.userMovieGenre.deleteMany({ where: { userId } });
+      await tx.userMovie.deleteMany({ where: { userId } });
       if (dto.movieGenreIds.length)
         await tx.userMovieGenre.createMany({
           data: dto.movieGenreIds.map((movieGenreId) => ({
