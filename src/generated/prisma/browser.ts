@@ -78,6 +78,56 @@ export type ExternalIntegration = Prisma.ExternalIntegrationModel
  */
 export type TasteItem = Prisma.TasteItemModel
 /**
+ * Model MusicGenre
+ * 
+ */
+export type MusicGenre = Prisma.MusicGenreModel
+/**
+ * Model Artist
+ * 
+ */
+export type Artist = Prisma.ArtistModel
+/**
+ * Model ArtistGenre
+ * 
+ */
+export type ArtistGenre = Prisma.ArtistGenreModel
+/**
+ * Model UserMusicGenre
+ * 
+ */
+export type UserMusicGenre = Prisma.UserMusicGenreModel
+/**
+ * Model UserArtist
+ * 
+ */
+export type UserArtist = Prisma.UserArtistModel
+/**
+ * Model MovieGenre
+ * 
+ */
+export type MovieGenre = Prisma.MovieGenreModel
+/**
+ * Model Movie
+ * 
+ */
+export type Movie = Prisma.MovieModel
+/**
+ * Model MovieGenreLink
+ * 
+ */
+export type MovieGenreLink = Prisma.MovieGenreLinkModel
+/**
+ * Model UserMovieGenre
+ * 
+ */
+export type UserMovieGenre = Prisma.UserMovieGenreModel
+/**
+ * Model UserMovie
+ * 
+ */
+export type UserMovie = Prisma.UserMovieModel
+/**
  * Model AlgorithmConfig
  * 
  */

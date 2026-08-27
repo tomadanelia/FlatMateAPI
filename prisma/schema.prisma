@@ -82,6 +82,10 @@ model User {
   testAttempts       TestAttempt[]
   integrations       ExternalIntegration[]
   tasteItems         TasteItem[]
+  musicGenres        UserMusicGenre[]
+  favoriteArtists    UserArtist[]
+  movieGenres        UserMovieGenre[]
+  favoriteMovies     UserMovie[]
   initiatedRuns      MatchRun[]            @relation("RunSubject")
   subjectMatches     MatchResult[]         @relation("MatchSubject")
   candidateMatches   MatchResult[]         @relation("MatchCandidate")
@@ -265,6 +269,104 @@ model TasteItem {
   @@unique([userId, provider, externalId, kind])
   @@index([userId, provider])
   @@map("taste_items")
+}
+
+model MusicGenre {
+  id        String          @id @default(uuid()) @db.Uuid
+  name      String          @unique
+  artists   ArtistGenre[]
+  users     UserMusicGenre[]
+
+  @@map("music_genres")
+}
+
+model Artist {
+  id        String        @id @default(uuid()) @db.Uuid
+  name      String        @unique
+  genres    ArtistGenre[]
+  users     UserArtist[]
+
+  @@index([name])
+  @@map("artists")
+}
+
+model ArtistGenre {
+  artistId     String     @map("artist_id") @db.Uuid
+  musicGenreId String     @map("music_genre_id") @db.Uuid
+  artist       Artist     @relation(fields: [artistId], references: [id], onDelete: Cascade)
+  musicGenre   MusicGenre @relation(fields: [musicGenreId], references: [id], onDelete: Cascade)
+
+  @@id([artistId, musicGenreId])
+  @@map("artist_genres")
+}
+
+model UserMusicGenre {
+  userId       String     @map("user_id") @db.Uuid
+  musicGenreId String     @map("music_genre_id") @db.Uuid
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  musicGenre   MusicGenre @relation(fields: [musicGenreId], references: [id], onDelete: Cascade)
+
+  @@id([userId, musicGenreId])
+  @@map("user_music_genres")
+}
+
+model UserArtist {
+  userId   String @map("user_id") @db.Uuid
+  artistId String @map("artist_id") @db.Uuid
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  artist   Artist @relation(fields: [artistId], references: [id], onDelete: Cascade)
+
+  @@id([userId, artistId])
+  @@map("user_artists")
+}
+
+model MovieGenre {
+  id      String           @id @default(uuid()) @db.Uuid
+  name    String           @unique
+  movies  MovieGenreLink[]
+  users   UserMovieGenre[]
+
+  @@map("movie_genres")
+}
+
+model Movie {
+  id      String           @id @default(uuid()) @db.Uuid
+  title   String           @unique
+  genres  MovieGenreLink[]
+  users   UserMovie[]
+
+  @@index([title])
+  @@map("movies")
+}
+
+model MovieGenreLink {
+  movieId      String     @map("movie_id") @db.Uuid
+  movieGenreId String     @map("movie_genre_id") @db.Uuid
+  movie        Movie      @relation(fields: [movieId], references: [id], onDelete: Cascade)
+  movieGenre   MovieGenre @relation(fields: [movieGenreId], references: [id], onDelete: Cascade)
+
+  @@id([movieId, movieGenreId])
+  @@map("movie_genres_link")
+}
+
+model UserMovieGenre {
+  userId       String     @map("user_id") @db.Uuid
+  movieGenreId String     @map("movie_genre_id") @db.Uuid
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  movieGenre   MovieGenre @relation(fields: [movieGenreId], references: [id], onDelete: Cascade)
+
+  @@id([userId, movieGenreId])
+  @@map("user_movie_genres")
+}
+
+model UserMovie {
+  userId  String @map("user_id") @db.Uuid
+  movieId String @map("movie_id") @db.Uuid
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  movie   Movie  @relation(fields: [movieId], references: [id], onDelete: Cascade)
+
+  @@id([userId, movieId])
+  @@map("user_movies")
 }
 
 model AlgorithmConfig {

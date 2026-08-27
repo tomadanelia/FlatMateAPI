@@ -63,6 +63,16 @@ export const ModelName = {
   TraitScore: 'TraitScore',
   ExternalIntegration: 'ExternalIntegration',
   TasteItem: 'TasteItem',
+  MusicGenre: 'MusicGenre',
+  Artist: 'Artist',
+  ArtistGenre: 'ArtistGenre',
+  UserMusicGenre: 'UserMusicGenre',
+  UserArtist: 'UserArtist',
+  MovieGenre: 'MovieGenre',
+  Movie: 'Movie',
+  MovieGenreLink: 'MovieGenreLink',
+  UserMovieGenre: 'UserMovieGenre',
+  UserMovie: 'UserMovie',
   AlgorithmConfig: 'AlgorithmConfig',
   MatchRun: 'MatchRun',
   MatchResult: 'MatchResult',
@@ -253,6 +263,86 @@ export const TasteItemScalarFieldEnum = {
 } as const
 
 export type TasteItemScalarFieldEnum = (typeof TasteItemScalarFieldEnum)[keyof typeof TasteItemScalarFieldEnum]
+
+
+export const MusicGenreScalarFieldEnum = {
+  id: 'id',
+  name: 'name'
+} as const
+
+export type MusicGenreScalarFieldEnum = (typeof MusicGenreScalarFieldEnum)[keyof typeof MusicGenreScalarFieldEnum]
+
+
+export const ArtistScalarFieldEnum = {
+  id: 'id',
+  name: 'name'
+} as const
+
+export type ArtistScalarFieldEnum = (typeof ArtistScalarFieldEnum)[keyof typeof ArtistScalarFieldEnum]
+
+
+export const ArtistGenreScalarFieldEnum = {
+  artistId: 'artistId',
+  musicGenreId: 'musicGenreId'
+} as const
+
+export type ArtistGenreScalarFieldEnum = (typeof ArtistGenreScalarFieldEnum)[keyof typeof ArtistGenreScalarFieldEnum]
+
+
+export const UserMusicGenreScalarFieldEnum = {
+  userId: 'userId',
+  musicGenreId: 'musicGenreId'
+} as const
+
+export type UserMusicGenreScalarFieldEnum = (typeof UserMusicGenreScalarFieldEnum)[keyof typeof UserMusicGenreScalarFieldEnum]
+
+
+export const UserArtistScalarFieldEnum = {
+  userId: 'userId',
+  artistId: 'artistId'
+} as const
+
+export type UserArtistScalarFieldEnum = (typeof UserArtistScalarFieldEnum)[keyof typeof UserArtistScalarFieldEnum]
+
+
+export const MovieGenreScalarFieldEnum = {
+  id: 'id',
+  name: 'name'
+} as const
+
+export type MovieGenreScalarFieldEnum = (typeof MovieGenreScalarFieldEnum)[keyof typeof MovieGenreScalarFieldEnum]
+
+
+export const MovieScalarFieldEnum = {
+  id: 'id',
+  title: 'title'
+} as const
+
+export type MovieScalarFieldEnum = (typeof MovieScalarFieldEnum)[keyof typeof MovieScalarFieldEnum]
+
+
+export const MovieGenreLinkScalarFieldEnum = {
+  movieId: 'movieId',
+  movieGenreId: 'movieGenreId'
+} as const
+
+export type MovieGenreLinkScalarFieldEnum = (typeof MovieGenreLinkScalarFieldEnum)[keyof typeof MovieGenreLinkScalarFieldEnum]
+
+
+export const UserMovieGenreScalarFieldEnum = {
+  userId: 'userId',
+  movieGenreId: 'movieGenreId'
+} as const
+
+export type UserMovieGenreScalarFieldEnum = (typeof UserMovieGenreScalarFieldEnum)[keyof typeof UserMovieGenreScalarFieldEnum]
+
+
+export const UserMovieScalarFieldEnum = {
+  userId: 'userId',
+  movieId: 'movieId'
+} as const
+
+export type UserMovieScalarFieldEnum = (typeof UserMovieScalarFieldEnum)[keyof typeof UserMovieScalarFieldEnum]
 
 
 export const AlgorithmConfigScalarFieldEnum = {

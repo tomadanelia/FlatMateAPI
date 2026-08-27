@@ -409,6 +409,16 @@ export const ModelName = {
   TraitScore: 'TraitScore',
   ExternalIntegration: 'ExternalIntegration',
   TasteItem: 'TasteItem',
+  MusicGenre: 'MusicGenre',
+  Artist: 'Artist',
+  ArtistGenre: 'ArtistGenre',
+  UserMusicGenre: 'UserMusicGenre',
+  UserArtist: 'UserArtist',
+  MovieGenre: 'MovieGenre',
+  Movie: 'Movie',
+  MovieGenreLink: 'MovieGenreLink',
+  UserMovieGenre: 'UserMovieGenre',
+  UserMovie: 'UserMovie',
   AlgorithmConfig: 'AlgorithmConfig',
   MatchRun: 'MatchRun',
   MatchResult: 'MatchResult',
@@ -428,7 +438,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "conversation" | "message" | "housingPreference" | "lifestyleProfile" | "testDefinition" | "question" | "testAttempt" | "testResponse" | "traitScore" | "externalIntegration" | "tasteItem" | "algorithmConfig" | "matchRun" | "matchResult" | "matchAlgorithmScore"
+    modelProps: "user" | "conversation" | "message" | "housingPreference" | "lifestyleProfile" | "testDefinition" | "question" | "testAttempt" | "testResponse" | "traitScore" | "externalIntegration" | "tasteItem" | "musicGenre" | "artist" | "artistGenre" | "userMusicGenre" | "userArtist" | "movieGenre" | "movie" | "movieGenreLink" | "userMovieGenre" | "userMovie" | "algorithmConfig" | "matchRun" | "matchResult" | "matchAlgorithmScore"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1320,6 +1330,746 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    MusicGenre: {
+      payload: Prisma.$MusicGenrePayload<ExtArgs>
+      fields: Prisma.MusicGenreFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.MusicGenreFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MusicGenrePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.MusicGenreFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MusicGenrePayload>
+        }
+        findFirst: {
+          args: Prisma.MusicGenreFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MusicGenrePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.MusicGenreFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MusicGenrePayload>
+        }
+        findMany: {
+          args: Prisma.MusicGenreFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MusicGenrePayload>[]
+        }
+        create: {
+          args: Prisma.MusicGenreCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MusicGenrePayload>
+        }
+        createMany: {
+          args: Prisma.MusicGenreCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.MusicGenreCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MusicGenrePayload>[]
+        }
+        delete: {
+          args: Prisma.MusicGenreDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MusicGenrePayload>
+        }
+        update: {
+          args: Prisma.MusicGenreUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MusicGenrePayload>
+        }
+        deleteMany: {
+          args: Prisma.MusicGenreDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.MusicGenreUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.MusicGenreUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MusicGenrePayload>[]
+        }
+        upsert: {
+          args: Prisma.MusicGenreUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MusicGenrePayload>
+        }
+        aggregate: {
+          args: Prisma.MusicGenreAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMusicGenre>
+        }
+        groupBy: {
+          args: Prisma.MusicGenreGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MusicGenreGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.MusicGenreCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MusicGenreCountAggregateOutputType> | number
+        }
+      }
+    }
+    Artist: {
+      payload: Prisma.$ArtistPayload<ExtArgs>
+      fields: Prisma.ArtistFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ArtistFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ArtistPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ArtistFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ArtistPayload>
+        }
+        findFirst: {
+          args: Prisma.ArtistFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ArtistPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ArtistFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ArtistPayload>
+        }
+        findMany: {
+          args: Prisma.ArtistFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ArtistPayload>[]
+        }
+        create: {
+          args: Prisma.ArtistCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ArtistPayload>
+        }
+        createMany: {
+          args: Prisma.ArtistCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ArtistCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ArtistPayload>[]
+        }
+        delete: {
+          args: Prisma.ArtistDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ArtistPayload>
+        }
+        update: {
+          args: Prisma.ArtistUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ArtistPayload>
+        }
+        deleteMany: {
+          args: Prisma.ArtistDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ArtistUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ArtistUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ArtistPayload>[]
+        }
+        upsert: {
+          args: Prisma.ArtistUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ArtistPayload>
+        }
+        aggregate: {
+          args: Prisma.ArtistAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateArtist>
+        }
+        groupBy: {
+          args: Prisma.ArtistGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ArtistGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ArtistCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ArtistCountAggregateOutputType> | number
+        }
+      }
+    }
+    ArtistGenre: {
+      payload: Prisma.$ArtistGenrePayload<ExtArgs>
+      fields: Prisma.ArtistGenreFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ArtistGenreFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ArtistGenrePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ArtistGenreFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ArtistGenrePayload>
+        }
+        findFirst: {
+          args: Prisma.ArtistGenreFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ArtistGenrePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ArtistGenreFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ArtistGenrePayload>
+        }
+        findMany: {
+          args: Prisma.ArtistGenreFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ArtistGenrePayload>[]
+        }
+        create: {
+          args: Prisma.ArtistGenreCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ArtistGenrePayload>
+        }
+        createMany: {
+          args: Prisma.ArtistGenreCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ArtistGenreCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ArtistGenrePayload>[]
+        }
+        delete: {
+          args: Prisma.ArtistGenreDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ArtistGenrePayload>
+        }
+        update: {
+          args: Prisma.ArtistGenreUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ArtistGenrePayload>
+        }
+        deleteMany: {
+          args: Prisma.ArtistGenreDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ArtistGenreUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ArtistGenreUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ArtistGenrePayload>[]
+        }
+        upsert: {
+          args: Prisma.ArtistGenreUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ArtistGenrePayload>
+        }
+        aggregate: {
+          args: Prisma.ArtistGenreAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateArtistGenre>
+        }
+        groupBy: {
+          args: Prisma.ArtistGenreGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ArtistGenreGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ArtistGenreCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ArtistGenreCountAggregateOutputType> | number
+        }
+      }
+    }
+    UserMusicGenre: {
+      payload: Prisma.$UserMusicGenrePayload<ExtArgs>
+      fields: Prisma.UserMusicGenreFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.UserMusicGenreFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserMusicGenrePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.UserMusicGenreFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserMusicGenrePayload>
+        }
+        findFirst: {
+          args: Prisma.UserMusicGenreFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserMusicGenrePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.UserMusicGenreFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserMusicGenrePayload>
+        }
+        findMany: {
+          args: Prisma.UserMusicGenreFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserMusicGenrePayload>[]
+        }
+        create: {
+          args: Prisma.UserMusicGenreCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserMusicGenrePayload>
+        }
+        createMany: {
+          args: Prisma.UserMusicGenreCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.UserMusicGenreCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserMusicGenrePayload>[]
+        }
+        delete: {
+          args: Prisma.UserMusicGenreDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserMusicGenrePayload>
+        }
+        update: {
+          args: Prisma.UserMusicGenreUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserMusicGenrePayload>
+        }
+        deleteMany: {
+          args: Prisma.UserMusicGenreDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.UserMusicGenreUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.UserMusicGenreUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserMusicGenrePayload>[]
+        }
+        upsert: {
+          args: Prisma.UserMusicGenreUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserMusicGenrePayload>
+        }
+        aggregate: {
+          args: Prisma.UserMusicGenreAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUserMusicGenre>
+        }
+        groupBy: {
+          args: Prisma.UserMusicGenreGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserMusicGenreGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.UserMusicGenreCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserMusicGenreCountAggregateOutputType> | number
+        }
+      }
+    }
+    UserArtist: {
+      payload: Prisma.$UserArtistPayload<ExtArgs>
+      fields: Prisma.UserArtistFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.UserArtistFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserArtistPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.UserArtistFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserArtistPayload>
+        }
+        findFirst: {
+          args: Prisma.UserArtistFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserArtistPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.UserArtistFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserArtistPayload>
+        }
+        findMany: {
+          args: Prisma.UserArtistFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserArtistPayload>[]
+        }
+        create: {
+          args: Prisma.UserArtistCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserArtistPayload>
+        }
+        createMany: {
+          args: Prisma.UserArtistCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.UserArtistCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserArtistPayload>[]
+        }
+        delete: {
+          args: Prisma.UserArtistDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserArtistPayload>
+        }
+        update: {
+          args: Prisma.UserArtistUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserArtistPayload>
+        }
+        deleteMany: {
+          args: Prisma.UserArtistDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.UserArtistUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.UserArtistUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserArtistPayload>[]
+        }
+        upsert: {
+          args: Prisma.UserArtistUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserArtistPayload>
+        }
+        aggregate: {
+          args: Prisma.UserArtistAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUserArtist>
+        }
+        groupBy: {
+          args: Prisma.UserArtistGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserArtistGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.UserArtistCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserArtistCountAggregateOutputType> | number
+        }
+      }
+    }
+    MovieGenre: {
+      payload: Prisma.$MovieGenrePayload<ExtArgs>
+      fields: Prisma.MovieGenreFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.MovieGenreFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MovieGenrePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.MovieGenreFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MovieGenrePayload>
+        }
+        findFirst: {
+          args: Prisma.MovieGenreFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MovieGenrePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.MovieGenreFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MovieGenrePayload>
+        }
+        findMany: {
+          args: Prisma.MovieGenreFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MovieGenrePayload>[]
+        }
+        create: {
+          args: Prisma.MovieGenreCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MovieGenrePayload>
+        }
+        createMany: {
+          args: Prisma.MovieGenreCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.MovieGenreCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MovieGenrePayload>[]
+        }
+        delete: {
+          args: Prisma.MovieGenreDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MovieGenrePayload>
+        }
+        update: {
+          args: Prisma.MovieGenreUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MovieGenrePayload>
+        }
+        deleteMany: {
+          args: Prisma.MovieGenreDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.MovieGenreUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.MovieGenreUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MovieGenrePayload>[]
+        }
+        upsert: {
+          args: Prisma.MovieGenreUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MovieGenrePayload>
+        }
+        aggregate: {
+          args: Prisma.MovieGenreAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMovieGenre>
+        }
+        groupBy: {
+          args: Prisma.MovieGenreGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MovieGenreGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.MovieGenreCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MovieGenreCountAggregateOutputType> | number
+        }
+      }
+    }
+    Movie: {
+      payload: Prisma.$MoviePayload<ExtArgs>
+      fields: Prisma.MovieFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.MovieFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MoviePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.MovieFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MoviePayload>
+        }
+        findFirst: {
+          args: Prisma.MovieFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MoviePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.MovieFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MoviePayload>
+        }
+        findMany: {
+          args: Prisma.MovieFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MoviePayload>[]
+        }
+        create: {
+          args: Prisma.MovieCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MoviePayload>
+        }
+        createMany: {
+          args: Prisma.MovieCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.MovieCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MoviePayload>[]
+        }
+        delete: {
+          args: Prisma.MovieDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MoviePayload>
+        }
+        update: {
+          args: Prisma.MovieUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MoviePayload>
+        }
+        deleteMany: {
+          args: Prisma.MovieDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.MovieUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.MovieUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MoviePayload>[]
+        }
+        upsert: {
+          args: Prisma.MovieUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MoviePayload>
+        }
+        aggregate: {
+          args: Prisma.MovieAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMovie>
+        }
+        groupBy: {
+          args: Prisma.MovieGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MovieGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.MovieCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MovieCountAggregateOutputType> | number
+        }
+      }
+    }
+    MovieGenreLink: {
+      payload: Prisma.$MovieGenreLinkPayload<ExtArgs>
+      fields: Prisma.MovieGenreLinkFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.MovieGenreLinkFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MovieGenreLinkPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.MovieGenreLinkFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MovieGenreLinkPayload>
+        }
+        findFirst: {
+          args: Prisma.MovieGenreLinkFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MovieGenreLinkPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.MovieGenreLinkFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MovieGenreLinkPayload>
+        }
+        findMany: {
+          args: Prisma.MovieGenreLinkFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MovieGenreLinkPayload>[]
+        }
+        create: {
+          args: Prisma.MovieGenreLinkCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MovieGenreLinkPayload>
+        }
+        createMany: {
+          args: Prisma.MovieGenreLinkCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.MovieGenreLinkCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MovieGenreLinkPayload>[]
+        }
+        delete: {
+          args: Prisma.MovieGenreLinkDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MovieGenreLinkPayload>
+        }
+        update: {
+          args: Prisma.MovieGenreLinkUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MovieGenreLinkPayload>
+        }
+        deleteMany: {
+          args: Prisma.MovieGenreLinkDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.MovieGenreLinkUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.MovieGenreLinkUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MovieGenreLinkPayload>[]
+        }
+        upsert: {
+          args: Prisma.MovieGenreLinkUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MovieGenreLinkPayload>
+        }
+        aggregate: {
+          args: Prisma.MovieGenreLinkAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMovieGenreLink>
+        }
+        groupBy: {
+          args: Prisma.MovieGenreLinkGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MovieGenreLinkGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.MovieGenreLinkCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MovieGenreLinkCountAggregateOutputType> | number
+        }
+      }
+    }
+    UserMovieGenre: {
+      payload: Prisma.$UserMovieGenrePayload<ExtArgs>
+      fields: Prisma.UserMovieGenreFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.UserMovieGenreFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserMovieGenrePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.UserMovieGenreFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserMovieGenrePayload>
+        }
+        findFirst: {
+          args: Prisma.UserMovieGenreFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserMovieGenrePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.UserMovieGenreFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserMovieGenrePayload>
+        }
+        findMany: {
+          args: Prisma.UserMovieGenreFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserMovieGenrePayload>[]
+        }
+        create: {
+          args: Prisma.UserMovieGenreCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserMovieGenrePayload>
+        }
+        createMany: {
+          args: Prisma.UserMovieGenreCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.UserMovieGenreCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserMovieGenrePayload>[]
+        }
+        delete: {
+          args: Prisma.UserMovieGenreDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserMovieGenrePayload>
+        }
+        update: {
+          args: Prisma.UserMovieGenreUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserMovieGenrePayload>
+        }
+        deleteMany: {
+          args: Prisma.UserMovieGenreDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.UserMovieGenreUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.UserMovieGenreUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserMovieGenrePayload>[]
+        }
+        upsert: {
+          args: Prisma.UserMovieGenreUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserMovieGenrePayload>
+        }
+        aggregate: {
+          args: Prisma.UserMovieGenreAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUserMovieGenre>
+        }
+        groupBy: {
+          args: Prisma.UserMovieGenreGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserMovieGenreGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.UserMovieGenreCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserMovieGenreCountAggregateOutputType> | number
+        }
+      }
+    }
+    UserMovie: {
+      payload: Prisma.$UserMoviePayload<ExtArgs>
+      fields: Prisma.UserMovieFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.UserMovieFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserMoviePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.UserMovieFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserMoviePayload>
+        }
+        findFirst: {
+          args: Prisma.UserMovieFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserMoviePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.UserMovieFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserMoviePayload>
+        }
+        findMany: {
+          args: Prisma.UserMovieFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserMoviePayload>[]
+        }
+        create: {
+          args: Prisma.UserMovieCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserMoviePayload>
+        }
+        createMany: {
+          args: Prisma.UserMovieCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.UserMovieCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserMoviePayload>[]
+        }
+        delete: {
+          args: Prisma.UserMovieDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserMoviePayload>
+        }
+        update: {
+          args: Prisma.UserMovieUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserMoviePayload>
+        }
+        deleteMany: {
+          args: Prisma.UserMovieDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.UserMovieUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.UserMovieUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserMoviePayload>[]
+        }
+        upsert: {
+          args: Prisma.UserMovieUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserMoviePayload>
+        }
+        aggregate: {
+          args: Prisma.UserMovieAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUserMovie>
+        }
+        groupBy: {
+          args: Prisma.UserMovieGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserMovieGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.UserMovieCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserMovieCountAggregateOutputType> | number
+        }
+      }
+    }
     AlgorithmConfig: {
       payload: Prisma.$AlgorithmConfigPayload<ExtArgs>
       fields: Prisma.AlgorithmConfigFieldRefs
@@ -1825,6 +2575,86 @@ export const TasteItemScalarFieldEnum = {
 export type TasteItemScalarFieldEnum = (typeof TasteItemScalarFieldEnum)[keyof typeof TasteItemScalarFieldEnum]
 
 
+export const MusicGenreScalarFieldEnum = {
+  id: 'id',
+  name: 'name'
+} as const
+
+export type MusicGenreScalarFieldEnum = (typeof MusicGenreScalarFieldEnum)[keyof typeof MusicGenreScalarFieldEnum]
+
+
+export const ArtistScalarFieldEnum = {
+  id: 'id',
+  name: 'name'
+} as const
+
+export type ArtistScalarFieldEnum = (typeof ArtistScalarFieldEnum)[keyof typeof ArtistScalarFieldEnum]
+
+
+export const ArtistGenreScalarFieldEnum = {
+  artistId: 'artistId',
+  musicGenreId: 'musicGenreId'
+} as const
+
+export type ArtistGenreScalarFieldEnum = (typeof ArtistGenreScalarFieldEnum)[keyof typeof ArtistGenreScalarFieldEnum]
+
+
+export const UserMusicGenreScalarFieldEnum = {
+  userId: 'userId',
+  musicGenreId: 'musicGenreId'
+} as const
+
+export type UserMusicGenreScalarFieldEnum = (typeof UserMusicGenreScalarFieldEnum)[keyof typeof UserMusicGenreScalarFieldEnum]
+
+
+export const UserArtistScalarFieldEnum = {
+  userId: 'userId',
+  artistId: 'artistId'
+} as const
+
+export type UserArtistScalarFieldEnum = (typeof UserArtistScalarFieldEnum)[keyof typeof UserArtistScalarFieldEnum]
+
+
+export const MovieGenreScalarFieldEnum = {
+  id: 'id',
+  name: 'name'
+} as const
+
+export type MovieGenreScalarFieldEnum = (typeof MovieGenreScalarFieldEnum)[keyof typeof MovieGenreScalarFieldEnum]
+
+
+export const MovieScalarFieldEnum = {
+  id: 'id',
+  title: 'title'
+} as const
+
+export type MovieScalarFieldEnum = (typeof MovieScalarFieldEnum)[keyof typeof MovieScalarFieldEnum]
+
+
+export const MovieGenreLinkScalarFieldEnum = {
+  movieId: 'movieId',
+  movieGenreId: 'movieGenreId'
+} as const
+
+export type MovieGenreLinkScalarFieldEnum = (typeof MovieGenreLinkScalarFieldEnum)[keyof typeof MovieGenreLinkScalarFieldEnum]
+
+
+export const UserMovieGenreScalarFieldEnum = {
+  userId: 'userId',
+  movieGenreId: 'movieGenreId'
+} as const
+
+export type UserMovieGenreScalarFieldEnum = (typeof UserMovieGenreScalarFieldEnum)[keyof typeof UserMovieGenreScalarFieldEnum]
+
+
+export const UserMovieScalarFieldEnum = {
+  userId: 'userId',
+  movieId: 'movieId'
+} as const
+
+export type UserMovieScalarFieldEnum = (typeof UserMovieScalarFieldEnum)[keyof typeof UserMovieScalarFieldEnum]
+
+
 export const AlgorithmConfigScalarFieldEnum = {
   id: 'id',
   key: 'key',
@@ -2281,6 +3111,16 @@ export type GlobalOmitConfig = {
   traitScore?: Prisma.TraitScoreOmit
   externalIntegration?: Prisma.ExternalIntegrationOmit
   tasteItem?: Prisma.TasteItemOmit
+  musicGenre?: Prisma.MusicGenreOmit
+  artist?: Prisma.ArtistOmit
+  artistGenre?: Prisma.ArtistGenreOmit
+  userMusicGenre?: Prisma.UserMusicGenreOmit
+  userArtist?: Prisma.UserArtistOmit
+  movieGenre?: Prisma.MovieGenreOmit
+  movie?: Prisma.MovieOmit
+  movieGenreLink?: Prisma.MovieGenreLinkOmit
+  userMovieGenre?: Prisma.UserMovieGenreOmit
+  userMovie?: Prisma.UserMovieOmit
   algorithmConfig?: Prisma.AlgorithmConfigOmit
   matchRun?: Prisma.MatchRunOmit
   matchResult?: Prisma.MatchResultOmit

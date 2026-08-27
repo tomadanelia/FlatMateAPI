@@ -251,6 +251,10 @@ export type UserWhereInput = {
   testAttempts?: Prisma.TestAttemptListRelationFilter
   integrations?: Prisma.ExternalIntegrationListRelationFilter
   tasteItems?: Prisma.TasteItemListRelationFilter
+  musicGenres?: Prisma.UserMusicGenreListRelationFilter
+  favoriteArtists?: Prisma.UserArtistListRelationFilter
+  movieGenres?: Prisma.UserMovieGenreListRelationFilter
+  favoriteMovies?: Prisma.UserMovieListRelationFilter
   initiatedRuns?: Prisma.MatchRunListRelationFilter
   subjectMatches?: Prisma.MatchResultListRelationFilter
   candidateMatches?: Prisma.MatchResultListRelationFilter
@@ -278,6 +282,10 @@ export type UserOrderByWithRelationInput = {
   testAttempts?: Prisma.TestAttemptOrderByRelationAggregateInput
   integrations?: Prisma.ExternalIntegrationOrderByRelationAggregateInput
   tasteItems?: Prisma.TasteItemOrderByRelationAggregateInput
+  musicGenres?: Prisma.UserMusicGenreOrderByRelationAggregateInput
+  favoriteArtists?: Prisma.UserArtistOrderByRelationAggregateInput
+  movieGenres?: Prisma.UserMovieGenreOrderByRelationAggregateInput
+  favoriteMovies?: Prisma.UserMovieOrderByRelationAggregateInput
   initiatedRuns?: Prisma.MatchRunOrderByRelationAggregateInput
   subjectMatches?: Prisma.MatchResultOrderByRelationAggregateInput
   candidateMatches?: Prisma.MatchResultOrderByRelationAggregateInput
@@ -308,6 +316,10 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   testAttempts?: Prisma.TestAttemptListRelationFilter
   integrations?: Prisma.ExternalIntegrationListRelationFilter
   tasteItems?: Prisma.TasteItemListRelationFilter
+  musicGenres?: Prisma.UserMusicGenreListRelationFilter
+  favoriteArtists?: Prisma.UserArtistListRelationFilter
+  movieGenres?: Prisma.UserMovieGenreListRelationFilter
+  favoriteMovies?: Prisma.UserMovieListRelationFilter
   initiatedRuns?: Prisma.MatchRunListRelationFilter
   subjectMatches?: Prisma.MatchResultListRelationFilter
   candidateMatches?: Prisma.MatchResultListRelationFilter
@@ -373,6 +385,10 @@ export type UserCreateInput = {
   testAttempts?: Prisma.TestAttemptCreateNestedManyWithoutUserInput
   integrations?: Prisma.ExternalIntegrationCreateNestedManyWithoutUserInput
   tasteItems?: Prisma.TasteItemCreateNestedManyWithoutUserInput
+  musicGenres?: Prisma.UserMusicGenreCreateNestedManyWithoutUserInput
+  favoriteArtists?: Prisma.UserArtistCreateNestedManyWithoutUserInput
+  movieGenres?: Prisma.UserMovieGenreCreateNestedManyWithoutUserInput
+  favoriteMovies?: Prisma.UserMovieCreateNestedManyWithoutUserInput
   initiatedRuns?: Prisma.MatchRunCreateNestedManyWithoutSubjectInput
   subjectMatches?: Prisma.MatchResultCreateNestedManyWithoutSubjectInput
   candidateMatches?: Prisma.MatchResultCreateNestedManyWithoutCandidateInput
@@ -400,6 +416,10 @@ export type UserUncheckedCreateInput = {
   testAttempts?: Prisma.TestAttemptUncheckedCreateNestedManyWithoutUserInput
   integrations?: Prisma.ExternalIntegrationUncheckedCreateNestedManyWithoutUserInput
   tasteItems?: Prisma.TasteItemUncheckedCreateNestedManyWithoutUserInput
+  musicGenres?: Prisma.UserMusicGenreUncheckedCreateNestedManyWithoutUserInput
+  favoriteArtists?: Prisma.UserArtistUncheckedCreateNestedManyWithoutUserInput
+  movieGenres?: Prisma.UserMovieGenreUncheckedCreateNestedManyWithoutUserInput
+  favoriteMovies?: Prisma.UserMovieUncheckedCreateNestedManyWithoutUserInput
   initiatedRuns?: Prisma.MatchRunUncheckedCreateNestedManyWithoutSubjectInput
   subjectMatches?: Prisma.MatchResultUncheckedCreateNestedManyWithoutSubjectInput
   candidateMatches?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCandidateInput
@@ -427,6 +447,10 @@ export type UserUpdateInput = {
   testAttempts?: Prisma.TestAttemptUpdateManyWithoutUserNestedInput
   integrations?: Prisma.ExternalIntegrationUpdateManyWithoutUserNestedInput
   tasteItems?: Prisma.TasteItemUpdateManyWithoutUserNestedInput
+  musicGenres?: Prisma.UserMusicGenreUpdateManyWithoutUserNestedInput
+  favoriteArtists?: Prisma.UserArtistUpdateManyWithoutUserNestedInput
+  movieGenres?: Prisma.UserMovieGenreUpdateManyWithoutUserNestedInput
+  favoriteMovies?: Prisma.UserMovieUpdateManyWithoutUserNestedInput
   initiatedRuns?: Prisma.MatchRunUpdateManyWithoutSubjectNestedInput
   subjectMatches?: Prisma.MatchResultUpdateManyWithoutSubjectNestedInput
   candidateMatches?: Prisma.MatchResultUpdateManyWithoutCandidateNestedInput
@@ -454,6 +478,10 @@ export type UserUncheckedUpdateInput = {
   testAttempts?: Prisma.TestAttemptUncheckedUpdateManyWithoutUserNestedInput
   integrations?: Prisma.ExternalIntegrationUncheckedUpdateManyWithoutUserNestedInput
   tasteItems?: Prisma.TasteItemUncheckedUpdateManyWithoutUserNestedInput
+  musicGenres?: Prisma.UserMusicGenreUncheckedUpdateManyWithoutUserNestedInput
+  favoriteArtists?: Prisma.UserArtistUncheckedUpdateManyWithoutUserNestedInput
+  movieGenres?: Prisma.UserMovieGenreUncheckedUpdateManyWithoutUserNestedInput
+  favoriteMovies?: Prisma.UserMovieUncheckedUpdateManyWithoutUserNestedInput
   initiatedRuns?: Prisma.MatchRunUncheckedUpdateManyWithoutSubjectNestedInput
   subjectMatches?: Prisma.MatchResultUncheckedUpdateManyWithoutSubjectNestedInput
   candidateMatches?: Prisma.MatchResultUncheckedUpdateManyWithoutCandidateNestedInput
@@ -703,6 +731,62 @@ export type UserUpdateOneRequiredWithoutTasteItemsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutTasteItemsInput, Prisma.UserUpdateWithoutTasteItemsInput>, Prisma.UserUncheckedUpdateWithoutTasteItemsInput>
 }
 
+export type UserCreateNestedOneWithoutMusicGenresInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutMusicGenresInput, Prisma.UserUncheckedCreateWithoutMusicGenresInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutMusicGenresInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutMusicGenresNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutMusicGenresInput, Prisma.UserUncheckedCreateWithoutMusicGenresInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutMusicGenresInput
+  upsert?: Prisma.UserUpsertWithoutMusicGenresInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutMusicGenresInput, Prisma.UserUpdateWithoutMusicGenresInput>, Prisma.UserUncheckedUpdateWithoutMusicGenresInput>
+}
+
+export type UserCreateNestedOneWithoutFavoriteArtistsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutFavoriteArtistsInput, Prisma.UserUncheckedCreateWithoutFavoriteArtistsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFavoriteArtistsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutFavoriteArtistsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutFavoriteArtistsInput, Prisma.UserUncheckedCreateWithoutFavoriteArtistsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFavoriteArtistsInput
+  upsert?: Prisma.UserUpsertWithoutFavoriteArtistsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutFavoriteArtistsInput, Prisma.UserUpdateWithoutFavoriteArtistsInput>, Prisma.UserUncheckedUpdateWithoutFavoriteArtistsInput>
+}
+
+export type UserCreateNestedOneWithoutMovieGenresInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutMovieGenresInput, Prisma.UserUncheckedCreateWithoutMovieGenresInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutMovieGenresInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutMovieGenresNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutMovieGenresInput, Prisma.UserUncheckedCreateWithoutMovieGenresInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutMovieGenresInput
+  upsert?: Prisma.UserUpsertWithoutMovieGenresInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutMovieGenresInput, Prisma.UserUpdateWithoutMovieGenresInput>, Prisma.UserUncheckedUpdateWithoutMovieGenresInput>
+}
+
+export type UserCreateNestedOneWithoutFavoriteMoviesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutFavoriteMoviesInput, Prisma.UserUncheckedCreateWithoutFavoriteMoviesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFavoriteMoviesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutFavoriteMoviesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutFavoriteMoviesInput, Prisma.UserUncheckedCreateWithoutFavoriteMoviesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFavoriteMoviesInput
+  upsert?: Prisma.UserUpsertWithoutFavoriteMoviesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutFavoriteMoviesInput, Prisma.UserUpdateWithoutFavoriteMoviesInput>, Prisma.UserUncheckedUpdateWithoutFavoriteMoviesInput>
+}
+
 export type UserCreateNestedOneWithoutInitiatedRunsInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutInitiatedRunsInput, Prisma.UserUncheckedCreateWithoutInitiatedRunsInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutInitiatedRunsInput
@@ -764,6 +848,10 @@ export type UserCreateWithoutConversationsAsOneInput = {
   testAttempts?: Prisma.TestAttemptCreateNestedManyWithoutUserInput
   integrations?: Prisma.ExternalIntegrationCreateNestedManyWithoutUserInput
   tasteItems?: Prisma.TasteItemCreateNestedManyWithoutUserInput
+  musicGenres?: Prisma.UserMusicGenreCreateNestedManyWithoutUserInput
+  favoriteArtists?: Prisma.UserArtistCreateNestedManyWithoutUserInput
+  movieGenres?: Prisma.UserMovieGenreCreateNestedManyWithoutUserInput
+  favoriteMovies?: Prisma.UserMovieCreateNestedManyWithoutUserInput
   initiatedRuns?: Prisma.MatchRunCreateNestedManyWithoutSubjectInput
   subjectMatches?: Prisma.MatchResultCreateNestedManyWithoutSubjectInput
   candidateMatches?: Prisma.MatchResultCreateNestedManyWithoutCandidateInput
@@ -790,6 +878,10 @@ export type UserUncheckedCreateWithoutConversationsAsOneInput = {
   testAttempts?: Prisma.TestAttemptUncheckedCreateNestedManyWithoutUserInput
   integrations?: Prisma.ExternalIntegrationUncheckedCreateNestedManyWithoutUserInput
   tasteItems?: Prisma.TasteItemUncheckedCreateNestedManyWithoutUserInput
+  musicGenres?: Prisma.UserMusicGenreUncheckedCreateNestedManyWithoutUserInput
+  favoriteArtists?: Prisma.UserArtistUncheckedCreateNestedManyWithoutUserInput
+  movieGenres?: Prisma.UserMovieGenreUncheckedCreateNestedManyWithoutUserInput
+  favoriteMovies?: Prisma.UserMovieUncheckedCreateNestedManyWithoutUserInput
   initiatedRuns?: Prisma.MatchRunUncheckedCreateNestedManyWithoutSubjectInput
   subjectMatches?: Prisma.MatchResultUncheckedCreateNestedManyWithoutSubjectInput
   candidateMatches?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCandidateInput
@@ -821,6 +913,10 @@ export type UserCreateWithoutConversationsAsTwoInput = {
   testAttempts?: Prisma.TestAttemptCreateNestedManyWithoutUserInput
   integrations?: Prisma.ExternalIntegrationCreateNestedManyWithoutUserInput
   tasteItems?: Prisma.TasteItemCreateNestedManyWithoutUserInput
+  musicGenres?: Prisma.UserMusicGenreCreateNestedManyWithoutUserInput
+  favoriteArtists?: Prisma.UserArtistCreateNestedManyWithoutUserInput
+  movieGenres?: Prisma.UserMovieGenreCreateNestedManyWithoutUserInput
+  favoriteMovies?: Prisma.UserMovieCreateNestedManyWithoutUserInput
   initiatedRuns?: Prisma.MatchRunCreateNestedManyWithoutSubjectInput
   subjectMatches?: Prisma.MatchResultCreateNestedManyWithoutSubjectInput
   candidateMatches?: Prisma.MatchResultCreateNestedManyWithoutCandidateInput
@@ -847,6 +943,10 @@ export type UserUncheckedCreateWithoutConversationsAsTwoInput = {
   testAttempts?: Prisma.TestAttemptUncheckedCreateNestedManyWithoutUserInput
   integrations?: Prisma.ExternalIntegrationUncheckedCreateNestedManyWithoutUserInput
   tasteItems?: Prisma.TasteItemUncheckedCreateNestedManyWithoutUserInput
+  musicGenres?: Prisma.UserMusicGenreUncheckedCreateNestedManyWithoutUserInput
+  favoriteArtists?: Prisma.UserArtistUncheckedCreateNestedManyWithoutUserInput
+  movieGenres?: Prisma.UserMovieGenreUncheckedCreateNestedManyWithoutUserInput
+  favoriteMovies?: Prisma.UserMovieUncheckedCreateNestedManyWithoutUserInput
   initiatedRuns?: Prisma.MatchRunUncheckedCreateNestedManyWithoutSubjectInput
   subjectMatches?: Prisma.MatchResultUncheckedCreateNestedManyWithoutSubjectInput
   candidateMatches?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCandidateInput
@@ -889,6 +989,10 @@ export type UserUpdateWithoutConversationsAsOneInput = {
   testAttempts?: Prisma.TestAttemptUpdateManyWithoutUserNestedInput
   integrations?: Prisma.ExternalIntegrationUpdateManyWithoutUserNestedInput
   tasteItems?: Prisma.TasteItemUpdateManyWithoutUserNestedInput
+  musicGenres?: Prisma.UserMusicGenreUpdateManyWithoutUserNestedInput
+  favoriteArtists?: Prisma.UserArtistUpdateManyWithoutUserNestedInput
+  movieGenres?: Prisma.UserMovieGenreUpdateManyWithoutUserNestedInput
+  favoriteMovies?: Prisma.UserMovieUpdateManyWithoutUserNestedInput
   initiatedRuns?: Prisma.MatchRunUpdateManyWithoutSubjectNestedInput
   subjectMatches?: Prisma.MatchResultUpdateManyWithoutSubjectNestedInput
   candidateMatches?: Prisma.MatchResultUpdateManyWithoutCandidateNestedInput
@@ -915,6 +1019,10 @@ export type UserUncheckedUpdateWithoutConversationsAsOneInput = {
   testAttempts?: Prisma.TestAttemptUncheckedUpdateManyWithoutUserNestedInput
   integrations?: Prisma.ExternalIntegrationUncheckedUpdateManyWithoutUserNestedInput
   tasteItems?: Prisma.TasteItemUncheckedUpdateManyWithoutUserNestedInput
+  musicGenres?: Prisma.UserMusicGenreUncheckedUpdateManyWithoutUserNestedInput
+  favoriteArtists?: Prisma.UserArtistUncheckedUpdateManyWithoutUserNestedInput
+  movieGenres?: Prisma.UserMovieGenreUncheckedUpdateManyWithoutUserNestedInput
+  favoriteMovies?: Prisma.UserMovieUncheckedUpdateManyWithoutUserNestedInput
   initiatedRuns?: Prisma.MatchRunUncheckedUpdateManyWithoutSubjectNestedInput
   subjectMatches?: Prisma.MatchResultUncheckedUpdateManyWithoutSubjectNestedInput
   candidateMatches?: Prisma.MatchResultUncheckedUpdateManyWithoutCandidateNestedInput
@@ -952,6 +1060,10 @@ export type UserUpdateWithoutConversationsAsTwoInput = {
   testAttempts?: Prisma.TestAttemptUpdateManyWithoutUserNestedInput
   integrations?: Prisma.ExternalIntegrationUpdateManyWithoutUserNestedInput
   tasteItems?: Prisma.TasteItemUpdateManyWithoutUserNestedInput
+  musicGenres?: Prisma.UserMusicGenreUpdateManyWithoutUserNestedInput
+  favoriteArtists?: Prisma.UserArtistUpdateManyWithoutUserNestedInput
+  movieGenres?: Prisma.UserMovieGenreUpdateManyWithoutUserNestedInput
+  favoriteMovies?: Prisma.UserMovieUpdateManyWithoutUserNestedInput
   initiatedRuns?: Prisma.MatchRunUpdateManyWithoutSubjectNestedInput
   subjectMatches?: Prisma.MatchResultUpdateManyWithoutSubjectNestedInput
   candidateMatches?: Prisma.MatchResultUpdateManyWithoutCandidateNestedInput
@@ -978,6 +1090,10 @@ export type UserUncheckedUpdateWithoutConversationsAsTwoInput = {
   testAttempts?: Prisma.TestAttemptUncheckedUpdateManyWithoutUserNestedInput
   integrations?: Prisma.ExternalIntegrationUncheckedUpdateManyWithoutUserNestedInput
   tasteItems?: Prisma.TasteItemUncheckedUpdateManyWithoutUserNestedInput
+  musicGenres?: Prisma.UserMusicGenreUncheckedUpdateManyWithoutUserNestedInput
+  favoriteArtists?: Prisma.UserArtistUncheckedUpdateManyWithoutUserNestedInput
+  movieGenres?: Prisma.UserMovieGenreUncheckedUpdateManyWithoutUserNestedInput
+  favoriteMovies?: Prisma.UserMovieUncheckedUpdateManyWithoutUserNestedInput
   initiatedRuns?: Prisma.MatchRunUncheckedUpdateManyWithoutSubjectNestedInput
   subjectMatches?: Prisma.MatchResultUncheckedUpdateManyWithoutSubjectNestedInput
   candidateMatches?: Prisma.MatchResultUncheckedUpdateManyWithoutCandidateNestedInput
@@ -1004,6 +1120,10 @@ export type UserCreateWithoutSentMessagesInput = {
   testAttempts?: Prisma.TestAttemptCreateNestedManyWithoutUserInput
   integrations?: Prisma.ExternalIntegrationCreateNestedManyWithoutUserInput
   tasteItems?: Prisma.TasteItemCreateNestedManyWithoutUserInput
+  musicGenres?: Prisma.UserMusicGenreCreateNestedManyWithoutUserInput
+  favoriteArtists?: Prisma.UserArtistCreateNestedManyWithoutUserInput
+  movieGenres?: Prisma.UserMovieGenreCreateNestedManyWithoutUserInput
+  favoriteMovies?: Prisma.UserMovieCreateNestedManyWithoutUserInput
   initiatedRuns?: Prisma.MatchRunCreateNestedManyWithoutSubjectInput
   subjectMatches?: Prisma.MatchResultCreateNestedManyWithoutSubjectInput
   candidateMatches?: Prisma.MatchResultCreateNestedManyWithoutCandidateInput
@@ -1030,6 +1150,10 @@ export type UserUncheckedCreateWithoutSentMessagesInput = {
   testAttempts?: Prisma.TestAttemptUncheckedCreateNestedManyWithoutUserInput
   integrations?: Prisma.ExternalIntegrationUncheckedCreateNestedManyWithoutUserInput
   tasteItems?: Prisma.TasteItemUncheckedCreateNestedManyWithoutUserInput
+  musicGenres?: Prisma.UserMusicGenreUncheckedCreateNestedManyWithoutUserInput
+  favoriteArtists?: Prisma.UserArtistUncheckedCreateNestedManyWithoutUserInput
+  movieGenres?: Prisma.UserMovieGenreUncheckedCreateNestedManyWithoutUserInput
+  favoriteMovies?: Prisma.UserMovieUncheckedCreateNestedManyWithoutUserInput
   initiatedRuns?: Prisma.MatchRunUncheckedCreateNestedManyWithoutSubjectInput
   subjectMatches?: Prisma.MatchResultUncheckedCreateNestedManyWithoutSubjectInput
   candidateMatches?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCandidateInput
@@ -1072,6 +1196,10 @@ export type UserUpdateWithoutSentMessagesInput = {
   testAttempts?: Prisma.TestAttemptUpdateManyWithoutUserNestedInput
   integrations?: Prisma.ExternalIntegrationUpdateManyWithoutUserNestedInput
   tasteItems?: Prisma.TasteItemUpdateManyWithoutUserNestedInput
+  musicGenres?: Prisma.UserMusicGenreUpdateManyWithoutUserNestedInput
+  favoriteArtists?: Prisma.UserArtistUpdateManyWithoutUserNestedInput
+  movieGenres?: Prisma.UserMovieGenreUpdateManyWithoutUserNestedInput
+  favoriteMovies?: Prisma.UserMovieUpdateManyWithoutUserNestedInput
   initiatedRuns?: Prisma.MatchRunUpdateManyWithoutSubjectNestedInput
   subjectMatches?: Prisma.MatchResultUpdateManyWithoutSubjectNestedInput
   candidateMatches?: Prisma.MatchResultUpdateManyWithoutCandidateNestedInput
@@ -1098,6 +1226,10 @@ export type UserUncheckedUpdateWithoutSentMessagesInput = {
   testAttempts?: Prisma.TestAttemptUncheckedUpdateManyWithoutUserNestedInput
   integrations?: Prisma.ExternalIntegrationUncheckedUpdateManyWithoutUserNestedInput
   tasteItems?: Prisma.TasteItemUncheckedUpdateManyWithoutUserNestedInput
+  musicGenres?: Prisma.UserMusicGenreUncheckedUpdateManyWithoutUserNestedInput
+  favoriteArtists?: Prisma.UserArtistUncheckedUpdateManyWithoutUserNestedInput
+  movieGenres?: Prisma.UserMovieGenreUncheckedUpdateManyWithoutUserNestedInput
+  favoriteMovies?: Prisma.UserMovieUncheckedUpdateManyWithoutUserNestedInput
   initiatedRuns?: Prisma.MatchRunUncheckedUpdateManyWithoutSubjectNestedInput
   subjectMatches?: Prisma.MatchResultUncheckedUpdateManyWithoutSubjectNestedInput
   candidateMatches?: Prisma.MatchResultUncheckedUpdateManyWithoutCandidateNestedInput
@@ -1123,6 +1255,10 @@ export type UserCreateWithoutHousingPreferenceInput = {
   testAttempts?: Prisma.TestAttemptCreateNestedManyWithoutUserInput
   integrations?: Prisma.ExternalIntegrationCreateNestedManyWithoutUserInput
   tasteItems?: Prisma.TasteItemCreateNestedManyWithoutUserInput
+  musicGenres?: Prisma.UserMusicGenreCreateNestedManyWithoutUserInput
+  favoriteArtists?: Prisma.UserArtistCreateNestedManyWithoutUserInput
+  movieGenres?: Prisma.UserMovieGenreCreateNestedManyWithoutUserInput
+  favoriteMovies?: Prisma.UserMovieCreateNestedManyWithoutUserInput
   initiatedRuns?: Prisma.MatchRunCreateNestedManyWithoutSubjectInput
   subjectMatches?: Prisma.MatchResultCreateNestedManyWithoutSubjectInput
   candidateMatches?: Prisma.MatchResultCreateNestedManyWithoutCandidateInput
@@ -1149,6 +1285,10 @@ export type UserUncheckedCreateWithoutHousingPreferenceInput = {
   testAttempts?: Prisma.TestAttemptUncheckedCreateNestedManyWithoutUserInput
   integrations?: Prisma.ExternalIntegrationUncheckedCreateNestedManyWithoutUserInput
   tasteItems?: Prisma.TasteItemUncheckedCreateNestedManyWithoutUserInput
+  musicGenres?: Prisma.UserMusicGenreUncheckedCreateNestedManyWithoutUserInput
+  favoriteArtists?: Prisma.UserArtistUncheckedCreateNestedManyWithoutUserInput
+  movieGenres?: Prisma.UserMovieGenreUncheckedCreateNestedManyWithoutUserInput
+  favoriteMovies?: Prisma.UserMovieUncheckedCreateNestedManyWithoutUserInput
   initiatedRuns?: Prisma.MatchRunUncheckedCreateNestedManyWithoutSubjectInput
   subjectMatches?: Prisma.MatchResultUncheckedCreateNestedManyWithoutSubjectInput
   candidateMatches?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCandidateInput
@@ -1191,6 +1331,10 @@ export type UserUpdateWithoutHousingPreferenceInput = {
   testAttempts?: Prisma.TestAttemptUpdateManyWithoutUserNestedInput
   integrations?: Prisma.ExternalIntegrationUpdateManyWithoutUserNestedInput
   tasteItems?: Prisma.TasteItemUpdateManyWithoutUserNestedInput
+  musicGenres?: Prisma.UserMusicGenreUpdateManyWithoutUserNestedInput
+  favoriteArtists?: Prisma.UserArtistUpdateManyWithoutUserNestedInput
+  movieGenres?: Prisma.UserMovieGenreUpdateManyWithoutUserNestedInput
+  favoriteMovies?: Prisma.UserMovieUpdateManyWithoutUserNestedInput
   initiatedRuns?: Prisma.MatchRunUpdateManyWithoutSubjectNestedInput
   subjectMatches?: Prisma.MatchResultUpdateManyWithoutSubjectNestedInput
   candidateMatches?: Prisma.MatchResultUpdateManyWithoutCandidateNestedInput
@@ -1217,6 +1361,10 @@ export type UserUncheckedUpdateWithoutHousingPreferenceInput = {
   testAttempts?: Prisma.TestAttemptUncheckedUpdateManyWithoutUserNestedInput
   integrations?: Prisma.ExternalIntegrationUncheckedUpdateManyWithoutUserNestedInput
   tasteItems?: Prisma.TasteItemUncheckedUpdateManyWithoutUserNestedInput
+  musicGenres?: Prisma.UserMusicGenreUncheckedUpdateManyWithoutUserNestedInput
+  favoriteArtists?: Prisma.UserArtistUncheckedUpdateManyWithoutUserNestedInput
+  movieGenres?: Prisma.UserMovieGenreUncheckedUpdateManyWithoutUserNestedInput
+  favoriteMovies?: Prisma.UserMovieUncheckedUpdateManyWithoutUserNestedInput
   initiatedRuns?: Prisma.MatchRunUncheckedUpdateManyWithoutSubjectNestedInput
   subjectMatches?: Prisma.MatchResultUncheckedUpdateManyWithoutSubjectNestedInput
   candidateMatches?: Prisma.MatchResultUncheckedUpdateManyWithoutCandidateNestedInput
@@ -1243,6 +1391,10 @@ export type UserCreateWithoutLifestyleProfileInput = {
   testAttempts?: Prisma.TestAttemptCreateNestedManyWithoutUserInput
   integrations?: Prisma.ExternalIntegrationCreateNestedManyWithoutUserInput
   tasteItems?: Prisma.TasteItemCreateNestedManyWithoutUserInput
+  musicGenres?: Prisma.UserMusicGenreCreateNestedManyWithoutUserInput
+  favoriteArtists?: Prisma.UserArtistCreateNestedManyWithoutUserInput
+  movieGenres?: Prisma.UserMovieGenreCreateNestedManyWithoutUserInput
+  favoriteMovies?: Prisma.UserMovieCreateNestedManyWithoutUserInput
   initiatedRuns?: Prisma.MatchRunCreateNestedManyWithoutSubjectInput
   subjectMatches?: Prisma.MatchResultCreateNestedManyWithoutSubjectInput
   candidateMatches?: Prisma.MatchResultCreateNestedManyWithoutCandidateInput
@@ -1269,6 +1421,10 @@ export type UserUncheckedCreateWithoutLifestyleProfileInput = {
   testAttempts?: Prisma.TestAttemptUncheckedCreateNestedManyWithoutUserInput
   integrations?: Prisma.ExternalIntegrationUncheckedCreateNestedManyWithoutUserInput
   tasteItems?: Prisma.TasteItemUncheckedCreateNestedManyWithoutUserInput
+  musicGenres?: Prisma.UserMusicGenreUncheckedCreateNestedManyWithoutUserInput
+  favoriteArtists?: Prisma.UserArtistUncheckedCreateNestedManyWithoutUserInput
+  movieGenres?: Prisma.UserMovieGenreUncheckedCreateNestedManyWithoutUserInput
+  favoriteMovies?: Prisma.UserMovieUncheckedCreateNestedManyWithoutUserInput
   initiatedRuns?: Prisma.MatchRunUncheckedCreateNestedManyWithoutSubjectInput
   subjectMatches?: Prisma.MatchResultUncheckedCreateNestedManyWithoutSubjectInput
   candidateMatches?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCandidateInput
@@ -1311,6 +1467,10 @@ export type UserUpdateWithoutLifestyleProfileInput = {
   testAttempts?: Prisma.TestAttemptUpdateManyWithoutUserNestedInput
   integrations?: Prisma.ExternalIntegrationUpdateManyWithoutUserNestedInput
   tasteItems?: Prisma.TasteItemUpdateManyWithoutUserNestedInput
+  musicGenres?: Prisma.UserMusicGenreUpdateManyWithoutUserNestedInput
+  favoriteArtists?: Prisma.UserArtistUpdateManyWithoutUserNestedInput
+  movieGenres?: Prisma.UserMovieGenreUpdateManyWithoutUserNestedInput
+  favoriteMovies?: Prisma.UserMovieUpdateManyWithoutUserNestedInput
   initiatedRuns?: Prisma.MatchRunUpdateManyWithoutSubjectNestedInput
   subjectMatches?: Prisma.MatchResultUpdateManyWithoutSubjectNestedInput
   candidateMatches?: Prisma.MatchResultUpdateManyWithoutCandidateNestedInput
@@ -1337,6 +1497,10 @@ export type UserUncheckedUpdateWithoutLifestyleProfileInput = {
   testAttempts?: Prisma.TestAttemptUncheckedUpdateManyWithoutUserNestedInput
   integrations?: Prisma.ExternalIntegrationUncheckedUpdateManyWithoutUserNestedInput
   tasteItems?: Prisma.TasteItemUncheckedUpdateManyWithoutUserNestedInput
+  musicGenres?: Prisma.UserMusicGenreUncheckedUpdateManyWithoutUserNestedInput
+  favoriteArtists?: Prisma.UserArtistUncheckedUpdateManyWithoutUserNestedInput
+  movieGenres?: Prisma.UserMovieGenreUncheckedUpdateManyWithoutUserNestedInput
+  favoriteMovies?: Prisma.UserMovieUncheckedUpdateManyWithoutUserNestedInput
   initiatedRuns?: Prisma.MatchRunUncheckedUpdateManyWithoutSubjectNestedInput
   subjectMatches?: Prisma.MatchResultUncheckedUpdateManyWithoutSubjectNestedInput
   candidateMatches?: Prisma.MatchResultUncheckedUpdateManyWithoutCandidateNestedInput
@@ -1363,6 +1527,10 @@ export type UserCreateWithoutTestAttemptsInput = {
   lifestyleProfile?: Prisma.LifestyleProfileCreateNestedOneWithoutUserInput
   integrations?: Prisma.ExternalIntegrationCreateNestedManyWithoutUserInput
   tasteItems?: Prisma.TasteItemCreateNestedManyWithoutUserInput
+  musicGenres?: Prisma.UserMusicGenreCreateNestedManyWithoutUserInput
+  favoriteArtists?: Prisma.UserArtistCreateNestedManyWithoutUserInput
+  movieGenres?: Prisma.UserMovieGenreCreateNestedManyWithoutUserInput
+  favoriteMovies?: Prisma.UserMovieCreateNestedManyWithoutUserInput
   initiatedRuns?: Prisma.MatchRunCreateNestedManyWithoutSubjectInput
   subjectMatches?: Prisma.MatchResultCreateNestedManyWithoutSubjectInput
   candidateMatches?: Prisma.MatchResultCreateNestedManyWithoutCandidateInput
@@ -1389,6 +1557,10 @@ export type UserUncheckedCreateWithoutTestAttemptsInput = {
   lifestyleProfile?: Prisma.LifestyleProfileUncheckedCreateNestedOneWithoutUserInput
   integrations?: Prisma.ExternalIntegrationUncheckedCreateNestedManyWithoutUserInput
   tasteItems?: Prisma.TasteItemUncheckedCreateNestedManyWithoutUserInput
+  musicGenres?: Prisma.UserMusicGenreUncheckedCreateNestedManyWithoutUserInput
+  favoriteArtists?: Prisma.UserArtistUncheckedCreateNestedManyWithoutUserInput
+  movieGenres?: Prisma.UserMovieGenreUncheckedCreateNestedManyWithoutUserInput
+  favoriteMovies?: Prisma.UserMovieUncheckedCreateNestedManyWithoutUserInput
   initiatedRuns?: Prisma.MatchRunUncheckedCreateNestedManyWithoutSubjectInput
   subjectMatches?: Prisma.MatchResultUncheckedCreateNestedManyWithoutSubjectInput
   candidateMatches?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCandidateInput
@@ -1431,6 +1603,10 @@ export type UserUpdateWithoutTestAttemptsInput = {
   lifestyleProfile?: Prisma.LifestyleProfileUpdateOneWithoutUserNestedInput
   integrations?: Prisma.ExternalIntegrationUpdateManyWithoutUserNestedInput
   tasteItems?: Prisma.TasteItemUpdateManyWithoutUserNestedInput
+  musicGenres?: Prisma.UserMusicGenreUpdateManyWithoutUserNestedInput
+  favoriteArtists?: Prisma.UserArtistUpdateManyWithoutUserNestedInput
+  movieGenres?: Prisma.UserMovieGenreUpdateManyWithoutUserNestedInput
+  favoriteMovies?: Prisma.UserMovieUpdateManyWithoutUserNestedInput
   initiatedRuns?: Prisma.MatchRunUpdateManyWithoutSubjectNestedInput
   subjectMatches?: Prisma.MatchResultUpdateManyWithoutSubjectNestedInput
   candidateMatches?: Prisma.MatchResultUpdateManyWithoutCandidateNestedInput
@@ -1457,6 +1633,10 @@ export type UserUncheckedUpdateWithoutTestAttemptsInput = {
   lifestyleProfile?: Prisma.LifestyleProfileUncheckedUpdateOneWithoutUserNestedInput
   integrations?: Prisma.ExternalIntegrationUncheckedUpdateManyWithoutUserNestedInput
   tasteItems?: Prisma.TasteItemUncheckedUpdateManyWithoutUserNestedInput
+  musicGenres?: Prisma.UserMusicGenreUncheckedUpdateManyWithoutUserNestedInput
+  favoriteArtists?: Prisma.UserArtistUncheckedUpdateManyWithoutUserNestedInput
+  movieGenres?: Prisma.UserMovieGenreUncheckedUpdateManyWithoutUserNestedInput
+  favoriteMovies?: Prisma.UserMovieUncheckedUpdateManyWithoutUserNestedInput
   initiatedRuns?: Prisma.MatchRunUncheckedUpdateManyWithoutSubjectNestedInput
   subjectMatches?: Prisma.MatchResultUncheckedUpdateManyWithoutSubjectNestedInput
   candidateMatches?: Prisma.MatchResultUncheckedUpdateManyWithoutCandidateNestedInput
@@ -1483,6 +1663,10 @@ export type UserCreateWithoutIntegrationsInput = {
   lifestyleProfile?: Prisma.LifestyleProfileCreateNestedOneWithoutUserInput
   testAttempts?: Prisma.TestAttemptCreateNestedManyWithoutUserInput
   tasteItems?: Prisma.TasteItemCreateNestedManyWithoutUserInput
+  musicGenres?: Prisma.UserMusicGenreCreateNestedManyWithoutUserInput
+  favoriteArtists?: Prisma.UserArtistCreateNestedManyWithoutUserInput
+  movieGenres?: Prisma.UserMovieGenreCreateNestedManyWithoutUserInput
+  favoriteMovies?: Prisma.UserMovieCreateNestedManyWithoutUserInput
   initiatedRuns?: Prisma.MatchRunCreateNestedManyWithoutSubjectInput
   subjectMatches?: Prisma.MatchResultCreateNestedManyWithoutSubjectInput
   candidateMatches?: Prisma.MatchResultCreateNestedManyWithoutCandidateInput
@@ -1509,6 +1693,10 @@ export type UserUncheckedCreateWithoutIntegrationsInput = {
   lifestyleProfile?: Prisma.LifestyleProfileUncheckedCreateNestedOneWithoutUserInput
   testAttempts?: Prisma.TestAttemptUncheckedCreateNestedManyWithoutUserInput
   tasteItems?: Prisma.TasteItemUncheckedCreateNestedManyWithoutUserInput
+  musicGenres?: Prisma.UserMusicGenreUncheckedCreateNestedManyWithoutUserInput
+  favoriteArtists?: Prisma.UserArtistUncheckedCreateNestedManyWithoutUserInput
+  movieGenres?: Prisma.UserMovieGenreUncheckedCreateNestedManyWithoutUserInput
+  favoriteMovies?: Prisma.UserMovieUncheckedCreateNestedManyWithoutUserInput
   initiatedRuns?: Prisma.MatchRunUncheckedCreateNestedManyWithoutSubjectInput
   subjectMatches?: Prisma.MatchResultUncheckedCreateNestedManyWithoutSubjectInput
   candidateMatches?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCandidateInput
@@ -1551,6 +1739,10 @@ export type UserUpdateWithoutIntegrationsInput = {
   lifestyleProfile?: Prisma.LifestyleProfileUpdateOneWithoutUserNestedInput
   testAttempts?: Prisma.TestAttemptUpdateManyWithoutUserNestedInput
   tasteItems?: Prisma.TasteItemUpdateManyWithoutUserNestedInput
+  musicGenres?: Prisma.UserMusicGenreUpdateManyWithoutUserNestedInput
+  favoriteArtists?: Prisma.UserArtistUpdateManyWithoutUserNestedInput
+  movieGenres?: Prisma.UserMovieGenreUpdateManyWithoutUserNestedInput
+  favoriteMovies?: Prisma.UserMovieUpdateManyWithoutUserNestedInput
   initiatedRuns?: Prisma.MatchRunUpdateManyWithoutSubjectNestedInput
   subjectMatches?: Prisma.MatchResultUpdateManyWithoutSubjectNestedInput
   candidateMatches?: Prisma.MatchResultUpdateManyWithoutCandidateNestedInput
@@ -1577,6 +1769,10 @@ export type UserUncheckedUpdateWithoutIntegrationsInput = {
   lifestyleProfile?: Prisma.LifestyleProfileUncheckedUpdateOneWithoutUserNestedInput
   testAttempts?: Prisma.TestAttemptUncheckedUpdateManyWithoutUserNestedInput
   tasteItems?: Prisma.TasteItemUncheckedUpdateManyWithoutUserNestedInput
+  musicGenres?: Prisma.UserMusicGenreUncheckedUpdateManyWithoutUserNestedInput
+  favoriteArtists?: Prisma.UserArtistUncheckedUpdateManyWithoutUserNestedInput
+  movieGenres?: Prisma.UserMovieGenreUncheckedUpdateManyWithoutUserNestedInput
+  favoriteMovies?: Prisma.UserMovieUncheckedUpdateManyWithoutUserNestedInput
   initiatedRuns?: Prisma.MatchRunUncheckedUpdateManyWithoutSubjectNestedInput
   subjectMatches?: Prisma.MatchResultUncheckedUpdateManyWithoutSubjectNestedInput
   candidateMatches?: Prisma.MatchResultUncheckedUpdateManyWithoutCandidateNestedInput
@@ -1603,6 +1799,10 @@ export type UserCreateWithoutTasteItemsInput = {
   lifestyleProfile?: Prisma.LifestyleProfileCreateNestedOneWithoutUserInput
   testAttempts?: Prisma.TestAttemptCreateNestedManyWithoutUserInput
   integrations?: Prisma.ExternalIntegrationCreateNestedManyWithoutUserInput
+  musicGenres?: Prisma.UserMusicGenreCreateNestedManyWithoutUserInput
+  favoriteArtists?: Prisma.UserArtistCreateNestedManyWithoutUserInput
+  movieGenres?: Prisma.UserMovieGenreCreateNestedManyWithoutUserInput
+  favoriteMovies?: Prisma.UserMovieCreateNestedManyWithoutUserInput
   initiatedRuns?: Prisma.MatchRunCreateNestedManyWithoutSubjectInput
   subjectMatches?: Prisma.MatchResultCreateNestedManyWithoutSubjectInput
   candidateMatches?: Prisma.MatchResultCreateNestedManyWithoutCandidateInput
@@ -1629,6 +1829,10 @@ export type UserUncheckedCreateWithoutTasteItemsInput = {
   lifestyleProfile?: Prisma.LifestyleProfileUncheckedCreateNestedOneWithoutUserInput
   testAttempts?: Prisma.TestAttemptUncheckedCreateNestedManyWithoutUserInput
   integrations?: Prisma.ExternalIntegrationUncheckedCreateNestedManyWithoutUserInput
+  musicGenres?: Prisma.UserMusicGenreUncheckedCreateNestedManyWithoutUserInput
+  favoriteArtists?: Prisma.UserArtistUncheckedCreateNestedManyWithoutUserInput
+  movieGenres?: Prisma.UserMovieGenreUncheckedCreateNestedManyWithoutUserInput
+  favoriteMovies?: Prisma.UserMovieUncheckedCreateNestedManyWithoutUserInput
   initiatedRuns?: Prisma.MatchRunUncheckedCreateNestedManyWithoutSubjectInput
   subjectMatches?: Prisma.MatchResultUncheckedCreateNestedManyWithoutSubjectInput
   candidateMatches?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCandidateInput
@@ -1671,6 +1875,10 @@ export type UserUpdateWithoutTasteItemsInput = {
   lifestyleProfile?: Prisma.LifestyleProfileUpdateOneWithoutUserNestedInput
   testAttempts?: Prisma.TestAttemptUpdateManyWithoutUserNestedInput
   integrations?: Prisma.ExternalIntegrationUpdateManyWithoutUserNestedInput
+  musicGenres?: Prisma.UserMusicGenreUpdateManyWithoutUserNestedInput
+  favoriteArtists?: Prisma.UserArtistUpdateManyWithoutUserNestedInput
+  movieGenres?: Prisma.UserMovieGenreUpdateManyWithoutUserNestedInput
+  favoriteMovies?: Prisma.UserMovieUpdateManyWithoutUserNestedInput
   initiatedRuns?: Prisma.MatchRunUpdateManyWithoutSubjectNestedInput
   subjectMatches?: Prisma.MatchResultUpdateManyWithoutSubjectNestedInput
   candidateMatches?: Prisma.MatchResultUpdateManyWithoutCandidateNestedInput
@@ -1697,6 +1905,554 @@ export type UserUncheckedUpdateWithoutTasteItemsInput = {
   lifestyleProfile?: Prisma.LifestyleProfileUncheckedUpdateOneWithoutUserNestedInput
   testAttempts?: Prisma.TestAttemptUncheckedUpdateManyWithoutUserNestedInput
   integrations?: Prisma.ExternalIntegrationUncheckedUpdateManyWithoutUserNestedInput
+  musicGenres?: Prisma.UserMusicGenreUncheckedUpdateManyWithoutUserNestedInput
+  favoriteArtists?: Prisma.UserArtistUncheckedUpdateManyWithoutUserNestedInput
+  movieGenres?: Prisma.UserMovieGenreUncheckedUpdateManyWithoutUserNestedInput
+  favoriteMovies?: Prisma.UserMovieUncheckedUpdateManyWithoutUserNestedInput
+  initiatedRuns?: Prisma.MatchRunUncheckedUpdateManyWithoutSubjectNestedInput
+  subjectMatches?: Prisma.MatchResultUncheckedUpdateManyWithoutSubjectNestedInput
+  candidateMatches?: Prisma.MatchResultUncheckedUpdateManyWithoutCandidateNestedInput
+  conversationsAsOne?: Prisma.ConversationUncheckedUpdateManyWithoutParticipantOneNestedInput
+  conversationsAsTwo?: Prisma.ConversationUncheckedUpdateManyWithoutParticipantTwoNestedInput
+  sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+}
+
+export type UserCreateWithoutMusicGenresInput = {
+  id: string
+  email: string
+  passwordHash?: string | null
+  role?: $Enums.UserRole
+  displayName?: string | null
+  birthDate?: Date | string | null
+  gender?: $Enums.Gender | null
+  bio?: string | null
+  avatarUrl?: string | null
+  isDiscoverable?: boolean
+  onboardingComplete?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  housingPreference?: Prisma.HousingPreferenceCreateNestedOneWithoutUserInput
+  lifestyleProfile?: Prisma.LifestyleProfileCreateNestedOneWithoutUserInput
+  testAttempts?: Prisma.TestAttemptCreateNestedManyWithoutUserInput
+  integrations?: Prisma.ExternalIntegrationCreateNestedManyWithoutUserInput
+  tasteItems?: Prisma.TasteItemCreateNestedManyWithoutUserInput
+  favoriteArtists?: Prisma.UserArtistCreateNestedManyWithoutUserInput
+  movieGenres?: Prisma.UserMovieGenreCreateNestedManyWithoutUserInput
+  favoriteMovies?: Prisma.UserMovieCreateNestedManyWithoutUserInput
+  initiatedRuns?: Prisma.MatchRunCreateNestedManyWithoutSubjectInput
+  subjectMatches?: Prisma.MatchResultCreateNestedManyWithoutSubjectInput
+  candidateMatches?: Prisma.MatchResultCreateNestedManyWithoutCandidateInput
+  conversationsAsOne?: Prisma.ConversationCreateNestedManyWithoutParticipantOneInput
+  conversationsAsTwo?: Prisma.ConversationCreateNestedManyWithoutParticipantTwoInput
+  sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+}
+
+export type UserUncheckedCreateWithoutMusicGenresInput = {
+  id: string
+  email: string
+  passwordHash?: string | null
+  role?: $Enums.UserRole
+  displayName?: string | null
+  birthDate?: Date | string | null
+  gender?: $Enums.Gender | null
+  bio?: string | null
+  avatarUrl?: string | null
+  isDiscoverable?: boolean
+  onboardingComplete?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  housingPreference?: Prisma.HousingPreferenceUncheckedCreateNestedOneWithoutUserInput
+  lifestyleProfile?: Prisma.LifestyleProfileUncheckedCreateNestedOneWithoutUserInput
+  testAttempts?: Prisma.TestAttemptUncheckedCreateNestedManyWithoutUserInput
+  integrations?: Prisma.ExternalIntegrationUncheckedCreateNestedManyWithoutUserInput
+  tasteItems?: Prisma.TasteItemUncheckedCreateNestedManyWithoutUserInput
+  favoriteArtists?: Prisma.UserArtistUncheckedCreateNestedManyWithoutUserInput
+  movieGenres?: Prisma.UserMovieGenreUncheckedCreateNestedManyWithoutUserInput
+  favoriteMovies?: Prisma.UserMovieUncheckedCreateNestedManyWithoutUserInput
+  initiatedRuns?: Prisma.MatchRunUncheckedCreateNestedManyWithoutSubjectInput
+  subjectMatches?: Prisma.MatchResultUncheckedCreateNestedManyWithoutSubjectInput
+  candidateMatches?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCandidateInput
+  conversationsAsOne?: Prisma.ConversationUncheckedCreateNestedManyWithoutParticipantOneInput
+  conversationsAsTwo?: Prisma.ConversationUncheckedCreateNestedManyWithoutParticipantTwoInput
+  sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+}
+
+export type UserCreateOrConnectWithoutMusicGenresInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutMusicGenresInput, Prisma.UserUncheckedCreateWithoutMusicGenresInput>
+}
+
+export type UserUpsertWithoutMusicGenresInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutMusicGenresInput, Prisma.UserUncheckedUpdateWithoutMusicGenresInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutMusicGenresInput, Prisma.UserUncheckedCreateWithoutMusicGenresInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutMusicGenresInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutMusicGenresInput, Prisma.UserUncheckedUpdateWithoutMusicGenresInput>
+}
+
+export type UserUpdateWithoutMusicGenresInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDiscoverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  housingPreference?: Prisma.HousingPreferenceUpdateOneWithoutUserNestedInput
+  lifestyleProfile?: Prisma.LifestyleProfileUpdateOneWithoutUserNestedInput
+  testAttempts?: Prisma.TestAttemptUpdateManyWithoutUserNestedInput
+  integrations?: Prisma.ExternalIntegrationUpdateManyWithoutUserNestedInput
+  tasteItems?: Prisma.TasteItemUpdateManyWithoutUserNestedInput
+  favoriteArtists?: Prisma.UserArtistUpdateManyWithoutUserNestedInput
+  movieGenres?: Prisma.UserMovieGenreUpdateManyWithoutUserNestedInput
+  favoriteMovies?: Prisma.UserMovieUpdateManyWithoutUserNestedInput
+  initiatedRuns?: Prisma.MatchRunUpdateManyWithoutSubjectNestedInput
+  subjectMatches?: Prisma.MatchResultUpdateManyWithoutSubjectNestedInput
+  candidateMatches?: Prisma.MatchResultUpdateManyWithoutCandidateNestedInput
+  conversationsAsOne?: Prisma.ConversationUpdateManyWithoutParticipantOneNestedInput
+  conversationsAsTwo?: Prisma.ConversationUpdateManyWithoutParticipantTwoNestedInput
+  sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+}
+
+export type UserUncheckedUpdateWithoutMusicGenresInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDiscoverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  housingPreference?: Prisma.HousingPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  lifestyleProfile?: Prisma.LifestyleProfileUncheckedUpdateOneWithoutUserNestedInput
+  testAttempts?: Prisma.TestAttemptUncheckedUpdateManyWithoutUserNestedInput
+  integrations?: Prisma.ExternalIntegrationUncheckedUpdateManyWithoutUserNestedInput
+  tasteItems?: Prisma.TasteItemUncheckedUpdateManyWithoutUserNestedInput
+  favoriteArtists?: Prisma.UserArtistUncheckedUpdateManyWithoutUserNestedInput
+  movieGenres?: Prisma.UserMovieGenreUncheckedUpdateManyWithoutUserNestedInput
+  favoriteMovies?: Prisma.UserMovieUncheckedUpdateManyWithoutUserNestedInput
+  initiatedRuns?: Prisma.MatchRunUncheckedUpdateManyWithoutSubjectNestedInput
+  subjectMatches?: Prisma.MatchResultUncheckedUpdateManyWithoutSubjectNestedInput
+  candidateMatches?: Prisma.MatchResultUncheckedUpdateManyWithoutCandidateNestedInput
+  conversationsAsOne?: Prisma.ConversationUncheckedUpdateManyWithoutParticipantOneNestedInput
+  conversationsAsTwo?: Prisma.ConversationUncheckedUpdateManyWithoutParticipantTwoNestedInput
+  sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+}
+
+export type UserCreateWithoutFavoriteArtistsInput = {
+  id: string
+  email: string
+  passwordHash?: string | null
+  role?: $Enums.UserRole
+  displayName?: string | null
+  birthDate?: Date | string | null
+  gender?: $Enums.Gender | null
+  bio?: string | null
+  avatarUrl?: string | null
+  isDiscoverable?: boolean
+  onboardingComplete?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  housingPreference?: Prisma.HousingPreferenceCreateNestedOneWithoutUserInput
+  lifestyleProfile?: Prisma.LifestyleProfileCreateNestedOneWithoutUserInput
+  testAttempts?: Prisma.TestAttemptCreateNestedManyWithoutUserInput
+  integrations?: Prisma.ExternalIntegrationCreateNestedManyWithoutUserInput
+  tasteItems?: Prisma.TasteItemCreateNestedManyWithoutUserInput
+  musicGenres?: Prisma.UserMusicGenreCreateNestedManyWithoutUserInput
+  movieGenres?: Prisma.UserMovieGenreCreateNestedManyWithoutUserInput
+  favoriteMovies?: Prisma.UserMovieCreateNestedManyWithoutUserInput
+  initiatedRuns?: Prisma.MatchRunCreateNestedManyWithoutSubjectInput
+  subjectMatches?: Prisma.MatchResultCreateNestedManyWithoutSubjectInput
+  candidateMatches?: Prisma.MatchResultCreateNestedManyWithoutCandidateInput
+  conversationsAsOne?: Prisma.ConversationCreateNestedManyWithoutParticipantOneInput
+  conversationsAsTwo?: Prisma.ConversationCreateNestedManyWithoutParticipantTwoInput
+  sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+}
+
+export type UserUncheckedCreateWithoutFavoriteArtistsInput = {
+  id: string
+  email: string
+  passwordHash?: string | null
+  role?: $Enums.UserRole
+  displayName?: string | null
+  birthDate?: Date | string | null
+  gender?: $Enums.Gender | null
+  bio?: string | null
+  avatarUrl?: string | null
+  isDiscoverable?: boolean
+  onboardingComplete?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  housingPreference?: Prisma.HousingPreferenceUncheckedCreateNestedOneWithoutUserInput
+  lifestyleProfile?: Prisma.LifestyleProfileUncheckedCreateNestedOneWithoutUserInput
+  testAttempts?: Prisma.TestAttemptUncheckedCreateNestedManyWithoutUserInput
+  integrations?: Prisma.ExternalIntegrationUncheckedCreateNestedManyWithoutUserInput
+  tasteItems?: Prisma.TasteItemUncheckedCreateNestedManyWithoutUserInput
+  musicGenres?: Prisma.UserMusicGenreUncheckedCreateNestedManyWithoutUserInput
+  movieGenres?: Prisma.UserMovieGenreUncheckedCreateNestedManyWithoutUserInput
+  favoriteMovies?: Prisma.UserMovieUncheckedCreateNestedManyWithoutUserInput
+  initiatedRuns?: Prisma.MatchRunUncheckedCreateNestedManyWithoutSubjectInput
+  subjectMatches?: Prisma.MatchResultUncheckedCreateNestedManyWithoutSubjectInput
+  candidateMatches?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCandidateInput
+  conversationsAsOne?: Prisma.ConversationUncheckedCreateNestedManyWithoutParticipantOneInput
+  conversationsAsTwo?: Prisma.ConversationUncheckedCreateNestedManyWithoutParticipantTwoInput
+  sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+}
+
+export type UserCreateOrConnectWithoutFavoriteArtistsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutFavoriteArtistsInput, Prisma.UserUncheckedCreateWithoutFavoriteArtistsInput>
+}
+
+export type UserUpsertWithoutFavoriteArtistsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutFavoriteArtistsInput, Prisma.UserUncheckedUpdateWithoutFavoriteArtistsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutFavoriteArtistsInput, Prisma.UserUncheckedCreateWithoutFavoriteArtistsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutFavoriteArtistsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutFavoriteArtistsInput, Prisma.UserUncheckedUpdateWithoutFavoriteArtistsInput>
+}
+
+export type UserUpdateWithoutFavoriteArtistsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDiscoverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  housingPreference?: Prisma.HousingPreferenceUpdateOneWithoutUserNestedInput
+  lifestyleProfile?: Prisma.LifestyleProfileUpdateOneWithoutUserNestedInput
+  testAttempts?: Prisma.TestAttemptUpdateManyWithoutUserNestedInput
+  integrations?: Prisma.ExternalIntegrationUpdateManyWithoutUserNestedInput
+  tasteItems?: Prisma.TasteItemUpdateManyWithoutUserNestedInput
+  musicGenres?: Prisma.UserMusicGenreUpdateManyWithoutUserNestedInput
+  movieGenres?: Prisma.UserMovieGenreUpdateManyWithoutUserNestedInput
+  favoriteMovies?: Prisma.UserMovieUpdateManyWithoutUserNestedInput
+  initiatedRuns?: Prisma.MatchRunUpdateManyWithoutSubjectNestedInput
+  subjectMatches?: Prisma.MatchResultUpdateManyWithoutSubjectNestedInput
+  candidateMatches?: Prisma.MatchResultUpdateManyWithoutCandidateNestedInput
+  conversationsAsOne?: Prisma.ConversationUpdateManyWithoutParticipantOneNestedInput
+  conversationsAsTwo?: Prisma.ConversationUpdateManyWithoutParticipantTwoNestedInput
+  sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+}
+
+export type UserUncheckedUpdateWithoutFavoriteArtistsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDiscoverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  housingPreference?: Prisma.HousingPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  lifestyleProfile?: Prisma.LifestyleProfileUncheckedUpdateOneWithoutUserNestedInput
+  testAttempts?: Prisma.TestAttemptUncheckedUpdateManyWithoutUserNestedInput
+  integrations?: Prisma.ExternalIntegrationUncheckedUpdateManyWithoutUserNestedInput
+  tasteItems?: Prisma.TasteItemUncheckedUpdateManyWithoutUserNestedInput
+  musicGenres?: Prisma.UserMusicGenreUncheckedUpdateManyWithoutUserNestedInput
+  movieGenres?: Prisma.UserMovieGenreUncheckedUpdateManyWithoutUserNestedInput
+  favoriteMovies?: Prisma.UserMovieUncheckedUpdateManyWithoutUserNestedInput
+  initiatedRuns?: Prisma.MatchRunUncheckedUpdateManyWithoutSubjectNestedInput
+  subjectMatches?: Prisma.MatchResultUncheckedUpdateManyWithoutSubjectNestedInput
+  candidateMatches?: Prisma.MatchResultUncheckedUpdateManyWithoutCandidateNestedInput
+  conversationsAsOne?: Prisma.ConversationUncheckedUpdateManyWithoutParticipantOneNestedInput
+  conversationsAsTwo?: Prisma.ConversationUncheckedUpdateManyWithoutParticipantTwoNestedInput
+  sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+}
+
+export type UserCreateWithoutMovieGenresInput = {
+  id: string
+  email: string
+  passwordHash?: string | null
+  role?: $Enums.UserRole
+  displayName?: string | null
+  birthDate?: Date | string | null
+  gender?: $Enums.Gender | null
+  bio?: string | null
+  avatarUrl?: string | null
+  isDiscoverable?: boolean
+  onboardingComplete?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  housingPreference?: Prisma.HousingPreferenceCreateNestedOneWithoutUserInput
+  lifestyleProfile?: Prisma.LifestyleProfileCreateNestedOneWithoutUserInput
+  testAttempts?: Prisma.TestAttemptCreateNestedManyWithoutUserInput
+  integrations?: Prisma.ExternalIntegrationCreateNestedManyWithoutUserInput
+  tasteItems?: Prisma.TasteItemCreateNestedManyWithoutUserInput
+  musicGenres?: Prisma.UserMusicGenreCreateNestedManyWithoutUserInput
+  favoriteArtists?: Prisma.UserArtistCreateNestedManyWithoutUserInput
+  favoriteMovies?: Prisma.UserMovieCreateNestedManyWithoutUserInput
+  initiatedRuns?: Prisma.MatchRunCreateNestedManyWithoutSubjectInput
+  subjectMatches?: Prisma.MatchResultCreateNestedManyWithoutSubjectInput
+  candidateMatches?: Prisma.MatchResultCreateNestedManyWithoutCandidateInput
+  conversationsAsOne?: Prisma.ConversationCreateNestedManyWithoutParticipantOneInput
+  conversationsAsTwo?: Prisma.ConversationCreateNestedManyWithoutParticipantTwoInput
+  sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+}
+
+export type UserUncheckedCreateWithoutMovieGenresInput = {
+  id: string
+  email: string
+  passwordHash?: string | null
+  role?: $Enums.UserRole
+  displayName?: string | null
+  birthDate?: Date | string | null
+  gender?: $Enums.Gender | null
+  bio?: string | null
+  avatarUrl?: string | null
+  isDiscoverable?: boolean
+  onboardingComplete?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  housingPreference?: Prisma.HousingPreferenceUncheckedCreateNestedOneWithoutUserInput
+  lifestyleProfile?: Prisma.LifestyleProfileUncheckedCreateNestedOneWithoutUserInput
+  testAttempts?: Prisma.TestAttemptUncheckedCreateNestedManyWithoutUserInput
+  integrations?: Prisma.ExternalIntegrationUncheckedCreateNestedManyWithoutUserInput
+  tasteItems?: Prisma.TasteItemUncheckedCreateNestedManyWithoutUserInput
+  musicGenres?: Prisma.UserMusicGenreUncheckedCreateNestedManyWithoutUserInput
+  favoriteArtists?: Prisma.UserArtistUncheckedCreateNestedManyWithoutUserInput
+  favoriteMovies?: Prisma.UserMovieUncheckedCreateNestedManyWithoutUserInput
+  initiatedRuns?: Prisma.MatchRunUncheckedCreateNestedManyWithoutSubjectInput
+  subjectMatches?: Prisma.MatchResultUncheckedCreateNestedManyWithoutSubjectInput
+  candidateMatches?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCandidateInput
+  conversationsAsOne?: Prisma.ConversationUncheckedCreateNestedManyWithoutParticipantOneInput
+  conversationsAsTwo?: Prisma.ConversationUncheckedCreateNestedManyWithoutParticipantTwoInput
+  sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+}
+
+export type UserCreateOrConnectWithoutMovieGenresInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutMovieGenresInput, Prisma.UserUncheckedCreateWithoutMovieGenresInput>
+}
+
+export type UserUpsertWithoutMovieGenresInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutMovieGenresInput, Prisma.UserUncheckedUpdateWithoutMovieGenresInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutMovieGenresInput, Prisma.UserUncheckedCreateWithoutMovieGenresInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutMovieGenresInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutMovieGenresInput, Prisma.UserUncheckedUpdateWithoutMovieGenresInput>
+}
+
+export type UserUpdateWithoutMovieGenresInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDiscoverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  housingPreference?: Prisma.HousingPreferenceUpdateOneWithoutUserNestedInput
+  lifestyleProfile?: Prisma.LifestyleProfileUpdateOneWithoutUserNestedInput
+  testAttempts?: Prisma.TestAttemptUpdateManyWithoutUserNestedInput
+  integrations?: Prisma.ExternalIntegrationUpdateManyWithoutUserNestedInput
+  tasteItems?: Prisma.TasteItemUpdateManyWithoutUserNestedInput
+  musicGenres?: Prisma.UserMusicGenreUpdateManyWithoutUserNestedInput
+  favoriteArtists?: Prisma.UserArtistUpdateManyWithoutUserNestedInput
+  favoriteMovies?: Prisma.UserMovieUpdateManyWithoutUserNestedInput
+  initiatedRuns?: Prisma.MatchRunUpdateManyWithoutSubjectNestedInput
+  subjectMatches?: Prisma.MatchResultUpdateManyWithoutSubjectNestedInput
+  candidateMatches?: Prisma.MatchResultUpdateManyWithoutCandidateNestedInput
+  conversationsAsOne?: Prisma.ConversationUpdateManyWithoutParticipantOneNestedInput
+  conversationsAsTwo?: Prisma.ConversationUpdateManyWithoutParticipantTwoNestedInput
+  sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+}
+
+export type UserUncheckedUpdateWithoutMovieGenresInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDiscoverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  housingPreference?: Prisma.HousingPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  lifestyleProfile?: Prisma.LifestyleProfileUncheckedUpdateOneWithoutUserNestedInput
+  testAttempts?: Prisma.TestAttemptUncheckedUpdateManyWithoutUserNestedInput
+  integrations?: Prisma.ExternalIntegrationUncheckedUpdateManyWithoutUserNestedInput
+  tasteItems?: Prisma.TasteItemUncheckedUpdateManyWithoutUserNestedInput
+  musicGenres?: Prisma.UserMusicGenreUncheckedUpdateManyWithoutUserNestedInput
+  favoriteArtists?: Prisma.UserArtistUncheckedUpdateManyWithoutUserNestedInput
+  favoriteMovies?: Prisma.UserMovieUncheckedUpdateManyWithoutUserNestedInput
+  initiatedRuns?: Prisma.MatchRunUncheckedUpdateManyWithoutSubjectNestedInput
+  subjectMatches?: Prisma.MatchResultUncheckedUpdateManyWithoutSubjectNestedInput
+  candidateMatches?: Prisma.MatchResultUncheckedUpdateManyWithoutCandidateNestedInput
+  conversationsAsOne?: Prisma.ConversationUncheckedUpdateManyWithoutParticipantOneNestedInput
+  conversationsAsTwo?: Prisma.ConversationUncheckedUpdateManyWithoutParticipantTwoNestedInput
+  sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+}
+
+export type UserCreateWithoutFavoriteMoviesInput = {
+  id: string
+  email: string
+  passwordHash?: string | null
+  role?: $Enums.UserRole
+  displayName?: string | null
+  birthDate?: Date | string | null
+  gender?: $Enums.Gender | null
+  bio?: string | null
+  avatarUrl?: string | null
+  isDiscoverable?: boolean
+  onboardingComplete?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  housingPreference?: Prisma.HousingPreferenceCreateNestedOneWithoutUserInput
+  lifestyleProfile?: Prisma.LifestyleProfileCreateNestedOneWithoutUserInput
+  testAttempts?: Prisma.TestAttemptCreateNestedManyWithoutUserInput
+  integrations?: Prisma.ExternalIntegrationCreateNestedManyWithoutUserInput
+  tasteItems?: Prisma.TasteItemCreateNestedManyWithoutUserInput
+  musicGenres?: Prisma.UserMusicGenreCreateNestedManyWithoutUserInput
+  favoriteArtists?: Prisma.UserArtistCreateNestedManyWithoutUserInput
+  movieGenres?: Prisma.UserMovieGenreCreateNestedManyWithoutUserInput
+  initiatedRuns?: Prisma.MatchRunCreateNestedManyWithoutSubjectInput
+  subjectMatches?: Prisma.MatchResultCreateNestedManyWithoutSubjectInput
+  candidateMatches?: Prisma.MatchResultCreateNestedManyWithoutCandidateInput
+  conversationsAsOne?: Prisma.ConversationCreateNestedManyWithoutParticipantOneInput
+  conversationsAsTwo?: Prisma.ConversationCreateNestedManyWithoutParticipantTwoInput
+  sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+}
+
+export type UserUncheckedCreateWithoutFavoriteMoviesInput = {
+  id: string
+  email: string
+  passwordHash?: string | null
+  role?: $Enums.UserRole
+  displayName?: string | null
+  birthDate?: Date | string | null
+  gender?: $Enums.Gender | null
+  bio?: string | null
+  avatarUrl?: string | null
+  isDiscoverable?: boolean
+  onboardingComplete?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  housingPreference?: Prisma.HousingPreferenceUncheckedCreateNestedOneWithoutUserInput
+  lifestyleProfile?: Prisma.LifestyleProfileUncheckedCreateNestedOneWithoutUserInput
+  testAttempts?: Prisma.TestAttemptUncheckedCreateNestedManyWithoutUserInput
+  integrations?: Prisma.ExternalIntegrationUncheckedCreateNestedManyWithoutUserInput
+  tasteItems?: Prisma.TasteItemUncheckedCreateNestedManyWithoutUserInput
+  musicGenres?: Prisma.UserMusicGenreUncheckedCreateNestedManyWithoutUserInput
+  favoriteArtists?: Prisma.UserArtistUncheckedCreateNestedManyWithoutUserInput
+  movieGenres?: Prisma.UserMovieGenreUncheckedCreateNestedManyWithoutUserInput
+  initiatedRuns?: Prisma.MatchRunUncheckedCreateNestedManyWithoutSubjectInput
+  subjectMatches?: Prisma.MatchResultUncheckedCreateNestedManyWithoutSubjectInput
+  candidateMatches?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCandidateInput
+  conversationsAsOne?: Prisma.ConversationUncheckedCreateNestedManyWithoutParticipantOneInput
+  conversationsAsTwo?: Prisma.ConversationUncheckedCreateNestedManyWithoutParticipantTwoInput
+  sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+}
+
+export type UserCreateOrConnectWithoutFavoriteMoviesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutFavoriteMoviesInput, Prisma.UserUncheckedCreateWithoutFavoriteMoviesInput>
+}
+
+export type UserUpsertWithoutFavoriteMoviesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutFavoriteMoviesInput, Prisma.UserUncheckedUpdateWithoutFavoriteMoviesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutFavoriteMoviesInput, Prisma.UserUncheckedCreateWithoutFavoriteMoviesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutFavoriteMoviesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutFavoriteMoviesInput, Prisma.UserUncheckedUpdateWithoutFavoriteMoviesInput>
+}
+
+export type UserUpdateWithoutFavoriteMoviesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDiscoverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  housingPreference?: Prisma.HousingPreferenceUpdateOneWithoutUserNestedInput
+  lifestyleProfile?: Prisma.LifestyleProfileUpdateOneWithoutUserNestedInput
+  testAttempts?: Prisma.TestAttemptUpdateManyWithoutUserNestedInput
+  integrations?: Prisma.ExternalIntegrationUpdateManyWithoutUserNestedInput
+  tasteItems?: Prisma.TasteItemUpdateManyWithoutUserNestedInput
+  musicGenres?: Prisma.UserMusicGenreUpdateManyWithoutUserNestedInput
+  favoriteArtists?: Prisma.UserArtistUpdateManyWithoutUserNestedInput
+  movieGenres?: Prisma.UserMovieGenreUpdateManyWithoutUserNestedInput
+  initiatedRuns?: Prisma.MatchRunUpdateManyWithoutSubjectNestedInput
+  subjectMatches?: Prisma.MatchResultUpdateManyWithoutSubjectNestedInput
+  candidateMatches?: Prisma.MatchResultUpdateManyWithoutCandidateNestedInput
+  conversationsAsOne?: Prisma.ConversationUpdateManyWithoutParticipantOneNestedInput
+  conversationsAsTwo?: Prisma.ConversationUpdateManyWithoutParticipantTwoNestedInput
+  sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+}
+
+export type UserUncheckedUpdateWithoutFavoriteMoviesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDiscoverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  housingPreference?: Prisma.HousingPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  lifestyleProfile?: Prisma.LifestyleProfileUncheckedUpdateOneWithoutUserNestedInput
+  testAttempts?: Prisma.TestAttemptUncheckedUpdateManyWithoutUserNestedInput
+  integrations?: Prisma.ExternalIntegrationUncheckedUpdateManyWithoutUserNestedInput
+  tasteItems?: Prisma.TasteItemUncheckedUpdateManyWithoutUserNestedInput
+  musicGenres?: Prisma.UserMusicGenreUncheckedUpdateManyWithoutUserNestedInput
+  favoriteArtists?: Prisma.UserArtistUncheckedUpdateManyWithoutUserNestedInput
+  movieGenres?: Prisma.UserMovieGenreUncheckedUpdateManyWithoutUserNestedInput
   initiatedRuns?: Prisma.MatchRunUncheckedUpdateManyWithoutSubjectNestedInput
   subjectMatches?: Prisma.MatchResultUncheckedUpdateManyWithoutSubjectNestedInput
   candidateMatches?: Prisma.MatchResultUncheckedUpdateManyWithoutCandidateNestedInput
@@ -1724,6 +2480,10 @@ export type UserCreateWithoutInitiatedRunsInput = {
   testAttempts?: Prisma.TestAttemptCreateNestedManyWithoutUserInput
   integrations?: Prisma.ExternalIntegrationCreateNestedManyWithoutUserInput
   tasteItems?: Prisma.TasteItemCreateNestedManyWithoutUserInput
+  musicGenres?: Prisma.UserMusicGenreCreateNestedManyWithoutUserInput
+  favoriteArtists?: Prisma.UserArtistCreateNestedManyWithoutUserInput
+  movieGenres?: Prisma.UserMovieGenreCreateNestedManyWithoutUserInput
+  favoriteMovies?: Prisma.UserMovieCreateNestedManyWithoutUserInput
   subjectMatches?: Prisma.MatchResultCreateNestedManyWithoutSubjectInput
   candidateMatches?: Prisma.MatchResultCreateNestedManyWithoutCandidateInput
   conversationsAsOne?: Prisma.ConversationCreateNestedManyWithoutParticipantOneInput
@@ -1750,6 +2510,10 @@ export type UserUncheckedCreateWithoutInitiatedRunsInput = {
   testAttempts?: Prisma.TestAttemptUncheckedCreateNestedManyWithoutUserInput
   integrations?: Prisma.ExternalIntegrationUncheckedCreateNestedManyWithoutUserInput
   tasteItems?: Prisma.TasteItemUncheckedCreateNestedManyWithoutUserInput
+  musicGenres?: Prisma.UserMusicGenreUncheckedCreateNestedManyWithoutUserInput
+  favoriteArtists?: Prisma.UserArtistUncheckedCreateNestedManyWithoutUserInput
+  movieGenres?: Prisma.UserMovieGenreUncheckedCreateNestedManyWithoutUserInput
+  favoriteMovies?: Prisma.UserMovieUncheckedCreateNestedManyWithoutUserInput
   subjectMatches?: Prisma.MatchResultUncheckedCreateNestedManyWithoutSubjectInput
   candidateMatches?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCandidateInput
   conversationsAsOne?: Prisma.ConversationUncheckedCreateNestedManyWithoutParticipantOneInput
@@ -1792,6 +2556,10 @@ export type UserUpdateWithoutInitiatedRunsInput = {
   testAttempts?: Prisma.TestAttemptUpdateManyWithoutUserNestedInput
   integrations?: Prisma.ExternalIntegrationUpdateManyWithoutUserNestedInput
   tasteItems?: Prisma.TasteItemUpdateManyWithoutUserNestedInput
+  musicGenres?: Prisma.UserMusicGenreUpdateManyWithoutUserNestedInput
+  favoriteArtists?: Prisma.UserArtistUpdateManyWithoutUserNestedInput
+  movieGenres?: Prisma.UserMovieGenreUpdateManyWithoutUserNestedInput
+  favoriteMovies?: Prisma.UserMovieUpdateManyWithoutUserNestedInput
   subjectMatches?: Prisma.MatchResultUpdateManyWithoutSubjectNestedInput
   candidateMatches?: Prisma.MatchResultUpdateManyWithoutCandidateNestedInput
   conversationsAsOne?: Prisma.ConversationUpdateManyWithoutParticipantOneNestedInput
@@ -1818,6 +2586,10 @@ export type UserUncheckedUpdateWithoutInitiatedRunsInput = {
   testAttempts?: Prisma.TestAttemptUncheckedUpdateManyWithoutUserNestedInput
   integrations?: Prisma.ExternalIntegrationUncheckedUpdateManyWithoutUserNestedInput
   tasteItems?: Prisma.TasteItemUncheckedUpdateManyWithoutUserNestedInput
+  musicGenres?: Prisma.UserMusicGenreUncheckedUpdateManyWithoutUserNestedInput
+  favoriteArtists?: Prisma.UserArtistUncheckedUpdateManyWithoutUserNestedInput
+  movieGenres?: Prisma.UserMovieGenreUncheckedUpdateManyWithoutUserNestedInput
+  favoriteMovies?: Prisma.UserMovieUncheckedUpdateManyWithoutUserNestedInput
   subjectMatches?: Prisma.MatchResultUncheckedUpdateManyWithoutSubjectNestedInput
   candidateMatches?: Prisma.MatchResultUncheckedUpdateManyWithoutCandidateNestedInput
   conversationsAsOne?: Prisma.ConversationUncheckedUpdateManyWithoutParticipantOneNestedInput
@@ -1844,6 +2616,10 @@ export type UserCreateWithoutSubjectMatchesInput = {
   testAttempts?: Prisma.TestAttemptCreateNestedManyWithoutUserInput
   integrations?: Prisma.ExternalIntegrationCreateNestedManyWithoutUserInput
   tasteItems?: Prisma.TasteItemCreateNestedManyWithoutUserInput
+  musicGenres?: Prisma.UserMusicGenreCreateNestedManyWithoutUserInput
+  favoriteArtists?: Prisma.UserArtistCreateNestedManyWithoutUserInput
+  movieGenres?: Prisma.UserMovieGenreCreateNestedManyWithoutUserInput
+  favoriteMovies?: Prisma.UserMovieCreateNestedManyWithoutUserInput
   initiatedRuns?: Prisma.MatchRunCreateNestedManyWithoutSubjectInput
   candidateMatches?: Prisma.MatchResultCreateNestedManyWithoutCandidateInput
   conversationsAsOne?: Prisma.ConversationCreateNestedManyWithoutParticipantOneInput
@@ -1870,6 +2646,10 @@ export type UserUncheckedCreateWithoutSubjectMatchesInput = {
   testAttempts?: Prisma.TestAttemptUncheckedCreateNestedManyWithoutUserInput
   integrations?: Prisma.ExternalIntegrationUncheckedCreateNestedManyWithoutUserInput
   tasteItems?: Prisma.TasteItemUncheckedCreateNestedManyWithoutUserInput
+  musicGenres?: Prisma.UserMusicGenreUncheckedCreateNestedManyWithoutUserInput
+  favoriteArtists?: Prisma.UserArtistUncheckedCreateNestedManyWithoutUserInput
+  movieGenres?: Prisma.UserMovieGenreUncheckedCreateNestedManyWithoutUserInput
+  favoriteMovies?: Prisma.UserMovieUncheckedCreateNestedManyWithoutUserInput
   initiatedRuns?: Prisma.MatchRunUncheckedCreateNestedManyWithoutSubjectInput
   candidateMatches?: Prisma.MatchResultUncheckedCreateNestedManyWithoutCandidateInput
   conversationsAsOne?: Prisma.ConversationUncheckedCreateNestedManyWithoutParticipantOneInput
@@ -1901,6 +2681,10 @@ export type UserCreateWithoutCandidateMatchesInput = {
   testAttempts?: Prisma.TestAttemptCreateNestedManyWithoutUserInput
   integrations?: Prisma.ExternalIntegrationCreateNestedManyWithoutUserInput
   tasteItems?: Prisma.TasteItemCreateNestedManyWithoutUserInput
+  musicGenres?: Prisma.UserMusicGenreCreateNestedManyWithoutUserInput
+  favoriteArtists?: Prisma.UserArtistCreateNestedManyWithoutUserInput
+  movieGenres?: Prisma.UserMovieGenreCreateNestedManyWithoutUserInput
+  favoriteMovies?: Prisma.UserMovieCreateNestedManyWithoutUserInput
   initiatedRuns?: Prisma.MatchRunCreateNestedManyWithoutSubjectInput
   subjectMatches?: Prisma.MatchResultCreateNestedManyWithoutSubjectInput
   conversationsAsOne?: Prisma.ConversationCreateNestedManyWithoutParticipantOneInput
@@ -1927,6 +2711,10 @@ export type UserUncheckedCreateWithoutCandidateMatchesInput = {
   testAttempts?: Prisma.TestAttemptUncheckedCreateNestedManyWithoutUserInput
   integrations?: Prisma.ExternalIntegrationUncheckedCreateNestedManyWithoutUserInput
   tasteItems?: Prisma.TasteItemUncheckedCreateNestedManyWithoutUserInput
+  musicGenres?: Prisma.UserMusicGenreUncheckedCreateNestedManyWithoutUserInput
+  favoriteArtists?: Prisma.UserArtistUncheckedCreateNestedManyWithoutUserInput
+  movieGenres?: Prisma.UserMovieGenreUncheckedCreateNestedManyWithoutUserInput
+  favoriteMovies?: Prisma.UserMovieUncheckedCreateNestedManyWithoutUserInput
   initiatedRuns?: Prisma.MatchRunUncheckedCreateNestedManyWithoutSubjectInput
   subjectMatches?: Prisma.MatchResultUncheckedCreateNestedManyWithoutSubjectInput
   conversationsAsOne?: Prisma.ConversationUncheckedCreateNestedManyWithoutParticipantOneInput
@@ -1969,6 +2757,10 @@ export type UserUpdateWithoutSubjectMatchesInput = {
   testAttempts?: Prisma.TestAttemptUpdateManyWithoutUserNestedInput
   integrations?: Prisma.ExternalIntegrationUpdateManyWithoutUserNestedInput
   tasteItems?: Prisma.TasteItemUpdateManyWithoutUserNestedInput
+  musicGenres?: Prisma.UserMusicGenreUpdateManyWithoutUserNestedInput
+  favoriteArtists?: Prisma.UserArtistUpdateManyWithoutUserNestedInput
+  movieGenres?: Prisma.UserMovieGenreUpdateManyWithoutUserNestedInput
+  favoriteMovies?: Prisma.UserMovieUpdateManyWithoutUserNestedInput
   initiatedRuns?: Prisma.MatchRunUpdateManyWithoutSubjectNestedInput
   candidateMatches?: Prisma.MatchResultUpdateManyWithoutCandidateNestedInput
   conversationsAsOne?: Prisma.ConversationUpdateManyWithoutParticipantOneNestedInput
@@ -1995,6 +2787,10 @@ export type UserUncheckedUpdateWithoutSubjectMatchesInput = {
   testAttempts?: Prisma.TestAttemptUncheckedUpdateManyWithoutUserNestedInput
   integrations?: Prisma.ExternalIntegrationUncheckedUpdateManyWithoutUserNestedInput
   tasteItems?: Prisma.TasteItemUncheckedUpdateManyWithoutUserNestedInput
+  musicGenres?: Prisma.UserMusicGenreUncheckedUpdateManyWithoutUserNestedInput
+  favoriteArtists?: Prisma.UserArtistUncheckedUpdateManyWithoutUserNestedInput
+  movieGenres?: Prisma.UserMovieGenreUncheckedUpdateManyWithoutUserNestedInput
+  favoriteMovies?: Prisma.UserMovieUncheckedUpdateManyWithoutUserNestedInput
   initiatedRuns?: Prisma.MatchRunUncheckedUpdateManyWithoutSubjectNestedInput
   candidateMatches?: Prisma.MatchResultUncheckedUpdateManyWithoutCandidateNestedInput
   conversationsAsOne?: Prisma.ConversationUncheckedUpdateManyWithoutParticipantOneNestedInput
@@ -2032,6 +2828,10 @@ export type UserUpdateWithoutCandidateMatchesInput = {
   testAttempts?: Prisma.TestAttemptUpdateManyWithoutUserNestedInput
   integrations?: Prisma.ExternalIntegrationUpdateManyWithoutUserNestedInput
   tasteItems?: Prisma.TasteItemUpdateManyWithoutUserNestedInput
+  musicGenres?: Prisma.UserMusicGenreUpdateManyWithoutUserNestedInput
+  favoriteArtists?: Prisma.UserArtistUpdateManyWithoutUserNestedInput
+  movieGenres?: Prisma.UserMovieGenreUpdateManyWithoutUserNestedInput
+  favoriteMovies?: Prisma.UserMovieUpdateManyWithoutUserNestedInput
   initiatedRuns?: Prisma.MatchRunUpdateManyWithoutSubjectNestedInput
   subjectMatches?: Prisma.MatchResultUpdateManyWithoutSubjectNestedInput
   conversationsAsOne?: Prisma.ConversationUpdateManyWithoutParticipantOneNestedInput
@@ -2058,6 +2858,10 @@ export type UserUncheckedUpdateWithoutCandidateMatchesInput = {
   testAttempts?: Prisma.TestAttemptUncheckedUpdateManyWithoutUserNestedInput
   integrations?: Prisma.ExternalIntegrationUncheckedUpdateManyWithoutUserNestedInput
   tasteItems?: Prisma.TasteItemUncheckedUpdateManyWithoutUserNestedInput
+  musicGenres?: Prisma.UserMusicGenreUncheckedUpdateManyWithoutUserNestedInput
+  favoriteArtists?: Prisma.UserArtistUncheckedUpdateManyWithoutUserNestedInput
+  movieGenres?: Prisma.UserMovieGenreUncheckedUpdateManyWithoutUserNestedInput
+  favoriteMovies?: Prisma.UserMovieUncheckedUpdateManyWithoutUserNestedInput
   initiatedRuns?: Prisma.MatchRunUncheckedUpdateManyWithoutSubjectNestedInput
   subjectMatches?: Prisma.MatchResultUncheckedUpdateManyWithoutSubjectNestedInput
   conversationsAsOne?: Prisma.ConversationUncheckedUpdateManyWithoutParticipantOneNestedInput
@@ -2074,6 +2878,10 @@ export type UserCountOutputType = {
   testAttempts: number
   integrations: number
   tasteItems: number
+  musicGenres: number
+  favoriteArtists: number
+  movieGenres: number
+  favoriteMovies: number
   initiatedRuns: number
   subjectMatches: number
   candidateMatches: number
@@ -2086,6 +2894,10 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   testAttempts?: boolean | UserCountOutputTypeCountTestAttemptsArgs
   integrations?: boolean | UserCountOutputTypeCountIntegrationsArgs
   tasteItems?: boolean | UserCountOutputTypeCountTasteItemsArgs
+  musicGenres?: boolean | UserCountOutputTypeCountMusicGenresArgs
+  favoriteArtists?: boolean | UserCountOutputTypeCountFavoriteArtistsArgs
+  movieGenres?: boolean | UserCountOutputTypeCountMovieGenresArgs
+  favoriteMovies?: boolean | UserCountOutputTypeCountFavoriteMoviesArgs
   initiatedRuns?: boolean | UserCountOutputTypeCountInitiatedRunsArgs
   subjectMatches?: boolean | UserCountOutputTypeCountSubjectMatchesArgs
   candidateMatches?: boolean | UserCountOutputTypeCountCandidateMatchesArgs
@@ -2123,6 +2935,34 @@ export type UserCountOutputTypeCountIntegrationsArgs<ExtArgs extends runtime.Typ
  */
 export type UserCountOutputTypeCountTasteItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.TasteItemWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountMusicGenresArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.UserMusicGenreWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountFavoriteArtistsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.UserArtistWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountMovieGenresArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.UserMovieGenreWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountFavoriteMoviesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.UserMovieWhereInput
 }
 
 /**
@@ -2187,6 +3027,10 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   testAttempts?: boolean | Prisma.User$testAttemptsArgs<ExtArgs>
   integrations?: boolean | Prisma.User$integrationsArgs<ExtArgs>
   tasteItems?: boolean | Prisma.User$tasteItemsArgs<ExtArgs>
+  musicGenres?: boolean | Prisma.User$musicGenresArgs<ExtArgs>
+  favoriteArtists?: boolean | Prisma.User$favoriteArtistsArgs<ExtArgs>
+  movieGenres?: boolean | Prisma.User$movieGenresArgs<ExtArgs>
+  favoriteMovies?: boolean | Prisma.User$favoriteMoviesArgs<ExtArgs>
   initiatedRuns?: boolean | Prisma.User$initiatedRunsArgs<ExtArgs>
   subjectMatches?: boolean | Prisma.User$subjectMatchesArgs<ExtArgs>
   candidateMatches?: boolean | Prisma.User$candidateMatchesArgs<ExtArgs>
@@ -2251,6 +3095,10 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   testAttempts?: boolean | Prisma.User$testAttemptsArgs<ExtArgs>
   integrations?: boolean | Prisma.User$integrationsArgs<ExtArgs>
   tasteItems?: boolean | Prisma.User$tasteItemsArgs<ExtArgs>
+  musicGenres?: boolean | Prisma.User$musicGenresArgs<ExtArgs>
+  favoriteArtists?: boolean | Prisma.User$favoriteArtistsArgs<ExtArgs>
+  movieGenres?: boolean | Prisma.User$movieGenresArgs<ExtArgs>
+  favoriteMovies?: boolean | Prisma.User$favoriteMoviesArgs<ExtArgs>
   initiatedRuns?: boolean | Prisma.User$initiatedRunsArgs<ExtArgs>
   subjectMatches?: boolean | Prisma.User$subjectMatchesArgs<ExtArgs>
   candidateMatches?: boolean | Prisma.User$candidateMatchesArgs<ExtArgs>
@@ -2270,6 +3118,10 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     testAttempts: Prisma.$TestAttemptPayload<ExtArgs>[]
     integrations: Prisma.$ExternalIntegrationPayload<ExtArgs>[]
     tasteItems: Prisma.$TasteItemPayload<ExtArgs>[]
+    musicGenres: Prisma.$UserMusicGenrePayload<ExtArgs>[]
+    favoriteArtists: Prisma.$UserArtistPayload<ExtArgs>[]
+    movieGenres: Prisma.$UserMovieGenrePayload<ExtArgs>[]
+    favoriteMovies: Prisma.$UserMoviePayload<ExtArgs>[]
     initiatedRuns: Prisma.$MatchRunPayload<ExtArgs>[]
     subjectMatches: Prisma.$MatchResultPayload<ExtArgs>[]
     candidateMatches: Prisma.$MatchResultPayload<ExtArgs>[]
@@ -2690,6 +3542,10 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   testAttempts<T extends Prisma.User$testAttemptsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$testAttemptsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TestAttemptPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   integrations<T extends Prisma.User$integrationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$integrationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ExternalIntegrationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   tasteItems<T extends Prisma.User$tasteItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$tasteItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TasteItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  musicGenres<T extends Prisma.User$musicGenresArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$musicGenresArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserMusicGenrePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  favoriteArtists<T extends Prisma.User$favoriteArtistsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$favoriteArtistsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserArtistPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  movieGenres<T extends Prisma.User$movieGenresArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$movieGenresArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserMovieGenrePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  favoriteMovies<T extends Prisma.User$favoriteMoviesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$favoriteMoviesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserMoviePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   initiatedRuns<T extends Prisma.User$initiatedRunsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$initiatedRunsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MatchRunPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   subjectMatches<T extends Prisma.User$subjectMatchesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$subjectMatchesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MatchResultPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   candidateMatches<T extends Prisma.User$candidateMatchesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$candidateMatchesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MatchResultPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -3238,6 +4094,102 @@ export type User$tasteItemsArgs<ExtArgs extends runtime.Types.Extensions.Interna
   take?: number
   skip?: number
   distinct?: Prisma.TasteItemScalarFieldEnum | Prisma.TasteItemScalarFieldEnum[]
+}
+
+/**
+ * User.musicGenres
+ */
+export type User$musicGenresArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserMusicGenre
+   */
+  select?: Prisma.UserMusicGenreSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the UserMusicGenre
+   */
+  omit?: Prisma.UserMusicGenreOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserMusicGenreInclude<ExtArgs> | null
+  where?: Prisma.UserMusicGenreWhereInput
+  orderBy?: Prisma.UserMusicGenreOrderByWithRelationInput | Prisma.UserMusicGenreOrderByWithRelationInput[]
+  cursor?: Prisma.UserMusicGenreWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.UserMusicGenreScalarFieldEnum | Prisma.UserMusicGenreScalarFieldEnum[]
+}
+
+/**
+ * User.favoriteArtists
+ */
+export type User$favoriteArtistsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserArtist
+   */
+  select?: Prisma.UserArtistSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the UserArtist
+   */
+  omit?: Prisma.UserArtistOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserArtistInclude<ExtArgs> | null
+  where?: Prisma.UserArtistWhereInput
+  orderBy?: Prisma.UserArtistOrderByWithRelationInput | Prisma.UserArtistOrderByWithRelationInput[]
+  cursor?: Prisma.UserArtistWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.UserArtistScalarFieldEnum | Prisma.UserArtistScalarFieldEnum[]
+}
+
+/**
+ * User.movieGenres
+ */
+export type User$movieGenresArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserMovieGenre
+   */
+  select?: Prisma.UserMovieGenreSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the UserMovieGenre
+   */
+  omit?: Prisma.UserMovieGenreOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserMovieGenreInclude<ExtArgs> | null
+  where?: Prisma.UserMovieGenreWhereInput
+  orderBy?: Prisma.UserMovieGenreOrderByWithRelationInput | Prisma.UserMovieGenreOrderByWithRelationInput[]
+  cursor?: Prisma.UserMovieGenreWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.UserMovieGenreScalarFieldEnum | Prisma.UserMovieGenreScalarFieldEnum[]
+}
+
+/**
+ * User.favoriteMovies
+ */
+export type User$favoriteMoviesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserMovie
+   */
+  select?: Prisma.UserMovieSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the UserMovie
+   */
+  omit?: Prisma.UserMovieOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserMovieInclude<ExtArgs> | null
+  where?: Prisma.UserMovieWhereInput
+  orderBy?: Prisma.UserMovieOrderByWithRelationInput | Prisma.UserMovieOrderByWithRelationInput[]
+  cursor?: Prisma.UserMovieWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.UserMovieScalarFieldEnum | Prisma.UserMovieScalarFieldEnum[]
 }
 
 /**
