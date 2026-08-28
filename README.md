@@ -37,6 +37,7 @@ The migrations create users, housing/lifestyle profiles, versioned tests and que
 - `POST /api/auth/signup` — create an account and receive a JWT.
 - `POST /api/auth/login` — authenticate with email/password and receive a JWT.
 - `PUT /api/users/profile` — create/update onboarding, rent and lifestyle data.
+- `PATCH /api/users/me/avatar` — save, replace or clear the authenticated user's profile image URL.
 - `GET /api/tests` and `GET /api/tests/:slug` — available tests/questions.
 - `POST /api/tests/submissions` — score and store a completed test.
 - `POST /api/integrations/connect` — record a Spotify or Letterboxd identity.
@@ -98,11 +99,11 @@ Socket.IO is exposed at the `/chat` namespace using WebSocket transport. Mount t
 
 ```ts
 const socket = io(`${apiOrigin}/chat`, {
-  transports: ['websocket'],
+  transports: ["websocket"],
   auth: { token: accessToken },
 });
 
-socket.on('message:new', (message) => showGlobalMessageNotification(message));
+socket.on("message:new", (message) => showGlobalMessageNotification(message));
 
 // Run from the app-shell cleanup on logout or when it unmounts.
 socket.disconnect();

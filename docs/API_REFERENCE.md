@@ -22,7 +22,7 @@ Signup and login return a JWT. For protected endpoints send:
 Authorization: Bearer <accessToken>
 ```
 
-Only admin endpoints are protected in the current implementation. The profile, user lookup, test submission, integration, and matching endpoints currently trust the `userId`/`id` supplied by the client and do **not** verify a JWT. This is unsafe for production and frontend code should not assume it will remain that way.
+Admin, messaging, and profile-image update endpoints are protected in the current implementation. The general profile, user lookup, test submission, integration, and matching endpoints currently trust the `userId`/`id` supplied by the client and do **not** verify a JWT. This is unsafe for production and frontend code should not assume it will remain that way.
 
 The JWT payload contains `sub` (user ID), `email`, `role`, `iat`, and `exp`. The default lifetime is 7 days unless `JWT_EXPIRES_IN` is configured differently. A user whose role changes must log in again to get a token with the new role.
 
@@ -33,9 +33,22 @@ The JWT payload contains `sub` (user ID), `email`, `role`, `iat`, and `exp`. The
   "UserRole": ["USER", "ADMIN"],
   "Gender": ["WOMAN", "MAN", "NON_BINARY", "OTHER", "PREFER_NOT_TO_SAY"],
   "TestType": ["BIG_FIVE", "HEXACO", "CUSTOM"],
-  "QuestionKind": ["LIKERT", "SINGLE_CHOICE", "MULTIPLE_CHOICE", "BOOLEAN", "NUMBER", "TEXT"],
+  "QuestionKind": [
+    "LIKERT",
+    "SINGLE_CHOICE",
+    "MULTIPLE_CHOICE",
+    "BOOLEAN",
+    "NUMBER",
+    "TEXT"
+  ],
   "IntegrationProvider": ["SPOTIFY", "LETTERBOXD"],
-  "IntegrationStatus": ["PENDING", "CONNECTED", "EXPIRED", "ERROR", "DISCONNECTED"],
+  "IntegrationStatus": [
+    "PENDING",
+    "CONNECTED",
+    "EXPIRED",
+    "ERROR",
+    "DISCONNECTED"
+  ],
   "AlgorithmKey": ["PERSONALITY", "TASTE", "LIFESTYLE"]
 }
 ```
@@ -173,10 +186,22 @@ Request schema:
   "type": "object",
   "additionalProperties": false,
   "required": [
-    "id", "email", "displayName", "city", "countryCode",
-    "minMonthlyBudget", "maxMonthlyBudget", "currency",
-    "cleanliness", "socialLevel", "sleepSchedule", "noiseTolerance",
-    "guestsFrequency", "smokingAllowed", "petsAllowed", "hasPets"
+    "id",
+    "email",
+    "displayName",
+    "city",
+    "countryCode",
+    "minMonthlyBudget",
+    "maxMonthlyBudget",
+    "currency",
+    "cleanliness",
+    "socialLevel",
+    "sleepSchedule",
+    "noiseTolerance",
+    "guestsFrequency",
+    "smokingAllowed",
+    "petsAllowed",
+    "hasPets"
   ],
   "properties": {
     "id": { "type": "string", "format": "uuid" },
@@ -189,13 +214,25 @@ Request schema:
       ],
       "description": "ISO date or date-time, e.g. 2000-01-31."
     },
-    "gender": { "enum": ["WOMAN", "MAN", "NON_BINARY", "OTHER", "PREFER_NOT_TO_SAY"] },
+    "gender": {
+      "enum": ["WOMAN", "MAN", "NON_BINARY", "OTHER", "PREFER_NOT_TO_SAY"]
+    },
     "bio": { "type": "string", "maxLength": 1000 },
     "city": { "type": "string", "minLength": 1, "maxLength": 100 },
-    "countryCode": { "type": "string", "minLength": 2, "maxLength": 2, "description": "Use an ISO 3166-1 alpha-2 code." },
+    "countryCode": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 2,
+      "description": "Use an ISO 3166-1 alpha-2 code."
+    },
     "minMonthlyBudget": { "type": "integer", "minimum": 0 },
     "maxMonthlyBudget": { "type": "integer", "minimum": 1 },
-    "currency": { "type": "string", "minLength": 3, "maxLength": 3, "description": "Use an ISO 4217 currency code." },
+    "currency": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 3,
+      "description": "Use an ISO 4217 currency code."
+    },
     "moveInDate": {
       "oneOf": [
         { "type": "string", "format": "date" },
@@ -225,7 +262,17 @@ Response schema:
     "housing": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["id", "userId", "city", "countryCode", "minMonthlyBudget", "maxMonthlyBudget", "currency", "moveInDate", "preferredAreas"],
+      "required": [
+        "id",
+        "userId",
+        "city",
+        "countryCode",
+        "minMonthlyBudget",
+        "maxMonthlyBudget",
+        "currency",
+        "moveInDate",
+        "preferredAreas"
+      ],
       "properties": {
         "id": { "type": "string", "format": "uuid" },
         "userId": { "type": "string", "format": "uuid" },
@@ -241,7 +288,18 @@ Response schema:
     "lifestyle": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["id", "userId", "cleanliness", "socialLevel", "sleepSchedule", "noiseTolerance", "guestsFrequency", "smokingAllowed", "petsAllowed", "hasPets"],
+      "required": [
+        "id",
+        "userId",
+        "cleanliness",
+        "socialLevel",
+        "sleepSchedule",
+        "noiseTolerance",
+        "guestsFrequency",
+        "smokingAllowed",
+        "petsAllowed",
+        "hasPets"
+      ],
       "properties": {
         "id": { "type": "string", "format": "uuid" },
         "userId": { "type": "string", "format": "uuid" },
@@ -258,7 +316,23 @@ Response schema:
   },
   "type": "object",
   "additionalProperties": false,
-  "required": ["id", "email", "passwordHash", "role", "displayName", "birthDate", "gender", "bio", "avatarUrl", "isDiscoverable", "onboardingComplete", "createdAt", "updatedAt", "housingPreference", "lifestyleProfile"],
+  "required": [
+    "id",
+    "email",
+    "passwordHash",
+    "role",
+    "displayName",
+    "birthDate",
+    "gender",
+    "bio",
+    "avatarUrl",
+    "isDiscoverable",
+    "onboardingComplete",
+    "createdAt",
+    "updatedAt",
+    "housingPreference",
+    "lifestyleProfile"
+  ],
   "properties": {
     "id": { "type": "string", "format": "uuid" },
     "email": { "type": "string", "format": "email" },
@@ -266,7 +340,14 @@ Response schema:
     "role": { "enum": ["USER", "ADMIN"] },
     "displayName": { "type": ["string", "null"] },
     "birthDate": { "type": ["string", "null"], "format": "date-time" },
-    "gender": { "oneOf": [{ "enum": ["WOMAN", "MAN", "NON_BINARY", "OTHER", "PREFER_NOT_TO_SAY"] }, { "type": "null" }] },
+    "gender": {
+      "oneOf": [
+        {
+          "enum": ["WOMAN", "MAN", "NON_BINARY", "OTHER", "PREFER_NOT_TO_SAY"]
+        },
+        { "type": "null" }
+      ]
+    },
     "bio": { "type": ["string", "null"] },
     "avatarUrl": { "type": ["string", "null"] },
     "isDiscoverable": { "type": "boolean" },
@@ -282,6 +363,42 @@ Response schema:
 Important: this endpoint currently returns `passwordHash`. The frontend must ignore it and must never store or display it; the backend should be changed to omit it.
 
 Errors: `400` validation failure or `"Minimum budget cannot exceed maximum budget"`. Database conflicts such as an email already owned by another user are not currently mapped to a stable client error.
+
+## 3a. Update a user's profile image
+
+`PATCH /api/users/me/avatar` — bearer JWT required — HTTP `200`
+
+Stores an externally hosted HTTP(S) image URL in the user's existing `avatarUrl` field. This endpoint does not upload or host image files. Send `null` to remove the current profile image.
+
+Request schema:
+
+```json
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["avatarUrl"],
+  "properties": {
+    "avatarUrl": {
+      "type": ["string", "null"],
+      "format": "uri",
+      "maxLength": 2048,
+      "description": "An absolute HTTP or HTTPS URL, or null to clear the image."
+    }
+  }
+}
+```
+
+Example response:
+
+```json
+{
+  "id": "59b247da-1479-45c1-9c11-6493b63eea4f",
+  "avatarUrl": "https://images.example.com/profile.jpg"
+}
+```
+
+Errors: `400` for a missing `avatarUrl` or a URL that is not HTTP(S); `401` for a missing or invalid JWT; `404` with `"User not found"` when the authenticated user no longer exists.
 
 ## 4. Get a user and profile
 
@@ -301,7 +418,24 @@ Response schema: the same user scalar fields, `housingPreference`, and `lifestyl
     {
       "type": "object",
       "additionalProperties": false,
-      "required": ["id", "email", "passwordHash", "role", "displayName", "birthDate", "gender", "bio", "avatarUrl", "isDiscoverable", "onboardingComplete", "createdAt", "updatedAt", "housingPreference", "lifestyleProfile", "integrations"],
+      "required": [
+        "id",
+        "email",
+        "passwordHash",
+        "role",
+        "displayName",
+        "birthDate",
+        "gender",
+        "bio",
+        "avatarUrl",
+        "isDiscoverable",
+        "onboardingComplete",
+        "createdAt",
+        "updatedAt",
+        "housingPreference",
+        "lifestyleProfile",
+        "integrations"
+      ],
       "properties": {
         "id": { "type": "string", "format": "uuid" },
         "email": { "type": "string", "format": "email" },
@@ -309,15 +443,32 @@ Response schema: the same user scalar fields, `housingPreference`, and `lifestyl
         "role": { "enum": ["USER", "ADMIN"] },
         "displayName": { "type": ["string", "null"] },
         "birthDate": { "type": ["string", "null"], "format": "date-time" },
-        "gender": { "oneOf": [{ "enum": ["WOMAN", "MAN", "NON_BINARY", "OTHER", "PREFER_NOT_TO_SAY"] }, { "type": "null" }] },
+        "gender": {
+          "oneOf": [
+            {
+              "enum": [
+                "WOMAN",
+                "MAN",
+                "NON_BINARY",
+                "OTHER",
+                "PREFER_NOT_TO_SAY"
+              ]
+            },
+            { "type": "null" }
+          ]
+        },
         "bio": { "type": ["string", "null"] },
         "avatarUrl": { "type": ["string", "null"] },
         "isDiscoverable": { "type": "boolean" },
         "onboardingComplete": { "type": "boolean" },
         "createdAt": { "type": "string", "format": "date-time" },
         "updatedAt": { "type": "string", "format": "date-time" },
-        "housingPreference": { "description": "Null or the housing object from endpoint 3" },
-        "lifestyleProfile": { "description": "Null or the lifestyle object from endpoint 3" },
+        "housingPreference": {
+          "description": "Null or the housing object from endpoint 3"
+        },
+        "lifestyleProfile": {
+          "description": "Null or the lifestyle object from endpoint 3"
+        },
         "integrations": {
           "type": "array",
           "items": {
@@ -327,8 +478,19 @@ Response schema: the same user scalar fields, `housingPreference`, and `lifestyl
             "properties": {
               "provider": { "enum": ["SPOTIFY", "LETTERBOXD"] },
               "username": { "type": ["string", "null"] },
-              "status": { "enum": ["PENDING", "CONNECTED", "EXPIRED", "ERROR", "DISCONNECTED"] },
-              "lastSyncedAt": { "type": ["string", "null"], "format": "date-time" }
+              "status": {
+                "enum": [
+                  "PENDING",
+                  "CONNECTED",
+                  "EXPIRED",
+                  "ERROR",
+                  "DISCONNECTED"
+                ]
+              },
+              "lastSyncedAt": {
+                "type": ["string", "null"],
+                "format": "date-time"
+              }
             }
           }
         }
@@ -388,7 +550,17 @@ Response schema:
     {
       "type": "object",
       "additionalProperties": false,
-      "required": ["id", "slug", "name", "type", "version", "description", "isActive", "createdAt", "questions"],
+      "required": [
+        "id",
+        "slug",
+        "name",
+        "type",
+        "version",
+        "description",
+        "isActive",
+        "createdAt",
+        "questions"
+      ],
       "properties": {
         "id": { "type": "string", "format": "uuid" },
         "slug": { "type": "string" },
@@ -403,14 +575,42 @@ Response schema:
           "items": {
             "type": "object",
             "additionalProperties": false,
-            "required": ["id", "code", "prompt", "kind", "position", "options", "minValue", "maxValue"],
+            "required": [
+              "id",
+              "code",
+              "prompt",
+              "kind",
+              "position",
+              "options",
+              "minValue",
+              "maxValue"
+            ],
             "properties": {
               "id": { "type": "string", "format": "uuid" },
               "code": { "type": "string" },
               "prompt": { "type": "string" },
-              "kind": { "enum": ["LIKERT", "SINGLE_CHOICE", "MULTIPLE_CHOICE", "BOOLEAN", "NUMBER", "TEXT"] },
+              "kind": {
+                "enum": [
+                  "LIKERT",
+                  "SINGLE_CHOICE",
+                  "MULTIPLE_CHOICE",
+                  "BOOLEAN",
+                  "NUMBER",
+                  "TEXT"
+                ]
+              },
               "position": { "type": "integer" },
-              "options": { "type": ["array", "object", "string", "number", "boolean", "null"], "description": "Arbitrary JSON stored by the backend; seeded choice questions use an array of {value,label} objects." },
+              "options": {
+                "type": [
+                  "array",
+                  "object",
+                  "string",
+                  "number",
+                  "boolean",
+                  "null"
+                ],
+                "description": "Arbitrary JSON stored by the backend; seeded choice questions use an array of {value,label} objects."
+              },
               "minValue": { "type": ["integer", "null"] },
               "maxValue": { "type": ["integer", "null"] }
             }
@@ -464,7 +664,14 @@ Response schema:
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "type": "object",
   "additionalProperties": false,
-  "required": ["id", "userId", "testDefinitionId", "completedAt", "createdAt", "traitScores"],
+  "required": [
+    "id",
+    "userId",
+    "testDefinitionId",
+    "completedAt",
+    "createdAt",
+    "traitScores"
+  ],
   "properties": {
     "id": { "type": "string", "format": "uuid" },
     "userId": { "type": "string", "format": "uuid" },
@@ -520,7 +727,19 @@ Response schema:
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "type": "object",
   "additionalProperties": false,
-  "required": ["id", "userId", "provider", "externalUserId", "username", "accessTokenEncrypted", "refreshTokenEncrypted", "tokenExpiresAt", "status", "lastSyncedAt", "metadata"],
+  "required": [
+    "id",
+    "userId",
+    "provider",
+    "externalUserId",
+    "username",
+    "accessTokenEncrypted",
+    "refreshTokenEncrypted",
+    "tokenExpiresAt",
+    "status",
+    "lastSyncedAt",
+    "metadata"
+  ],
   "properties": {
     "id": { "type": "string", "format": "uuid" },
     "userId": { "type": "string", "format": "uuid" },
@@ -530,9 +749,13 @@ Response schema:
     "accessTokenEncrypted": { "type": ["string", "null"] },
     "refreshTokenEncrypted": { "type": ["string", "null"] },
     "tokenExpiresAt": { "type": ["string", "null"], "format": "date-time" },
-    "status": { "enum": ["PENDING", "CONNECTED", "EXPIRED", "ERROR", "DISCONNECTED"] },
+    "status": {
+      "enum": ["PENDING", "CONNECTED", "EXPIRED", "ERROR", "DISCONNECTED"]
+    },
     "lastSyncedAt": { "type": ["string", "null"], "format": "date-time" },
-    "metadata": { "type": ["object", "array", "string", "number", "boolean", "null"] }
+    "metadata": {
+      "type": ["object", "array", "string", "number", "boolean", "null"]
+    }
   }
 }
 ```
@@ -564,7 +787,10 @@ Request schema:
         "required": ["externalId", "kind", "name"],
         "properties": {
           "externalId": { "type": "string" },
-          "kind": { "type": "string", "description": "Provider-neutral category such as track, artist, film, or genre." },
+          "kind": {
+            "type": "string",
+            "description": "Provider-neutral category such as track, artist, film, or genre."
+          },
           "name": { "type": "string" },
           "artists": { "type": "array", "items": { "type": "string" } },
           "genres": { "type": "array", "items": { "type": "string" } },
@@ -663,7 +889,14 @@ Response schema:
               "required": ["sharedTraits", "byTrait"],
               "properties": {
                 "sharedTraits": { "type": "integer", "minimum": 1 },
-                "byTrait": { "type": "object", "additionalProperties": { "type": "number", "minimum": 0, "maximum": 1 } }
+                "byTrait": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                  }
+                }
               }
             },
             {
@@ -672,7 +905,11 @@ Response schema:
               "required": ["sharedCount", "shared"],
               "properties": {
                 "sharedCount": { "type": "integer", "minimum": 0 },
-                "shared": { "type": "array", "maxItems": 12, "items": { "type": "string" } }
+                "shared": {
+                  "type": "array",
+                  "maxItems": 12,
+                  "items": { "type": "string" }
+                }
               }
             },
             {
@@ -683,7 +920,13 @@ Response schema:
                 "byDimension": {
                   "type": "object",
                   "additionalProperties": false,
-                  "required": ["cleanliness", "socialLevel", "sleepSchedule", "noiseTolerance", "guestsFrequency"],
+                  "required": [
+                    "cleanliness",
+                    "socialLevel",
+                    "sleepSchedule",
+                    "noiseTolerance",
+                    "guestsFrequency"
+                  ],
                   "properties": {
                     "cleanliness": { "type": "number" },
                     "socialLevel": { "type": "number" },
@@ -730,7 +973,10 @@ Response schema:
               "bio": { "type": ["string", "null"] }
             }
           },
-          "breakdown": { "type": "array", "items": { "$ref": "#/$defs/breakdown" } }
+          "breakdown": {
+            "type": "array",
+            "items": { "$ref": "#/$defs/breakdown" }
+          }
         }
       }
     }
@@ -770,14 +1016,24 @@ Response schema:
   "items": {
     "type": "object",
     "additionalProperties": false,
-    "required": ["id", "key", "enabled", "weight", "version", "settings", "updatedAt"],
+    "required": [
+      "id",
+      "key",
+      "enabled",
+      "weight",
+      "version",
+      "settings",
+      "updatedAt"
+    ],
     "properties": {
       "id": { "type": "string", "format": "uuid" },
       "key": { "enum": ["PERSONALITY", "TASTE", "LIFESTYLE"] },
       "enabled": { "type": "boolean" },
       "weight": { "type": "number" },
       "version": { "type": "string" },
-      "settings": { "type": ["object", "array", "string", "number", "boolean", "null"] },
+      "settings": {
+        "type": ["object", "array", "string", "number", "boolean", "null"]
+      },
       "updatedAt": { "type": "string", "format": "date-time" }
     }
   }
@@ -831,7 +1087,17 @@ Request schema:
       "properties": {
         "code": { "type": "string", "minLength": 1, "maxLength": 50 },
         "prompt": { "type": "string", "minLength": 1, "maxLength": 1000 },
-        "kind": { "enum": ["LIKERT", "SINGLE_CHOICE", "MULTIPLE_CHOICE", "BOOLEAN", "NUMBER", "TEXT"], "default": "LIKERT" },
+        "kind": {
+          "enum": [
+            "LIKERT",
+            "SINGLE_CHOICE",
+            "MULTIPLE_CHOICE",
+            "BOOLEAN",
+            "NUMBER",
+            "TEXT"
+          ],
+          "default": "LIKERT"
+        },
         "trait": { "type": "string", "minLength": 1, "maxLength": 100 },
         "reverseScored": { "type": "boolean", "default": false },
         "position": { "type": "integer", "minimum": 1 },
@@ -846,7 +1112,11 @@ Request schema:
   "additionalProperties": false,
   "required": ["questions"],
   "properties": {
-    "questions": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/questionInput" } }
+    "questions": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/questionInput" }
+    }
   }
 }
 ```
@@ -860,17 +1130,41 @@ Response schema:
   "items": {
     "type": "object",
     "additionalProperties": false,
-    "required": ["id", "testDefinitionId", "code", "prompt", "kind", "trait", "reverseScored", "position", "options", "minValue", "maxValue", "weight"],
+    "required": [
+      "id",
+      "testDefinitionId",
+      "code",
+      "prompt",
+      "kind",
+      "trait",
+      "reverseScored",
+      "position",
+      "options",
+      "minValue",
+      "maxValue",
+      "weight"
+    ],
     "properties": {
       "id": { "type": "string", "format": "uuid" },
       "testDefinitionId": { "type": "string", "format": "uuid" },
       "code": { "type": "string" },
       "prompt": { "type": "string" },
-      "kind": { "enum": ["LIKERT", "SINGLE_CHOICE", "MULTIPLE_CHOICE", "BOOLEAN", "NUMBER", "TEXT"] },
+      "kind": {
+        "enum": [
+          "LIKERT",
+          "SINGLE_CHOICE",
+          "MULTIPLE_CHOICE",
+          "BOOLEAN",
+          "NUMBER",
+          "TEXT"
+        ]
+      },
       "trait": { "type": "string" },
       "reverseScored": { "type": "boolean" },
       "position": { "type": "integer" },
-      "options": { "type": ["array", "object", "string", "number", "boolean", "null"] },
+      "options": {
+        "type": ["array", "object", "string", "number", "boolean", "null"]
+      },
       "minValue": { "type": ["integer", "null"] },
       "maxValue": { "type": ["integer", "null"] },
       "weight": { "type": "number" }
@@ -897,7 +1191,16 @@ Request schema:
   "properties": {
     "code": { "type": "string", "minLength": 1, "maxLength": 50 },
     "prompt": { "type": "string", "minLength": 1, "maxLength": 1000 },
-    "kind": { "enum": ["LIKERT", "SINGLE_CHOICE", "MULTIPLE_CHOICE", "BOOLEAN", "NUMBER", "TEXT"] },
+    "kind": {
+      "enum": [
+        "LIKERT",
+        "SINGLE_CHOICE",
+        "MULTIPLE_CHOICE",
+        "BOOLEAN",
+        "NUMBER",
+        "TEXT"
+      ]
+    },
     "trait": { "type": "string", "minLength": 1, "maxLength": 100 },
     "reverseScored": { "type": "boolean" },
     "position": { "type": "integer", "minimum": 1 },
@@ -969,5 +1272,5 @@ Socket.IO uses the `/chat` namespace and WebSocket-only transport. The authentic
 - Do not send numeric input values as strings. Runtime implicit numeric conversion is not enabled, so values such as `"20"` fail integer/number validation.
 - Preserve enum casing exactly as documented.
 - Treat `GET /api/users/:id` and `GET /api/tests/:slug` as nullable success responses.
-- The backend does not currently expose endpoints to update `avatarUrl` or `isDiscoverable`, list match history, disconnect integrations, or retrieve submitted test attempts.
+- The backend does not currently expose endpoints to update `isDiscoverable`, list match history, disconnect integrations, or retrieve submitted test attempts.
 - The response leaks called out above are backend defects, not fields the frontend should depend on.
