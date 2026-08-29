@@ -488,14 +488,6 @@ export type HousingPreferenceCreatepreferredAreasInput = {
   set: string[]
 }
 
-export type IntFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
 export type HousingPreferenceUpdatepreferredAreasInput = {
   set?: string[]
   push?: string | string[]

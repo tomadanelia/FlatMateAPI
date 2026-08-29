@@ -16,7 +16,7 @@ This document describes the HTTP contract implemented by the current NestJS back
 
 ## Authentication
 
-Signup and login return a JWT. For protected endpoints send:
+Email verification and login return a JWT. Signup only sends a verification code. For protected endpoints send:
 
 ```http
 Authorization: Bearer <accessToken>
@@ -91,7 +91,7 @@ Example:
 
 `POST /api/auth/signup` — public — HTTP `201`
 
-Creates a user, normalizes the email by trimming and lowercasing it, trims `displayName`, and returns a signed access token.
+Creates an unverified user, normalizes the email by trimming and lowercasing it, trims `displayName`, stores a bcrypt hash of a six-digit verification code, and sends the code through Resend. Codes expire after 10 minutes.
 
 Request schema:
 
@@ -126,26 +126,28 @@ Response schema:
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "type": "object",
   "additionalProperties": false,
-  "required": ["accessToken", "tokenType", "user"],
+  "required": ["message", "email", "expiresInSeconds"],
   "properties": {
-    "accessToken": { "type": "string" },
-    "tokenType": { "const": "Bearer" },
-    "user": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": ["id", "email", "displayName", "role"],
-      "properties": {
-        "id": { "type": "string", "format": "uuid" },
-        "email": { "type": "string", "format": "email" },
-        "displayName": { "type": ["string", "null"] },
-        "role": { "enum": ["USER", "ADMIN"] }
-      }
-    }
+    "message": { "type": "string" },
+    "email": { "type": "string", "format": "email" },
+    "expiresInSeconds": { "const": 600 }
   }
 }
 ```
 
-Errors: `400` validation failure; `409` with `"An account with this email already exists"`.
+Errors: `400` validation failure; `409` for an existing or pending account; `503` when Resend is unavailable. A pending account can use the resend endpoint.
+
+## 1a. Verify signup email
+
+`POST /api/auth/verify-email` — public — HTTP `200`
+
+Request: `{ "email": "person@example.com", "code": "123456" }`. A valid code marks the email verified, consumes the code, and returns `{ accessToken, tokenType, user }`. The user object contains `id`, `email`, `displayName`, and `role`. A code permits at most five failed attempts. Invalid, expired, already-used, and unknown-account codes all return `400` with `"Invalid or expired verification code"`.
+
+## 1b. Resend signup verification
+
+`POST /api/auth/resend-verification` — public — HTTP `200`
+
+Request: `{ "email": "person@example.com" }`. For a pending account, this replaces the old code and emails a fresh one. Requests are limited to one send per minute. The response is deliberately identical for unknown, verified, rate-limited, and pending accounts so the endpoint does not disclose account status.
 
 ## 2. Log in
 
@@ -168,9 +170,9 @@ Request schema:
 }
 ```
 
-Response schema: identical to signup's response schema.
+Response schema: `{ accessToken, tokenType, user }`, identical to the successful email-verification response. Once verified, future logins never require another email code.
 
-Errors: `400` validation failure; `401` with `"Invalid email or password"`.
+Errors: `400` validation failure; `401` with `"Invalid email or password"`; `403` with `"Email verification is required"` only after the correct password is supplied for a pending account.
 
 ## 3. Create or update a user's profile
 

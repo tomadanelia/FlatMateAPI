@@ -19,7 +19,7 @@ To add or replace an algorithm, implement `MatchingAlgorithm`, register the clas
 ## Setup
 
 1. Create a Supabase project and copy `.env.example` to `.env`.
-2. Put the pooled Supabase PostgreSQL URL in `DATABASE_URL` and direct port-5432 URL in `DIRECT_URL`. Runtime queries use `DATABASE_URL` through Prisma 7's `@prisma/adapter-pg`; Prisma CLI migrations use `DIRECT_URL` from `prisma.config.ts`. Set `JWT_SECRET` to a separate long random value and optionally change `JWT_EXPIRES_IN` (defaults to `7d`).
+2. Put the pooled Supabase PostgreSQL URL in `DATABASE_URL` and direct port-5432 URL in `DIRECT_URL`. Runtime queries use `DATABASE_URL` through Prisma 7's `@prisma/adapter-pg`; Prisma CLI migrations use `DIRECT_URL` from `prisma.config.ts`. Set `JWT_SECRET` to a separate long random value and optionally change `JWT_EXPIRES_IN` (defaults to `7d`). Set `RESEND_API_KEY` and, in production, set `RESEND_FROM_EMAIL` to a sender on a domain verified in Resend.
 3. Run:
 
 ```bash
@@ -34,8 +34,10 @@ The migrations create users, housing/lifestyle profiles, versioned tests and que
 
 ## Main endpoints
 
-- `POST /api/auth/signup` — create an account and receive a JWT.
-- `POST /api/auth/login` — authenticate with email/password and receive a JWT.
+- `POST /api/auth/signup` — create an unverified account and email a one-time code.
+- `POST /api/auth/verify-email` — verify the signup code and receive a JWT.
+- `POST /api/auth/resend-verification` — replace and resend an expired or lost code.
+- `POST /api/auth/login` — authenticate a verified account with email/password and receive a JWT; no code is required again.
 - `PUT /api/users/profile` — create/update onboarding, rent and lifestyle data.
 - `PATCH /api/users/me/avatar` — save, replace or clear the authenticated user's profile image URL.
 - `GET /api/tests` and `GET /api/tests/:slug` — available tests/questions.
@@ -57,7 +59,7 @@ The migrations create users, housing/lifestyle profiles, versioned tests and que
 - `PATCH /api/admin/users/:id/role` — grant or revoke a user's admin role (admin only).
 - `DELETE /api/admin/messages` — delete every message and retain empty conversations (admin only).
 
-Signup request:
+Signup request (the response tells the client to show its code-entry screen):
 
 ```json
 {
@@ -67,7 +69,15 @@ Signup request:
 }
 ```
 
-Login and use the returned JWT:
+Verify once and use the returned JWT:
+
+```bash
+curl -X POST http://localhost:3000/api/auth/verify-email \
+  -H "Content-Type: application/json" \
+  -d '{"email":"person@example.com","code":"123456"}'
+```
+
+Future logins need only the password:
 
 ```bash
 curl -X POST http://localhost:3000/api/auth/login \
