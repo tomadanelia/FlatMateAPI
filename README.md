@@ -12,9 +12,9 @@ Current strategies:
 - `TASTE`: Jaccard similarity across normalized Spotify/Letterboxd titles, artists and genres.
 - `LIFESTYLE`: compatibility across cleanliness, schedule, sociability, noise, guests, pets and smoking.
 
-City, currency and overlapping rent budgets are hard candidate filters. Missing optional data omits that strategy for that pair and the remaining weights are normalized, so it does not unfairly become a zero.
+Country/city, currency, overlapping rent budgets, reciprocal gender preferences, discoverability, onboarding, and (when supplied) move-in dates within 30 days are hard candidate filters. Matching is calculated from current profile data on demand. A cheap budget/date/lifestyle pass selects at most 50 candidates before personality and taste run, and at most 20 matches are returned. Missing optional data omits that strategy for that pair and the remaining weights are normalized, so it does not unfairly become a zero.
 
-To add or replace an algorithm, implement `MatchingAlgorithm`, register the class in `MatchingModule` and add it to `AlgorithmRegistry`. Callers and stored match-result structure remain unchanged. Each run stores the algorithm version, score, weight and explanation for auditability.
+To add or replace an algorithm, implement `MatchingAlgorithm`, register the class in `MatchingModule` and add it to `AlgorithmRegistry`. Algorithm scores and explanations are returned to the caller but are not persisted.
 
 ## Setup
 
@@ -30,7 +30,7 @@ npx prisma db seed
 npm run start:dev
 ```
 
-The migrations create users, housing/lifestyle profiles, versioned tests and questions, attempts/responses/trait scores, external integrations and taste items, algorithm configuration, match runs/results, direct conversations, and messages.
+The migrations create users, housing/lifestyle profiles, versioned tests and questions, attempts/responses/trait scores, external integrations and taste items, algorithm configuration, direct conversations, and messages.
 
 ## Main endpoints
 
@@ -46,7 +46,7 @@ The migrations create users, housing/lifestyle profiles, versioned tests and que
 - `POST /api/integrations/letterboxd/connect` — verify a public Letterboxd username and sync its favorite films.
 - `GET /api/integrations/letterboxd/:userId/favorites` — return a user's stored Letterboxd favorite films and poster URLs.
 - `POST /api/integrations/taste/sync` — ingestion boundary for normalized provider data.
-- `POST /api/matches/search` — run enabled strategies. Pass `algorithms` to run only selected ones.
+- `POST /api/matches/search` — calculate current matches on demand. Pass `algorithms` to run only selected ones.
 - `POST /api/messages/conversations` — get or create a direct conversation (JWT required).
 - `GET /api/messages/conversations` — list the current user's conversations (JWT required).
 - `GET /api/messages/conversations/:id` — page through newest-first message history (JWT required).

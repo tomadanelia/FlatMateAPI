@@ -74,10 +74,7 @@ export const ModelName = {
   MovieGenreLink: 'MovieGenreLink',
   UserMovieGenre: 'UserMovieGenre',
   UserMovie: 'UserMovie',
-  AlgorithmConfig: 'AlgorithmConfig',
-  MatchRun: 'MatchRun',
-  MatchResult: 'MatchResult',
-  MatchAlgorithmScore: 'MatchAlgorithmScore'
+  AlgorithmConfig: 'AlgorithmConfig'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -162,7 +159,8 @@ export const HousingPreferenceScalarFieldEnum = {
   maxMonthlyBudget: 'maxMonthlyBudget',
   currency: 'currency',
   moveInDate: 'moveInDate',
-  preferredAreas: 'preferredAreas'
+  preferredAreas: 'preferredAreas',
+  preferredRoommateGenders: 'preferredRoommateGenders'
 } as const
 
 export type HousingPreferenceScalarFieldEnum = (typeof HousingPreferenceScalarFieldEnum)[keyof typeof HousingPreferenceScalarFieldEnum]
@@ -371,44 +369,6 @@ export const AlgorithmConfigScalarFieldEnum = {
 } as const
 
 export type AlgorithmConfigScalarFieldEnum = (typeof AlgorithmConfigScalarFieldEnum)[keyof typeof AlgorithmConfigScalarFieldEnum]
-
-
-export const MatchRunScalarFieldEnum = {
-  id: 'id',
-  subjectId: 'subjectId',
-  status: 'status',
-  context: 'context',
-  error: 'error',
-  createdAt: 'createdAt'
-} as const
-
-export type MatchRunScalarFieldEnum = (typeof MatchRunScalarFieldEnum)[keyof typeof MatchRunScalarFieldEnum]
-
-
-export const MatchResultScalarFieldEnum = {
-  id: 'id',
-  matchRunId: 'matchRunId',
-  subjectId: 'subjectId',
-  candidateId: 'candidateId',
-  totalScore: 'totalScore',
-  rank: 'rank',
-  explanation: 'explanation'
-} as const
-
-export type MatchResultScalarFieldEnum = (typeof MatchResultScalarFieldEnum)[keyof typeof MatchResultScalarFieldEnum]
-
-
-export const MatchAlgorithmScoreScalarFieldEnum = {
-  id: 'id',
-  matchResultId: 'matchResultId',
-  algorithmKey: 'algorithmKey',
-  score: 'score',
-  weight: 'weight',
-  version: 'version',
-  explanation: 'explanation'
-} as const
-
-export type MatchAlgorithmScoreScalarFieldEnum = (typeof MatchAlgorithmScoreScalarFieldEnum)[keyof typeof MatchAlgorithmScoreScalarFieldEnum]
 
 
 export const SortOrder = {

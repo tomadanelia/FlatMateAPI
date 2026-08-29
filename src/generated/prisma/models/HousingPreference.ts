@@ -68,6 +68,7 @@ export type HousingPreferenceCountAggregateOutputType = {
   currency: number
   moveInDate: number
   preferredAreas: number
+  preferredRoommateGenders: number
   _all: number
 }
 
@@ -114,6 +115,7 @@ export type HousingPreferenceCountAggregateInputType = {
   currency?: true
   moveInDate?: true
   preferredAreas?: true
+  preferredRoommateGenders?: true
   _all?: true
 }
 
@@ -213,6 +215,7 @@ export type HousingPreferenceGroupByOutputType = {
   currency: string
   moveInDate: Date | null
   preferredAreas: string[]
+  preferredRoommateGenders: $Enums.Gender[]
   _count: HousingPreferenceCountAggregateOutputType | null
   _avg: HousingPreferenceAvgAggregateOutputType | null
   _sum: HousingPreferenceSumAggregateOutputType | null
@@ -248,6 +251,7 @@ export type HousingPreferenceWhereInput = {
   currency?: Prisma.StringFilter<"HousingPreference"> | string
   moveInDate?: Prisma.DateTimeNullableFilter<"HousingPreference"> | Date | string | null
   preferredAreas?: Prisma.StringNullableListFilter<"HousingPreference">
+  preferredRoommateGenders?: Prisma.EnumGenderNullableListFilter<"HousingPreference">
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
 
@@ -261,6 +265,7 @@ export type HousingPreferenceOrderByWithRelationInput = {
   currency?: Prisma.SortOrder
   moveInDate?: Prisma.SortOrderInput | Prisma.SortOrder
   preferredAreas?: Prisma.SortOrder
+  preferredRoommateGenders?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
 }
 
@@ -277,6 +282,7 @@ export type HousingPreferenceWhereUniqueInput = Prisma.AtLeast<{
   currency?: Prisma.StringFilter<"HousingPreference"> | string
   moveInDate?: Prisma.DateTimeNullableFilter<"HousingPreference"> | Date | string | null
   preferredAreas?: Prisma.StringNullableListFilter<"HousingPreference">
+  preferredRoommateGenders?: Prisma.EnumGenderNullableListFilter<"HousingPreference">
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id" | "userId">
 
@@ -290,6 +296,7 @@ export type HousingPreferenceOrderByWithAggregationInput = {
   currency?: Prisma.SortOrder
   moveInDate?: Prisma.SortOrderInput | Prisma.SortOrder
   preferredAreas?: Prisma.SortOrder
+  preferredRoommateGenders?: Prisma.SortOrder
   _count?: Prisma.HousingPreferenceCountOrderByAggregateInput
   _avg?: Prisma.HousingPreferenceAvgOrderByAggregateInput
   _max?: Prisma.HousingPreferenceMaxOrderByAggregateInput
@@ -310,6 +317,7 @@ export type HousingPreferenceScalarWhereWithAggregatesInput = {
   currency?: Prisma.StringWithAggregatesFilter<"HousingPreference"> | string
   moveInDate?: Prisma.DateTimeNullableWithAggregatesFilter<"HousingPreference"> | Date | string | null
   preferredAreas?: Prisma.StringNullableListFilter<"HousingPreference">
+  preferredRoommateGenders?: Prisma.EnumGenderNullableListFilter<"HousingPreference">
 }
 
 export type HousingPreferenceCreateInput = {
@@ -321,6 +329,7 @@ export type HousingPreferenceCreateInput = {
   currency?: string
   moveInDate?: Date | string | null
   preferredAreas?: Prisma.HousingPreferenceCreatepreferredAreasInput | string[]
+  preferredRoommateGenders?: Prisma.HousingPreferenceCreatepreferredRoommateGendersInput | $Enums.Gender[]
   user: Prisma.UserCreateNestedOneWithoutHousingPreferenceInput
 }
 
@@ -334,6 +343,7 @@ export type HousingPreferenceUncheckedCreateInput = {
   currency?: string
   moveInDate?: Date | string | null
   preferredAreas?: Prisma.HousingPreferenceCreatepreferredAreasInput | string[]
+  preferredRoommateGenders?: Prisma.HousingPreferenceCreatepreferredRoommateGendersInput | $Enums.Gender[]
 }
 
 export type HousingPreferenceUpdateInput = {
@@ -345,6 +355,7 @@ export type HousingPreferenceUpdateInput = {
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   moveInDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   preferredAreas?: Prisma.HousingPreferenceUpdatepreferredAreasInput | string[]
+  preferredRoommateGenders?: Prisma.HousingPreferenceUpdatepreferredRoommateGendersInput | $Enums.Gender[]
   user?: Prisma.UserUpdateOneRequiredWithoutHousingPreferenceNestedInput
 }
 
@@ -358,6 +369,7 @@ export type HousingPreferenceUncheckedUpdateInput = {
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   moveInDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   preferredAreas?: Prisma.HousingPreferenceUpdatepreferredAreasInput | string[]
+  preferredRoommateGenders?: Prisma.HousingPreferenceUpdatepreferredRoommateGendersInput | $Enums.Gender[]
 }
 
 export type HousingPreferenceCreateManyInput = {
@@ -370,6 +382,7 @@ export type HousingPreferenceCreateManyInput = {
   currency?: string
   moveInDate?: Date | string | null
   preferredAreas?: Prisma.HousingPreferenceCreatepreferredAreasInput | string[]
+  preferredRoommateGenders?: Prisma.HousingPreferenceCreatepreferredRoommateGendersInput | $Enums.Gender[]
 }
 
 export type HousingPreferenceUpdateManyMutationInput = {
@@ -381,6 +394,7 @@ export type HousingPreferenceUpdateManyMutationInput = {
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   moveInDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   preferredAreas?: Prisma.HousingPreferenceUpdatepreferredAreasInput | string[]
+  preferredRoommateGenders?: Prisma.HousingPreferenceUpdatepreferredRoommateGendersInput | $Enums.Gender[]
 }
 
 export type HousingPreferenceUncheckedUpdateManyInput = {
@@ -393,6 +407,7 @@ export type HousingPreferenceUncheckedUpdateManyInput = {
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   moveInDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   preferredAreas?: Prisma.HousingPreferenceUpdatepreferredAreasInput | string[]
+  preferredRoommateGenders?: Prisma.HousingPreferenceUpdatepreferredRoommateGendersInput | $Enums.Gender[]
 }
 
 export type HousingPreferenceNullableScalarRelationFilter = {
@@ -408,6 +423,14 @@ export type StringNullableListFilter<$PrismaModel = never> = {
   isEmpty?: boolean
 }
 
+export type EnumGenderNullableListFilter<$PrismaModel = never> = {
+  equals?: $Enums.Gender[] | Prisma.ListEnumGenderFieldRefInput<$PrismaModel> | null
+  has?: $Enums.Gender | Prisma.EnumGenderFieldRefInput<$PrismaModel> | null
+  hasEvery?: $Enums.Gender[] | Prisma.ListEnumGenderFieldRefInput<$PrismaModel>
+  hasSome?: $Enums.Gender[] | Prisma.ListEnumGenderFieldRefInput<$PrismaModel>
+  isEmpty?: boolean
+}
+
 export type HousingPreferenceCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
@@ -418,6 +441,7 @@ export type HousingPreferenceCountOrderByAggregateInput = {
   currency?: Prisma.SortOrder
   moveInDate?: Prisma.SortOrder
   preferredAreas?: Prisma.SortOrder
+  preferredRoommateGenders?: Prisma.SortOrder
 }
 
 export type HousingPreferenceAvgOrderByAggregateInput = {
@@ -488,9 +512,18 @@ export type HousingPreferenceCreatepreferredAreasInput = {
   set: string[]
 }
 
+export type HousingPreferenceCreatepreferredRoommateGendersInput = {
+  set: $Enums.Gender[]
+}
+
 export type HousingPreferenceUpdatepreferredAreasInput = {
   set?: string[]
   push?: string | string[]
+}
+
+export type HousingPreferenceUpdatepreferredRoommateGendersInput = {
+  set?: $Enums.Gender[]
+  push?: $Enums.Gender | $Enums.Gender[]
 }
 
 export type HousingPreferenceCreateWithoutUserInput = {
@@ -502,6 +535,7 @@ export type HousingPreferenceCreateWithoutUserInput = {
   currency?: string
   moveInDate?: Date | string | null
   preferredAreas?: Prisma.HousingPreferenceCreatepreferredAreasInput | string[]
+  preferredRoommateGenders?: Prisma.HousingPreferenceCreatepreferredRoommateGendersInput | $Enums.Gender[]
 }
 
 export type HousingPreferenceUncheckedCreateWithoutUserInput = {
@@ -513,6 +547,7 @@ export type HousingPreferenceUncheckedCreateWithoutUserInput = {
   currency?: string
   moveInDate?: Date | string | null
   preferredAreas?: Prisma.HousingPreferenceCreatepreferredAreasInput | string[]
+  preferredRoommateGenders?: Prisma.HousingPreferenceCreatepreferredRoommateGendersInput | $Enums.Gender[]
 }
 
 export type HousingPreferenceCreateOrConnectWithoutUserInput = {
@@ -540,6 +575,7 @@ export type HousingPreferenceUpdateWithoutUserInput = {
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   moveInDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   preferredAreas?: Prisma.HousingPreferenceUpdatepreferredAreasInput | string[]
+  preferredRoommateGenders?: Prisma.HousingPreferenceUpdatepreferredRoommateGendersInput | $Enums.Gender[]
 }
 
 export type HousingPreferenceUncheckedUpdateWithoutUserInput = {
@@ -551,6 +587,7 @@ export type HousingPreferenceUncheckedUpdateWithoutUserInput = {
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   moveInDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   preferredAreas?: Prisma.HousingPreferenceUpdatepreferredAreasInput | string[]
+  preferredRoommateGenders?: Prisma.HousingPreferenceUpdatepreferredRoommateGendersInput | $Enums.Gender[]
 }
 
 
@@ -565,6 +602,7 @@ export type HousingPreferenceSelect<ExtArgs extends runtime.Types.Extensions.Int
   currency?: boolean
   moveInDate?: boolean
   preferredAreas?: boolean
+  preferredRoommateGenders?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["housingPreference"]>
 
@@ -578,6 +616,7 @@ export type HousingPreferenceSelectCreateManyAndReturn<ExtArgs extends runtime.T
   currency?: boolean
   moveInDate?: boolean
   preferredAreas?: boolean
+  preferredRoommateGenders?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["housingPreference"]>
 
@@ -591,6 +630,7 @@ export type HousingPreferenceSelectUpdateManyAndReturn<ExtArgs extends runtime.T
   currency?: boolean
   moveInDate?: boolean
   preferredAreas?: boolean
+  preferredRoommateGenders?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["housingPreference"]>
 
@@ -604,9 +644,10 @@ export type HousingPreferenceSelectScalar = {
   currency?: boolean
   moveInDate?: boolean
   preferredAreas?: boolean
+  preferredRoommateGenders?: boolean
 }
 
-export type HousingPreferenceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "city" | "countryCode" | "minMonthlyBudget" | "maxMonthlyBudget" | "currency" | "moveInDate" | "preferredAreas", ExtArgs["result"]["housingPreference"]>
+export type HousingPreferenceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "city" | "countryCode" | "minMonthlyBudget" | "maxMonthlyBudget" | "currency" | "moveInDate" | "preferredAreas" | "preferredRoommateGenders", ExtArgs["result"]["housingPreference"]>
 export type HousingPreferenceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -632,6 +673,7 @@ export type $HousingPreferencePayload<ExtArgs extends runtime.Types.Extensions.I
     currency: string
     moveInDate: Date | null
     preferredAreas: string[]
+    preferredRoommateGenders: $Enums.Gender[]
   }, ExtArgs["result"]["housingPreference"]>
   composites: {}
 }
@@ -1065,6 +1107,7 @@ export interface HousingPreferenceFieldRefs {
   readonly currency: Prisma.FieldRef<"HousingPreference", 'String'>
   readonly moveInDate: Prisma.FieldRef<"HousingPreference", 'DateTime'>
   readonly preferredAreas: Prisma.FieldRef<"HousingPreference", 'String[]'>
+  readonly preferredRoommateGenders: Prisma.FieldRef<"HousingPreference", 'Gender[]'>
 }
     
 

@@ -75,12 +75,3 @@ export const AlgorithmKey = {
 } as const
 
 export type AlgorithmKey = (typeof AlgorithmKey)[keyof typeof AlgorithmKey]
-
-
-export const MatchRunStatus = {
-  PENDING: 'PENDING',
-  COMPLETED: 'COMPLETED',
-  FAILED: 'FAILED'
-} as const
-
-export type MatchRunStatus = (typeof MatchRunStatus)[keyof typeof MatchRunStatus]

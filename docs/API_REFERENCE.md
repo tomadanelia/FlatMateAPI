@@ -243,6 +243,13 @@ Request schema:
       "description": "ISO date or date-time."
     },
     "preferredAreas": { "type": "array", "items": { "type": "string" } },
+    "preferredRoommateGenders": {
+      "type": "array",
+      "default": ["WOMAN", "MAN", "NON_BINARY", "OTHER", "PREFER_NOT_TO_SAY"],
+      "items": {
+        "enum": ["WOMAN", "MAN", "NON_BINARY", "OTHER", "PREFER_NOT_TO_SAY"]
+      }
+    },
     "cleanliness": { "type": "integer", "minimum": 1, "maximum": 5 },
     "socialLevel": { "type": "integer", "minimum": 1, "maximum": 5 },
     "sleepSchedule": { "type": "integer", "minimum": 1, "maximum": 5 },
@@ -273,7 +280,8 @@ Response schema:
         "maxMonthlyBudget",
         "currency",
         "moveInDate",
-        "preferredAreas"
+        "preferredAreas",
+        "preferredRoommateGenders"
       ],
       "properties": {
         "id": { "type": "string", "format": "uuid" },
@@ -284,7 +292,13 @@ Response schema:
         "maxMonthlyBudget": { "type": "integer" },
         "currency": { "type": "string" },
         "moveInDate": { "type": ["string", "null"], "format": "date-time" },
-        "preferredAreas": { "type": "array", "items": { "type": "string" } }
+        "preferredAreas": { "type": "array", "items": { "type": "string" } },
+        "preferredRoommateGenders": {
+          "type": "array",
+          "items": {
+            "enum": ["WOMAN", "MAN", "NON_BINARY", "OTHER", "PREFER_NOT_TO_SAY"]
+          }
+        }
       }
     },
     "lifestyle": {
@@ -847,7 +861,9 @@ Returns the same response shape as the connect endpoint from stored data without
 
 `POST /api/matches/search` — currently public — HTTP `201`
 
-Hard filters require candidates to be discoverable, onboarded, in the same city (case-insensitive), use the same currency, and have overlapping budget ranges. `algorithms` optionally restricts which enabled strategies run. Omit it or pass `[]` to use all enabled strategies. A strategy is omitted for a pair when required data is missing; remaining weights are renormalized. Candidates for which no strategy can produce a score are omitted.
+Results are calculated from current profile data for every request and are not persisted. Hard filters require candidates to be discoverable, onboarded, in the same country and city (city is case-insensitive), use the same currency, have overlapping budget ranges, and satisfy both users' roommate-gender preferences. When the searching user has a move-in date, candidates must have a date within 30 days.
+
+After hard filtering, a cheap budget/date/lifestyle score selects at most 50 candidates. Personality and taste algorithms run only for that shortlist, and at most 20 results are returned. `algorithms` optionally restricts which enabled strategies run. Omit it or pass `[]` to use all enabled strategies. A strategy is omitted for a pair when required data is missing; remaining weights are renormalized. Candidates for which no strategy can produce a score are omitted.
 
 Request schema:
 
@@ -859,7 +875,7 @@ Request schema:
   "required": ["userId"],
   "properties": {
     "userId": { "type": "string", "format": "uuid" },
-    "limit": { "type": "integer", "minimum": 1, "maximum": 100, "default": 20 },
+    "limit": { "type": "integer", "minimum": 1, "maximum": 20, "default": 20 },
     "algorithms": {
       "type": "array",
       "items": { "enum": ["PERSONALITY", "TASTE", "LIFESTYLE"] }
@@ -952,9 +968,8 @@ Response schema:
   },
   "type": "object",
   "additionalProperties": false,
-  "required": ["runId", "matches"],
+  "required": ["matches"],
   "properties": {
-    "runId": { "type": "string", "format": "uuid" },
     "matches": {
       "type": "array",
       "items": {
@@ -986,7 +1001,7 @@ Response schema:
 }
 ```
 
-`score` is the weighted mean of the available strategy scores. A pets conflict produces lifestyle score `0`; a smoking preference mismatch produces `0.2`. A successful search can return `matches: []` and still creates a completed match run. Errors: `404` with `"User or housing preference not found"`.
+`score` is the weighted mean of the available strategy scores. A pets conflict produces lifestyle score `0`; a smoking preference mismatch produces `0.2`. A successful search can return `matches: []`; it does not create database records. Errors: `404` with `"User or housing preference not found"`.
 
 ## Admin endpoints
 

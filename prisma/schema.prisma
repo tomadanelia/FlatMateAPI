@@ -57,27 +57,21 @@ enum AlgorithmKey {
   LIFESTYLE
 }
 
-enum MatchRunStatus {
-  PENDING
-  COMPLETED
-  FAILED
-}
-
 model User {
-  id                 String                @id @db.Uuid
-  email              String                @unique
-  passwordHash       String?               @map("password_hash")
-  emailVerifiedAt    DateTime?             @map("email_verified_at")
-  role               UserRole              @default(USER)
-  displayName        String?               @map("display_name")
-  birthDate          DateTime?             @map("birth_date") @db.Date
+  id                 String                 @id @db.Uuid
+  email              String                 @unique
+  passwordHash       String?                @map("password_hash")
+  emailVerifiedAt    DateTime?              @map("email_verified_at")
+  role               UserRole               @default(USER)
+  displayName        String?                @map("display_name")
+  birthDate          DateTime?              @map("birth_date") @db.Date
   gender             Gender?
   bio                String?
-  avatarUrl          String?               @map("avatar_url")
-  isDiscoverable     Boolean               @default(true) @map("is_discoverable")
-  onboardingComplete Boolean               @default(false) @map("onboarding_complete")
-  createdAt          DateTime              @default(now()) @map("created_at")
-  updatedAt          DateTime              @updatedAt @map("updated_at")
+  avatarUrl          String?                @map("avatar_url")
+  isDiscoverable     Boolean                @default(true) @map("is_discoverable")
+  onboardingComplete Boolean                @default(false) @map("onboarding_complete")
+  createdAt          DateTime               @default(now()) @map("created_at")
+  updatedAt          DateTime               @updatedAt @map("updated_at")
   housingPreference  HousingPreference?
   lifestyleProfile   LifestyleProfile?
   testAttempts       TestAttempt[]
@@ -87,14 +81,12 @@ model User {
   favoriteArtists    UserArtist[]
   movieGenres        UserMovieGenre[]
   favoriteMovies     UserMovie[]
-  initiatedRuns      MatchRun[]            @relation("RunSubject")
-  subjectMatches     MatchResult[]         @relation("MatchSubject")
-  candidateMatches   MatchResult[]         @relation("MatchCandidate")
-  conversationsAsOne Conversation[]        @relation("ConversationParticipantOne")
-  conversationsAsTwo Conversation[]        @relation("ConversationParticipantTwo")
-  sentMessages       Message[]             @relation("MessageSender")
+  conversationsAsOne Conversation[]         @relation("ConversationParticipantOne")
+  conversationsAsTwo Conversation[]         @relation("ConversationParticipantTwo")
+  sentMessages       Message[]              @relation("MessageSender")
   emailVerification  EmailVerificationCode?
 
+  @@index([isDiscoverable, onboardingComplete, gender])
   @@map("users")
 }
 
@@ -145,18 +137,20 @@ model Message {
 }
 
 model HousingPreference {
-  id               String    @id @default(uuid()) @db.Uuid
-  userId           String    @unique @map("user_id") @db.Uuid
-  city             String
-  countryCode      String    @map("country_code") @db.Char(2)
-  minMonthlyBudget Int       @map("min_monthly_budget")
-  maxMonthlyBudget Int       @map("max_monthly_budget")
-  currency         String    @default("USD") @db.Char(3)
-  moveInDate       DateTime? @map("move_in_date") @db.Date
-  preferredAreas   String[]  @default([]) @map("preferred_areas")
-  user             User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                       String    @id @default(uuid()) @db.Uuid
+  userId                   String    @unique @map("user_id") @db.Uuid
+  city                     String
+  countryCode              String    @map("country_code") @db.Char(2)
+  minMonthlyBudget         Int       @map("min_monthly_budget")
+  maxMonthlyBudget         Int       @map("max_monthly_budget")
+  currency                 String    @default("USD") @db.Char(3)
+  moveInDate               DateTime? @map("move_in_date") @db.Date
+  preferredAreas           String[]  @default([]) @map("preferred_areas")
+  preferredRoommateGenders Gender[]  @default([WOMAN, MAN, NON_BINARY, OTHER, PREFER_NOT_TO_SAY]) @map("preferred_roommate_genders")
+  user                     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@index([city, maxMonthlyBudget])
+  @@index([countryCode, city, currency, minMonthlyBudget, maxMonthlyBudget])
+  @@index([preferredRoommateGenders], type: Gin)
   @@map("housing_preferences")
 }
 
@@ -288,19 +282,19 @@ model TasteItem {
 }
 
 model MusicGenre {
-  id        String          @id @default(uuid()) @db.Uuid
-  name      String          @unique
-  artists   ArtistGenre[]
-  users     UserMusicGenre[]
+  id      String           @id @default(uuid()) @db.Uuid
+  name    String           @unique
+  artists ArtistGenre[]
+  users   UserMusicGenre[]
 
   @@map("music_genres")
 }
 
 model Artist {
-  id        String        @id @default(uuid()) @db.Uuid
-  name      String        @unique
-  genres    ArtistGenre[]
-  users     UserArtist[]
+  id     String        @id @default(uuid()) @db.Uuid
+  name   String        @unique
+  genres ArtistGenre[]
+  users  UserArtist[]
 
   @@index([name])
   @@map("artists")
@@ -337,19 +331,19 @@ model UserArtist {
 }
 
 model MovieGenre {
-  id      String           @id @default(uuid()) @db.Uuid
-  name    String           @unique
-  movies  MovieGenreLink[]
-  users   UserMovieGenre[]
+  id     String           @id @default(uuid()) @db.Uuid
+  name   String           @unique
+  movies MovieGenreLink[]
+  users  UserMovieGenre[]
 
   @@map("movie_genres")
 }
 
 model Movie {
-  id      String           @id @default(uuid()) @db.Uuid
-  title   String           @unique
-  genres  MovieGenreLink[]
-  users   UserMovie[]
+  id     String           @id @default(uuid()) @db.Uuid
+  title  String           @unique
+  genres MovieGenreLink[]
+  users  UserMovie[]
 
   @@index([title])
   @@map("movies")
@@ -395,50 +389,4 @@ model AlgorithmConfig {
   updatedAt DateTime     @updatedAt @map("updated_at")
 
   @@map("algorithm_configs")
-}
-
-model MatchRun {
-  id        String         @id @default(uuid()) @db.Uuid
-  subjectId String         @map("subject_id") @db.Uuid
-  status    MatchRunStatus @default(PENDING)
-  context   Json?
-  error     String?
-  createdAt DateTime       @default(now()) @map("created_at")
-  subject   User           @relation("RunSubject", fields: [subjectId], references: [id], onDelete: Cascade)
-  results   MatchResult[]
-
-  @@index([subjectId, createdAt])
-  @@map("match_runs")
-}
-
-model MatchResult {
-  id          String                @id @default(uuid()) @db.Uuid
-  matchRunId  String                @map("match_run_id") @db.Uuid
-  subjectId   String                @map("subject_id") @db.Uuid
-  candidateId String                @map("candidate_id") @db.Uuid
-  totalScore  Float                 @map("total_score")
-  rank        Int
-  explanation Json?
-  matchRun    MatchRun              @relation(fields: [matchRunId], references: [id], onDelete: Cascade)
-  subject     User                  @relation("MatchSubject", fields: [subjectId], references: [id], onDelete: Cascade)
-  candidate   User                  @relation("MatchCandidate", fields: [candidateId], references: [id], onDelete: Cascade)
-  scores      MatchAlgorithmScore[]
-
-  @@unique([matchRunId, candidateId])
-  @@index([subjectId, totalScore])
-  @@map("match_results")
-}
-
-model MatchAlgorithmScore {
-  id            String       @id @default(uuid()) @db.Uuid
-  matchResultId String       @map("match_result_id") @db.Uuid
-  algorithmKey  AlgorithmKey @map("algorithm_key")
-  score         Float
-  weight        Float
-  version       String
-  explanation   Json?
-  matchResult   MatchResult  @relation(fields: [matchResultId], references: [id], onDelete: Cascade)
-
-  @@unique([matchResultId, algorithmKey])
-  @@map("match_algorithm_scores")
 }
