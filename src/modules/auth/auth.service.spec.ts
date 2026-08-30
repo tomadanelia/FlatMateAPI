@@ -1,7 +1,6 @@
 import {
   BadRequestException,
   ConflictException,
-  ForbiddenException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { compare, hash } from 'bcryptjs';
@@ -167,7 +166,7 @@ describe('AuthService', () => {
     expect(result.accessToken).toBe('signed-token');
   });
 
-  it('requires verification only after the password is proven', async () => {
+  it('emails a verification code after a pending user proves the password', async () => {
     prisma.user.findUnique.mockResolvedValue({
       id: 'user-id',
       email: 'person@example.com',
@@ -175,6 +174,7 @@ describe('AuthService', () => {
       role: 'USER',
       passwordHash: await hash('StrongPass1', 4),
       emailVerifiedAt: null,
+      emailVerification: null,
     });
 
     await expect(
@@ -182,13 +182,49 @@ describe('AuthService', () => {
         email: 'person@example.com',
         password: 'StrongPass1',
       }),
-    ).rejects.toBeInstanceOf(ForbiddenException);
+    ).rejects.toMatchObject({
+      response: {
+        code: 'EMAIL_VERIFICATION_REQUIRED',
+        verificationEmailSent: true,
+      },
+    });
+    expect(verificationEmail.sendVerificationCode).toHaveBeenCalledWith(
+      'person@example.com',
+      expect.stringMatching(/^\d{6}$/),
+    );
+
     await expect(
       service.login({
         email: 'person@example.com',
         password: 'WrongPassword1',
       }),
     ).rejects.toBeInstanceOf(UnauthorizedException);
+    expect(verificationEmail.sendVerificationCode).toHaveBeenCalledTimes(1);
+  });
+
+  it('does not send another login code during the resend cooldown', async () => {
+    prisma.user.findUnique.mockResolvedValue({
+      id: 'user-id',
+      email: 'person@example.com',
+      displayName: 'Taylor',
+      role: 'USER',
+      passwordHash: await hash('StrongPass1', 4),
+      emailVerifiedAt: null,
+      emailVerification: { lastSentAt: new Date() },
+    });
+
+    await expect(
+      service.login({
+        email: 'person@example.com',
+        password: 'StrongPass1',
+      }),
+    ).rejects.toMatchObject({
+      response: {
+        code: 'EMAIL_VERIFICATION_REQUIRED',
+        verificationEmailSent: false,
+      },
+    });
+    expect(verificationEmail.sendVerificationCode).not.toHaveBeenCalled();
   });
 
   it('does not reveal whether an email exists when resending', async () => {

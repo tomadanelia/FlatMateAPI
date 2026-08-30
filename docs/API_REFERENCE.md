@@ -172,7 +172,7 @@ Request schema:
 
 Response schema: `{ accessToken, tokenType, user }`, identical to the successful email-verification response. Once verified, future logins never require another email code.
 
-Errors: `400` validation failure; `401` with `"Invalid email or password"`; `403` with `"Email verification is required"` only after the correct password is supplied for a pending account.
+Errors: `400` validation failure; `401` with `"Invalid email or password"`; `403` with `"Email verification is required"` only after the correct password is supplied for a pending account. For a pending account, login also sends a new verification code unless one was sent during the previous 60 seconds. The `403` response includes `code: "EMAIL_VERIFICATION_REQUIRED"` and `verificationEmailSent`, which tells the client whether a new email was sent.
 
 ## 3. Create or update a user's profile
 

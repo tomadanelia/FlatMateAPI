@@ -152,31 +152,11 @@ export class AuthService {
       return this.verificationPendingResponse(email);
     }
 
-    const lastSentAt = user.emailVerification?.lastSentAt;
-    if (
-      lastSentAt &&
-      Date.now() - lastSentAt.getTime() < VERIFICATION_RESEND_COOLDOWN_MS
-    ) {
-      return this.verificationPendingResponse(email);
-    }
-
-    const code = this.generateVerificationCode();
-    const codeHash = await hash(code, 12);
-    await this.prisma.emailVerificationCode.upsert({
-      where: { userId: user.id },
-      create: {
-        userId: user.id,
-        codeHash,
-        expiresAt: new Date(Date.now() + VERIFICATION_CODE_TTL_MS),
-      },
-      update: {
-        codeHash,
-        expiresAt: new Date(Date.now() + VERIFICATION_CODE_TTL_MS),
-        attempts: 0,
-        lastSentAt: new Date(),
-      },
-    });
-    await this.verificationEmail.sendVerificationCode(email, code);
+    await this.sendVerificationCodeIfAllowed(
+      user.id,
+      email,
+      user.emailVerification?.lastSentAt,
+    );
     return this.verificationPendingResponse(email);
   }
 
@@ -190,6 +170,7 @@ export class AuthService {
         role: true,
         passwordHash: true,
         emailVerifiedAt: true,
+        emailVerification: { select: { lastSentAt: true } },
       },
     });
     if (
@@ -199,10 +180,58 @@ export class AuthService {
       throw new UnauthorizedException('Invalid email or password');
     }
     if (!user.emailVerifiedAt) {
-      throw new ForbiddenException('Email verification is required');
+      const verificationEmailSent = await this.sendVerificationCodeIfAllowed(
+        user.id,
+        user.email,
+        user.emailVerification?.lastSentAt,
+      );
+      throw new ForbiddenException({
+        statusCode: 403,
+        error: 'Forbidden',
+        message: 'Email verification is required',
+        code: 'EMAIL_VERIFICATION_REQUIRED',
+        verificationEmailSent,
+      });
     }
-    const { passwordHash: _, emailVerifiedAt: __, ...safeUser } = user;
+    const {
+      passwordHash: _,
+      emailVerifiedAt: __,
+      emailVerification: ___,
+      ...safeUser
+    } = user;
     return this.issueToken(safeUser);
+  }
+
+  private async sendVerificationCodeIfAllowed(
+    userId: string,
+    email: string,
+    lastSentAt?: Date | null,
+  ) {
+    if (
+      lastSentAt &&
+      Date.now() - lastSentAt.getTime() < VERIFICATION_RESEND_COOLDOWN_MS
+    ) {
+      return false;
+    }
+
+    const code = this.generateVerificationCode();
+    const codeHash = await hash(code, 12);
+    await this.prisma.emailVerificationCode.upsert({
+      where: { userId },
+      create: {
+        userId,
+        codeHash,
+        expiresAt: new Date(Date.now() + VERIFICATION_CODE_TTL_MS),
+      },
+      update: {
+        codeHash,
+        expiresAt: new Date(Date.now() + VERIFICATION_CODE_TTL_MS),
+        attempts: 0,
+        lastSentAt: new Date(),
+      },
+    });
+    await this.verificationEmail.sendVerificationCode(email, code);
+    return true;
   }
 
   private generateVerificationCode() {
