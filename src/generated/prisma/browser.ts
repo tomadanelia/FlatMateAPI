@@ -137,18 +137,3 @@ export type UserMovie = Prisma.UserMovieModel
  * 
  */
 export type AlgorithmConfig = Prisma.AlgorithmConfigModel
-/**
- * Model MatchRun
- * 
- */
-export type MatchRun = Prisma.MatchRunModel
-/**
- * Model MatchResult
- * 
- */
-export type MatchResult = Prisma.MatchResultModel
-/**
- * Model MatchAlgorithmScore
- * 
- */
-export type MatchAlgorithmScore = Prisma.MatchAlgorithmScoreModel

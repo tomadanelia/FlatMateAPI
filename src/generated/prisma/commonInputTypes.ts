@@ -477,23 +477,6 @@ export type EnumAlgorithmKeyWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumAlgorithmKeyFilter<$PrismaModel>
 }
 
-export type EnumMatchRunStatusFilter<$PrismaModel = never> = {
-  equals?: $Enums.MatchRunStatus | Prisma.EnumMatchRunStatusFieldRefInput<$PrismaModel>
-  in?: $Enums.MatchRunStatus[] | Prisma.ListEnumMatchRunStatusFieldRefInput<$PrismaModel>
-  notIn?: $Enums.MatchRunStatus[] | Prisma.ListEnumMatchRunStatusFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumMatchRunStatusFilter<$PrismaModel> | $Enums.MatchRunStatus
-}
-
-export type EnumMatchRunStatusWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.MatchRunStatus | Prisma.EnumMatchRunStatusFieldRefInput<$PrismaModel>
-  in?: $Enums.MatchRunStatus[] | Prisma.ListEnumMatchRunStatusFieldRefInput<$PrismaModel>
-  notIn?: $Enums.MatchRunStatus[] | Prisma.ListEnumMatchRunStatusFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumMatchRunStatusWithAggregatesFilter<$PrismaModel> | $Enums.MatchRunStatus
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumMatchRunStatusFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumMatchRunStatusFilter<$PrismaModel>
-}
-
 export type NestedUuidFilter<$PrismaModel = never> = {
   equals?: string | Prisma.StringFieldRefInput<$PrismaModel>
   in?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
@@ -901,23 +884,6 @@ export type NestedEnumAlgorithmKeyWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumAlgorithmKeyFilter<$PrismaModel>
   _max?: Prisma.NestedEnumAlgorithmKeyFilter<$PrismaModel>
-}
-
-export type NestedEnumMatchRunStatusFilter<$PrismaModel = never> = {
-  equals?: $Enums.MatchRunStatus | Prisma.EnumMatchRunStatusFieldRefInput<$PrismaModel>
-  in?: $Enums.MatchRunStatus[] | Prisma.ListEnumMatchRunStatusFieldRefInput<$PrismaModel>
-  notIn?: $Enums.MatchRunStatus[] | Prisma.ListEnumMatchRunStatusFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumMatchRunStatusFilter<$PrismaModel> | $Enums.MatchRunStatus
-}
-
-export type NestedEnumMatchRunStatusWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.MatchRunStatus | Prisma.EnumMatchRunStatusFieldRefInput<$PrismaModel>
-  in?: $Enums.MatchRunStatus[] | Prisma.ListEnumMatchRunStatusFieldRefInput<$PrismaModel>
-  notIn?: $Enums.MatchRunStatus[] | Prisma.ListEnumMatchRunStatusFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumMatchRunStatusWithAggregatesFilter<$PrismaModel> | $Enums.MatchRunStatus
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumMatchRunStatusFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumMatchRunStatusFilter<$PrismaModel>
 }
 
 

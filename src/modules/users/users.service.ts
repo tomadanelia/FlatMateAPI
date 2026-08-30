@@ -37,6 +37,7 @@ export class UsersService {
       currency,
       moveInDate,
       preferredAreas,
+      preferredRoommateGenders,
       cleanliness,
       socialLevel,
       sleepSchedule,
@@ -62,6 +63,7 @@ export class UsersService {
             currency: currency.toUpperCase(),
             moveInDate: moveInDate ? new Date(moveInDate) : undefined,
             preferredAreas: preferredAreas ?? [],
+            ...(preferredRoommateGenders ? { preferredRoommateGenders } : {}),
           },
         },
         lifestyleProfile: {
@@ -93,6 +95,7 @@ export class UsersService {
               maxMonthlyBudget,
               currency: currency.toUpperCase(),
               preferredAreas: preferredAreas ?? [],
+              ...(preferredRoommateGenders ? { preferredRoommateGenders } : {}),
             },
             update: {
               city,
@@ -101,6 +104,7 @@ export class UsersService {
               maxMonthlyBudget,
               currency: currency.toUpperCase(),
               preferredAreas: preferredAreas ?? [],
+              ...(preferredRoommateGenders ? { preferredRoommateGenders } : {}),
               moveInDate: moveInDate ? new Date(moveInDate) : null,
             },
           },

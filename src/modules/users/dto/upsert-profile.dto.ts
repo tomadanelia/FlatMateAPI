@@ -1,5 +1,18 @@
-import { Gender } from '../../../generated/prisma/client';
-import { IsArray, IsBoolean, IsDateString, IsEmail, IsEnum, IsInt, IsOptional, IsString, IsUUID, Length, Max, Min } from 'class-validator';
+import { Gender } from "../../../generated/prisma/client";
+import {
+  IsArray,
+  IsBoolean,
+  IsDateString,
+  IsEmail,
+  IsEnum,
+  IsInt,
+  IsOptional,
+  IsString,
+  IsUUID,
+  Length,
+  Max,
+  Min,
+} from "class-validator";
 
 export class UpsertProfileDto {
   @IsUUID() id: string;
@@ -15,6 +28,10 @@ export class UpsertProfileDto {
   @IsString() @Length(3, 3) currency: string;
   @IsOptional() @IsDateString() moveInDate?: string;
   @IsOptional() @IsArray() @IsString({ each: true }) preferredAreas?: string[];
+  @IsOptional()
+  @IsArray()
+  @IsEnum(Gender, { each: true })
+  preferredRoommateGenders?: Gender[];
   @IsInt() @Min(1) @Max(5) cleanliness: number;
   @IsInt() @Min(1) @Max(5) socialLevel: number;
   @IsInt() @Min(1) @Max(5) sleepSchedule: number;
