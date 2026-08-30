@@ -418,105 +418,55 @@ Errors: `400` for a missing `avatarUrl` or a URL that is not HTTP(S); `401` for 
 
 ## 4. Get a user and profile
 
-`GET /api/users/:id` — currently public — HTTP `200`
+`GET /api/users/:id` — JWT required — HTTP `200`
 
-Path parameter: `id` is intended to be a UUID, but the controller does not validate it before querying.
+Path parameter: `id` must be a UUID.
 
 Request body: none.
 
-Response schema: the same user scalar fields, `housingPreference`, and `lifestyleProfile` shown in endpoint 3, plus `integrations`. Unlike endpoint 3, either profile relation may be `null`, and the whole response is `null` when no user is found.
+The response contains only public identity fields, calculated `age` (never the exact birth date), housing and lifestyle preferences, the latest completed personality test and trait scores, and manual/imported tastes. It never contains email, password hash, role, integration credentials, or timestamps from the user record.
+
+Other users are visible only when discoverable and fully onboarded. A block in either direction makes the profile unavailable and also removes that pair from matching. Missing, private, and blocked profiles all return `404` with `"Profile not found"` to avoid revealing account or block state. Invalid IDs return `400`; a missing or invalid token returns `401`.
+
+### Profile blocking
+
+All routes require a JWT and derive the acting user from it.
+
+- `POST /api/users/:id/block` creates a block and is idempotent. Self-blocking returns `400`; an unknown target returns `404`.
+- `DELETE /api/users/:id/block` removes the current user's block. It returns `{ "blockedId": "<uuid>", "unblocked": true }`; `unblocked` is `false` when no block existed.
+- `GET /api/users/me/blocks` lists the current user's blocks newest-first, with `createdAt` and safe `id`, `displayName`, and `avatarUrl` fields for each blocked user.
+
+Representative profile response:
 
 ```json
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "oneOf": [
-    { "type": "null" },
-    {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "id",
-        "email",
-        "passwordHash",
-        "role",
-        "displayName",
-        "birthDate",
-        "gender",
-        "bio",
-        "avatarUrl",
-        "isDiscoverable",
-        "onboardingComplete",
-        "createdAt",
-        "updatedAt",
-        "housingPreference",
-        "lifestyleProfile",
-        "integrations"
-      ],
-      "properties": {
-        "id": { "type": "string", "format": "uuid" },
-        "email": { "type": "string", "format": "email" },
-        "passwordHash": { "type": ["string", "null"] },
-        "role": { "enum": ["USER", "ADMIN"] },
-        "displayName": { "type": ["string", "null"] },
-        "birthDate": { "type": ["string", "null"], "format": "date-time" },
-        "gender": {
-          "oneOf": [
-            {
-              "enum": [
-                "WOMAN",
-                "MAN",
-                "NON_BINARY",
-                "OTHER",
-                "PREFER_NOT_TO_SAY"
-              ]
-            },
-            { "type": "null" }
-          ]
-        },
-        "bio": { "type": ["string", "null"] },
-        "avatarUrl": { "type": ["string", "null"] },
-        "isDiscoverable": { "type": "boolean" },
-        "onboardingComplete": { "type": "boolean" },
-        "createdAt": { "type": "string", "format": "date-time" },
-        "updatedAt": { "type": "string", "format": "date-time" },
-        "housingPreference": {
-          "description": "Null or the housing object from endpoint 3"
-        },
-        "lifestyleProfile": {
-          "description": "Null or the lifestyle object from endpoint 3"
-        },
-        "integrations": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "additionalProperties": false,
-            "required": ["provider", "username", "status", "lastSyncedAt"],
-            "properties": {
-              "provider": { "enum": ["SPOTIFY", "LETTERBOXD"] },
-              "username": { "type": ["string", "null"] },
-              "status": {
-                "enum": [
-                  "PENDING",
-                  "CONNECTED",
-                  "EXPIRED",
-                  "ERROR",
-                  "DISCONNECTED"
-                ]
-              },
-              "lastSyncedAt": {
-                "type": ["string", "null"],
-                "format": "date-time"
-              }
-            }
-          }
-        }
-      }
-    }
-  ]
+  "id": "59b247da-1479-45c1-9c11-6493b63eea4f",
+  "displayName": "Taylor",
+  "gender": "NON_BINARY",
+  "bio": "Quiet on weekdays, social on weekends.",
+  "avatarUrl": "https://images.example.com/profile.jpg",
+  "housingPreference": { "city": "Berlin", "countryCode": "DE" },
+  "lifestyleProfile": { "cleanliness": 4, "socialLevel": 3 },
+  "age": 26,
+  "personality": {
+    "test": {
+      "slug": "big-five",
+      "name": "Big Five",
+      "type": "BIG_FIVE",
+      "version": 1
+    },
+    "completedAt": "2026-08-30T12:00:00.000Z",
+    "traits": [{ "trait": "openness", "score": 0.82 }]
+  },
+  "tastes": {
+    "musicGenres": [{ "id": "<uuid>", "name": "Jazz" }],
+    "favoriteArtists": [],
+    "movieGenres": [],
+    "favoriteMovies": [],
+    "importedItems": []
+  }
 }
 ```
-
-Important: this endpoint also currently exposes `passwordHash`. Treat that field as an accidental backend leak. Invalid UUID syntax may result in a database error rather than a clean `400`.
 
 ## 5. List active tests
 
@@ -1288,6 +1238,5 @@ Socket.IO uses the `/chat` namespace and WebSocket-only transport. The authentic
 - Check `response.ok` before parsing a response as a success model. Error bodies use the common error shape above.
 - Do not send numeric input values as strings. Runtime implicit numeric conversion is not enabled, so values such as `"20"` fail integer/number validation.
 - Preserve enum casing exactly as documented.
-- Treat `GET /api/users/:id` and `GET /api/tests/:slug` as nullable success responses.
+- Treat `GET /api/tests/:slug` as a nullable success response. User profile lookup returns `404` when unavailable.
 - The backend does not currently expose endpoints to update `isDiscoverable`, list match history, disconnect integrations, or retrieve submitted test attempts.
-- The response leaks called out above are backend defects, not fields the frontend should depend on.

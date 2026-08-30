@@ -137,21 +137,166 @@ export class UsersService {
       include: { housingPreference: true, lifestyleProfile: true },
     });
   }
-  findOne(id: string) {
-    return this.prisma.user.findUnique({
-      where: { id },
-      include: {
-        housingPreference: true,
-        lifestyleProfile: true,
-        integrations: {
+  async findPublicProfile(viewerId: string, profileId: string) {
+    const profile = await this.prisma.user.findFirst({
+      where: {
+        id: profileId,
+        ...(viewerId === profileId
+          ? {}
+          : { isDiscoverable: true, onboardingComplete: true }),
+        blocksInitiated: { none: { blockedId: viewerId } },
+        blocksReceived: { none: { blockerId: viewerId } },
+      },
+      select: {
+        id: true,
+        displayName: true,
+        birthDate: true,
+        gender: true,
+        bio: true,
+        avatarUrl: true,
+        housingPreference: {
+          select: {
+            city: true,
+            countryCode: true,
+            minMonthlyBudget: true,
+            maxMonthlyBudget: true,
+            currency: true,
+            moveInDate: true,
+            preferredAreas: true,
+            preferredRoommateGenders: true,
+          },
+        },
+        lifestyleProfile: {
+          select: {
+            cleanliness: true,
+            socialLevel: true,
+            sleepSchedule: true,
+            noiseTolerance: true,
+            guestsFrequency: true,
+            smokingAllowed: true,
+            petsAllowed: true,
+            hasPets: true,
+          },
+        },
+        testAttempts: {
+          where: { completedAt: { not: null } },
+          orderBy: { completedAt: "desc" },
+          take: 1,
+          select: {
+            completedAt: true,
+            testDefinition: {
+              select: { slug: true, name: true, type: true, version: true },
+            },
+            traitScores: {
+              orderBy: { trait: "asc" },
+              select: { trait: true, score: true },
+            },
+          },
+        },
+        musicGenres: {
+          select: { musicGenre: { select: { id: true, name: true } } },
+        },
+        favoriteArtists: {
+          select: { artist: { select: { id: true, name: true } } },
+        },
+        movieGenres: {
+          select: { movieGenre: { select: { id: true, name: true } } },
+        },
+        favoriteMovies: {
+          select: { movie: { select: { id: true, title: true } } },
+        },
+        tasteItems: {
+          orderBy: [{ score: "desc" }, { name: "asc" }],
           select: {
             provider: true,
-            username: true,
-            status: true,
-            lastSyncedAt: true,
+            kind: true,
+            name: true,
+            artists: true,
+            genres: true,
+            score: true,
           },
         },
       },
     });
+    if (!profile) throw new NotFoundException("Profile not found");
+
+    const {
+      birthDate,
+      testAttempts,
+      musicGenres,
+      favoriteArtists,
+      movieGenres,
+      favoriteMovies,
+      tasteItems,
+      ...publicProfile
+    } = profile;
+    const latestAttempt = testAttempts[0];
+    return {
+      ...publicProfile,
+      age: birthDate ? this.ageFromBirthDate(birthDate) : null,
+      personality: latestAttempt
+        ? {
+            test: latestAttempt.testDefinition,
+            completedAt: latestAttempt.completedAt,
+            traits: latestAttempt.traitScores,
+          }
+        : null,
+      tastes: {
+        musicGenres: musicGenres.map(({ musicGenre }) => musicGenre),
+        favoriteArtists: favoriteArtists.map(({ artist }) => artist),
+        movieGenres: movieGenres.map(({ movieGenre }) => movieGenre),
+        favoriteMovies: favoriteMovies.map(({ movie }) => movie),
+        importedItems: tasteItems,
+      },
+    };
+  }
+
+  async block(blockerId: string, blockedId: string) {
+    if (blockerId === blockedId) {
+      throw new BadRequestException("You cannot block yourself");
+    }
+    const user = await this.prisma.user.findUnique({
+      where: { id: blockedId },
+      select: { id: true },
+    });
+    if (!user) throw new NotFoundException("User not found");
+
+    return this.prisma.userBlock.upsert({
+      where: { blockerId_blockedId: { blockerId, blockedId } },
+      create: { blockerId, blockedId },
+      update: {},
+      select: { blockedId: true, createdAt: true },
+    });
+  }
+
+  async unblock(blockerId: string, blockedId: string) {
+    const result = await this.prisma.userBlock.deleteMany({
+      where: { blockerId, blockedId },
+    });
+    return { blockedId, unblocked: result.count > 0 };
+  }
+
+  listBlocks(blockerId: string) {
+    return this.prisma.userBlock.findMany({
+      where: { blockerId },
+      orderBy: { createdAt: "desc" },
+      select: {
+        createdAt: true,
+        blocked: {
+          select: { id: true, displayName: true, avatarUrl: true },
+        },
+      },
+    });
+  }
+
+  private ageFromBirthDate(birthDate: Date) {
+    const today = new Date();
+    let age = today.getUTCFullYear() - birthDate.getUTCFullYear();
+    const beforeBirthday =
+      today.getUTCMonth() < birthDate.getUTCMonth() ||
+      (today.getUTCMonth() === birthDate.getUTCMonth() &&
+        today.getUTCDate() < birthDate.getUTCDate());
+    if (beforeBirthday) age--;
+    return age;
   }
 }

@@ -6,8 +6,14 @@ describe("UsersService", () => {
   const prisma = {
     user: {
       findUnique: jest.fn(),
+      findFirst: jest.fn(),
       update: jest.fn(),
       upsert: jest.fn(),
+    },
+    userBlock: {
+      upsert: jest.fn(),
+      deleteMany: jest.fn(),
+      findMany: jest.fn(),
     },
   };
   const service = new UsersService(prisma as never);
@@ -98,5 +104,96 @@ describe("UsersService", () => {
         }),
       }),
     );
+  });
+
+  it("loads only a visible profile when neither user has blocked the other", async () => {
+    prisma.user.findFirst.mockResolvedValue({
+      id: "profile-id",
+      displayName: "Taylor",
+      birthDate: null,
+      gender: Gender.NON_BINARY,
+      bio: "Hello",
+      avatarUrl: null,
+      housingPreference: null,
+      lifestyleProfile: null,
+      testAttempts: [],
+      musicGenres: [{ musicGenre: { id: "genre-id", name: "Jazz" } }],
+      favoriteArtists: [],
+      movieGenres: [],
+      favoriteMovies: [],
+      tasteItems: [],
+    });
+
+    const result = await service.findPublicProfile("viewer-id", "profile-id");
+
+    expect(prisma.user.findFirst).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: expect.objectContaining({
+          id: "profile-id",
+          isDiscoverable: true,
+          onboardingComplete: true,
+          blocksInitiated: { none: { blockedId: "viewer-id" } },
+          blocksReceived: { none: { blockerId: "viewer-id" } },
+        }),
+      }),
+    );
+    expect(result).toEqual(
+      expect.objectContaining({
+        id: "profile-id",
+        age: null,
+        personality: null,
+        tastes: expect.objectContaining({
+          musicGenres: [{ id: "genre-id", name: "Jazz" }],
+        }),
+      }),
+    );
+    expect(result).not.toHaveProperty("email");
+    expect(result).not.toHaveProperty("birthDate");
+  });
+
+  it("hides missing, private, and blocked profiles behind the same error", async () => {
+    prisma.user.findFirst.mockResolvedValue(null);
+
+    await expect(
+      service.findPublicProfile("viewer-id", "profile-id"),
+    ).rejects.toThrow("Profile not found");
+  });
+
+  it("creates a block idempotently", async () => {
+    prisma.user.findUnique.mockResolvedValue({ id: "blocked-id" });
+    prisma.userBlock.upsert.mockResolvedValue({
+      blockedId: "blocked-id",
+      createdAt: new Date("2026-08-30T00:00:00Z"),
+    });
+
+    await service.block("blocker-id", "blocked-id");
+
+    expect(prisma.userBlock.upsert).toHaveBeenCalledWith({
+      where: {
+        blockerId_blockedId: {
+          blockerId: "blocker-id",
+          blockedId: "blocked-id",
+        },
+      },
+      create: { blockerId: "blocker-id", blockedId: "blocked-id" },
+      update: {},
+      select: { blockedId: true, createdAt: true },
+    });
+  });
+
+  it("rejects blocking yourself", async () => {
+    await expect(service.block("same-id", "same-id")).rejects.toThrow(
+      "You cannot block yourself",
+    );
+    expect(prisma.userBlock.upsert).not.toHaveBeenCalled();
+  });
+
+  it("unblocks idempotently", async () => {
+    prisma.userBlock.deleteMany.mockResolvedValue({ count: 0 });
+
+    await expect(service.unblock("blocker-id", "blocked-id")).resolves.toEqual({
+      blockedId: "blocked-id",
+      unblocked: false,
+    });
   });
 });

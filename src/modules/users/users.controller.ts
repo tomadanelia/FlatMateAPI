@@ -1,9 +1,12 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
+  ParseUUIDPipe,
   Patch,
+  Post,
   Put,
   Req,
   UseGuards,
@@ -31,7 +34,37 @@ export class UsersController {
   ) {
     return this.users.updateAvatar(request.user.id, dto.avatarUrl);
   }
-  @Get(":id") findOne(@Param("id") id: string) {
-    return this.users.findOne(id);
+
+  @Get("me/blocks")
+  @UseGuards(JwtAuthGuard)
+  listBlocks(@Req() request: AuthenticatedRequest) {
+    return this.users.listBlocks(request.user.id);
+  }
+
+  @Post(":id/block")
+  @UseGuards(JwtAuthGuard)
+  block(
+    @Req() request: AuthenticatedRequest,
+    @Param("id", ParseUUIDPipe) id: string,
+  ) {
+    return this.users.block(request.user.id, id);
+  }
+
+  @Delete(":id/block")
+  @UseGuards(JwtAuthGuard)
+  unblock(
+    @Req() request: AuthenticatedRequest,
+    @Param("id", ParseUUIDPipe) id: string,
+  ) {
+    return this.users.unblock(request.user.id, id);
+  }
+
+  @Get(":id")
+  @UseGuards(JwtAuthGuard)
+  findOne(
+    @Req() request: AuthenticatedRequest,
+    @Param("id", ParseUUIDPipe) id: string,
+  ) {
+    return this.users.findPublicProfile(request.user.id, id);
   }
 }

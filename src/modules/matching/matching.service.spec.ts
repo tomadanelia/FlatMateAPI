@@ -122,6 +122,8 @@ describe("MatchingService", () => {
     expect(broadQuery).toEqual({
       where: {
         id: { not: "subject" },
+        blocksInitiated: { none: { blockedId: "subject" } },
+        blocksReceived: { none: { blockerId: "subject" } },
         isDiscoverable: true,
         onboardingComplete: true,
         gender: { in: [Gender.MAN] },

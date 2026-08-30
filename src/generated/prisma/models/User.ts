@@ -267,6 +267,8 @@ export type UserWhereInput = {
   conversationsAsTwo?: Prisma.ConversationListRelationFilter
   sentMessages?: Prisma.MessageListRelationFilter
   emailVerification?: Prisma.XOR<Prisma.EmailVerificationCodeNullableScalarRelationFilter, Prisma.EmailVerificationCodeWhereInput> | null
+  blocksInitiated?: Prisma.UserBlockListRelationFilter
+  blocksReceived?: Prisma.UserBlockListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -297,6 +299,8 @@ export type UserOrderByWithRelationInput = {
   conversationsAsTwo?: Prisma.ConversationOrderByRelationAggregateInput
   sentMessages?: Prisma.MessageOrderByRelationAggregateInput
   emailVerification?: Prisma.EmailVerificationCodeOrderByWithRelationInput
+  blocksInitiated?: Prisma.UserBlockOrderByRelationAggregateInput
+  blocksReceived?: Prisma.UserBlockOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -330,6 +334,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   conversationsAsTwo?: Prisma.ConversationListRelationFilter
   sentMessages?: Prisma.MessageListRelationFilter
   emailVerification?: Prisma.XOR<Prisma.EmailVerificationCodeNullableScalarRelationFilter, Prisma.EmailVerificationCodeWhereInput> | null
+  blocksInitiated?: Prisma.UserBlockListRelationFilter
+  blocksReceived?: Prisma.UserBlockListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -400,6 +406,8 @@ export type UserCreateInput = {
   conversationsAsTwo?: Prisma.ConversationCreateNestedManyWithoutParticipantTwoInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
   emailVerification?: Prisma.EmailVerificationCodeCreateNestedOneWithoutUserInput
+  blocksInitiated?: Prisma.UserBlockCreateNestedManyWithoutBlockerInput
+  blocksReceived?: Prisma.UserBlockCreateNestedManyWithoutBlockedInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -430,6 +438,8 @@ export type UserUncheckedCreateInput = {
   conversationsAsTwo?: Prisma.ConversationUncheckedCreateNestedManyWithoutParticipantTwoInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
   emailVerification?: Prisma.EmailVerificationCodeUncheckedCreateNestedOneWithoutUserInput
+  blocksInitiated?: Prisma.UserBlockUncheckedCreateNestedManyWithoutBlockerInput
+  blocksReceived?: Prisma.UserBlockUncheckedCreateNestedManyWithoutBlockedInput
 }
 
 export type UserUpdateInput = {
@@ -460,6 +470,8 @@ export type UserUpdateInput = {
   conversationsAsTwo?: Prisma.ConversationUpdateManyWithoutParticipantTwoNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
   emailVerification?: Prisma.EmailVerificationCodeUpdateOneWithoutUserNestedInput
+  blocksInitiated?: Prisma.UserBlockUpdateManyWithoutBlockerNestedInput
+  blocksReceived?: Prisma.UserBlockUpdateManyWithoutBlockedNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -490,6 +502,8 @@ export type UserUncheckedUpdateInput = {
   conversationsAsTwo?: Prisma.ConversationUncheckedUpdateManyWithoutParticipantTwoNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
   emailVerification?: Prisma.EmailVerificationCodeUncheckedUpdateOneWithoutUserNestedInput
+  blocksInitiated?: Prisma.UserBlockUncheckedUpdateManyWithoutBlockerNestedInput
+  blocksReceived?: Prisma.UserBlockUncheckedUpdateManyWithoutBlockedNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -625,6 +639,34 @@ export type BoolFieldUpdateOperationsInput = {
 
 export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
+}
+
+export type UserCreateNestedOneWithoutBlocksInitiatedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutBlocksInitiatedInput, Prisma.UserUncheckedCreateWithoutBlocksInitiatedInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutBlocksInitiatedInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserCreateNestedOneWithoutBlocksReceivedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutBlocksReceivedInput, Prisma.UserUncheckedCreateWithoutBlocksReceivedInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutBlocksReceivedInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutBlocksInitiatedNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutBlocksInitiatedInput, Prisma.UserUncheckedCreateWithoutBlocksInitiatedInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutBlocksInitiatedInput
+  upsert?: Prisma.UserUpsertWithoutBlocksInitiatedInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutBlocksInitiatedInput, Prisma.UserUpdateWithoutBlocksInitiatedInput>, Prisma.UserUncheckedUpdateWithoutBlocksInitiatedInput>
+}
+
+export type UserUpdateOneRequiredWithoutBlocksReceivedNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutBlocksReceivedInput, Prisma.UserUncheckedCreateWithoutBlocksReceivedInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutBlocksReceivedInput
+  upsert?: Prisma.UserUpsertWithoutBlocksReceivedInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutBlocksReceivedInput, Prisma.UserUpdateWithoutBlocksReceivedInput>, Prisma.UserUncheckedUpdateWithoutBlocksReceivedInput>
 }
 
 export type UserCreateNestedOneWithoutEmailVerificationInput = {
@@ -809,6 +851,286 @@ export type UserUpdateOneRequiredWithoutFavoriteMoviesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutFavoriteMoviesInput, Prisma.UserUpdateWithoutFavoriteMoviesInput>, Prisma.UserUncheckedUpdateWithoutFavoriteMoviesInput>
 }
 
+export type UserCreateWithoutBlocksInitiatedInput = {
+  id: string
+  email: string
+  passwordHash?: string | null
+  emailVerifiedAt?: Date | string | null
+  role?: $Enums.UserRole
+  displayName?: string | null
+  birthDate?: Date | string | null
+  gender?: $Enums.Gender | null
+  bio?: string | null
+  avatarUrl?: string | null
+  isDiscoverable?: boolean
+  onboardingComplete?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  housingPreference?: Prisma.HousingPreferenceCreateNestedOneWithoutUserInput
+  lifestyleProfile?: Prisma.LifestyleProfileCreateNestedOneWithoutUserInput
+  testAttempts?: Prisma.TestAttemptCreateNestedManyWithoutUserInput
+  integrations?: Prisma.ExternalIntegrationCreateNestedManyWithoutUserInput
+  tasteItems?: Prisma.TasteItemCreateNestedManyWithoutUserInput
+  musicGenres?: Prisma.UserMusicGenreCreateNestedManyWithoutUserInput
+  favoriteArtists?: Prisma.UserArtistCreateNestedManyWithoutUserInput
+  movieGenres?: Prisma.UserMovieGenreCreateNestedManyWithoutUserInput
+  favoriteMovies?: Prisma.UserMovieCreateNestedManyWithoutUserInput
+  conversationsAsOne?: Prisma.ConversationCreateNestedManyWithoutParticipantOneInput
+  conversationsAsTwo?: Prisma.ConversationCreateNestedManyWithoutParticipantTwoInput
+  sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  emailVerification?: Prisma.EmailVerificationCodeCreateNestedOneWithoutUserInput
+  blocksReceived?: Prisma.UserBlockCreateNestedManyWithoutBlockedInput
+}
+
+export type UserUncheckedCreateWithoutBlocksInitiatedInput = {
+  id: string
+  email: string
+  passwordHash?: string | null
+  emailVerifiedAt?: Date | string | null
+  role?: $Enums.UserRole
+  displayName?: string | null
+  birthDate?: Date | string | null
+  gender?: $Enums.Gender | null
+  bio?: string | null
+  avatarUrl?: string | null
+  isDiscoverable?: boolean
+  onboardingComplete?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  housingPreference?: Prisma.HousingPreferenceUncheckedCreateNestedOneWithoutUserInput
+  lifestyleProfile?: Prisma.LifestyleProfileUncheckedCreateNestedOneWithoutUserInput
+  testAttempts?: Prisma.TestAttemptUncheckedCreateNestedManyWithoutUserInput
+  integrations?: Prisma.ExternalIntegrationUncheckedCreateNestedManyWithoutUserInput
+  tasteItems?: Prisma.TasteItemUncheckedCreateNestedManyWithoutUserInput
+  musicGenres?: Prisma.UserMusicGenreUncheckedCreateNestedManyWithoutUserInput
+  favoriteArtists?: Prisma.UserArtistUncheckedCreateNestedManyWithoutUserInput
+  movieGenres?: Prisma.UserMovieGenreUncheckedCreateNestedManyWithoutUserInput
+  favoriteMovies?: Prisma.UserMovieUncheckedCreateNestedManyWithoutUserInput
+  conversationsAsOne?: Prisma.ConversationUncheckedCreateNestedManyWithoutParticipantOneInput
+  conversationsAsTwo?: Prisma.ConversationUncheckedCreateNestedManyWithoutParticipantTwoInput
+  sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  emailVerification?: Prisma.EmailVerificationCodeUncheckedCreateNestedOneWithoutUserInput
+  blocksReceived?: Prisma.UserBlockUncheckedCreateNestedManyWithoutBlockedInput
+}
+
+export type UserCreateOrConnectWithoutBlocksInitiatedInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutBlocksInitiatedInput, Prisma.UserUncheckedCreateWithoutBlocksInitiatedInput>
+}
+
+export type UserCreateWithoutBlocksReceivedInput = {
+  id: string
+  email: string
+  passwordHash?: string | null
+  emailVerifiedAt?: Date | string | null
+  role?: $Enums.UserRole
+  displayName?: string | null
+  birthDate?: Date | string | null
+  gender?: $Enums.Gender | null
+  bio?: string | null
+  avatarUrl?: string | null
+  isDiscoverable?: boolean
+  onboardingComplete?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  housingPreference?: Prisma.HousingPreferenceCreateNestedOneWithoutUserInput
+  lifestyleProfile?: Prisma.LifestyleProfileCreateNestedOneWithoutUserInput
+  testAttempts?: Prisma.TestAttemptCreateNestedManyWithoutUserInput
+  integrations?: Prisma.ExternalIntegrationCreateNestedManyWithoutUserInput
+  tasteItems?: Prisma.TasteItemCreateNestedManyWithoutUserInput
+  musicGenres?: Prisma.UserMusicGenreCreateNestedManyWithoutUserInput
+  favoriteArtists?: Prisma.UserArtistCreateNestedManyWithoutUserInput
+  movieGenres?: Prisma.UserMovieGenreCreateNestedManyWithoutUserInput
+  favoriteMovies?: Prisma.UserMovieCreateNestedManyWithoutUserInput
+  conversationsAsOne?: Prisma.ConversationCreateNestedManyWithoutParticipantOneInput
+  conversationsAsTwo?: Prisma.ConversationCreateNestedManyWithoutParticipantTwoInput
+  sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  emailVerification?: Prisma.EmailVerificationCodeCreateNestedOneWithoutUserInput
+  blocksInitiated?: Prisma.UserBlockCreateNestedManyWithoutBlockerInput
+}
+
+export type UserUncheckedCreateWithoutBlocksReceivedInput = {
+  id: string
+  email: string
+  passwordHash?: string | null
+  emailVerifiedAt?: Date | string | null
+  role?: $Enums.UserRole
+  displayName?: string | null
+  birthDate?: Date | string | null
+  gender?: $Enums.Gender | null
+  bio?: string | null
+  avatarUrl?: string | null
+  isDiscoverable?: boolean
+  onboardingComplete?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  housingPreference?: Prisma.HousingPreferenceUncheckedCreateNestedOneWithoutUserInput
+  lifestyleProfile?: Prisma.LifestyleProfileUncheckedCreateNestedOneWithoutUserInput
+  testAttempts?: Prisma.TestAttemptUncheckedCreateNestedManyWithoutUserInput
+  integrations?: Prisma.ExternalIntegrationUncheckedCreateNestedManyWithoutUserInput
+  tasteItems?: Prisma.TasteItemUncheckedCreateNestedManyWithoutUserInput
+  musicGenres?: Prisma.UserMusicGenreUncheckedCreateNestedManyWithoutUserInput
+  favoriteArtists?: Prisma.UserArtistUncheckedCreateNestedManyWithoutUserInput
+  movieGenres?: Prisma.UserMovieGenreUncheckedCreateNestedManyWithoutUserInput
+  favoriteMovies?: Prisma.UserMovieUncheckedCreateNestedManyWithoutUserInput
+  conversationsAsOne?: Prisma.ConversationUncheckedCreateNestedManyWithoutParticipantOneInput
+  conversationsAsTwo?: Prisma.ConversationUncheckedCreateNestedManyWithoutParticipantTwoInput
+  sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  emailVerification?: Prisma.EmailVerificationCodeUncheckedCreateNestedOneWithoutUserInput
+  blocksInitiated?: Prisma.UserBlockUncheckedCreateNestedManyWithoutBlockerInput
+}
+
+export type UserCreateOrConnectWithoutBlocksReceivedInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutBlocksReceivedInput, Prisma.UserUncheckedCreateWithoutBlocksReceivedInput>
+}
+
+export type UserUpsertWithoutBlocksInitiatedInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutBlocksInitiatedInput, Prisma.UserUncheckedUpdateWithoutBlocksInitiatedInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutBlocksInitiatedInput, Prisma.UserUncheckedCreateWithoutBlocksInitiatedInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutBlocksInitiatedInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutBlocksInitiatedInput, Prisma.UserUncheckedUpdateWithoutBlocksInitiatedInput>
+}
+
+export type UserUpdateWithoutBlocksInitiatedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDiscoverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  housingPreference?: Prisma.HousingPreferenceUpdateOneWithoutUserNestedInput
+  lifestyleProfile?: Prisma.LifestyleProfileUpdateOneWithoutUserNestedInput
+  testAttempts?: Prisma.TestAttemptUpdateManyWithoutUserNestedInput
+  integrations?: Prisma.ExternalIntegrationUpdateManyWithoutUserNestedInput
+  tasteItems?: Prisma.TasteItemUpdateManyWithoutUserNestedInput
+  musicGenres?: Prisma.UserMusicGenreUpdateManyWithoutUserNestedInput
+  favoriteArtists?: Prisma.UserArtistUpdateManyWithoutUserNestedInput
+  movieGenres?: Prisma.UserMovieGenreUpdateManyWithoutUserNestedInput
+  favoriteMovies?: Prisma.UserMovieUpdateManyWithoutUserNestedInput
+  conversationsAsOne?: Prisma.ConversationUpdateManyWithoutParticipantOneNestedInput
+  conversationsAsTwo?: Prisma.ConversationUpdateManyWithoutParticipantTwoNestedInput
+  sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  emailVerification?: Prisma.EmailVerificationCodeUpdateOneWithoutUserNestedInput
+  blocksReceived?: Prisma.UserBlockUpdateManyWithoutBlockedNestedInput
+}
+
+export type UserUncheckedUpdateWithoutBlocksInitiatedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDiscoverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  housingPreference?: Prisma.HousingPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  lifestyleProfile?: Prisma.LifestyleProfileUncheckedUpdateOneWithoutUserNestedInput
+  testAttempts?: Prisma.TestAttemptUncheckedUpdateManyWithoutUserNestedInput
+  integrations?: Prisma.ExternalIntegrationUncheckedUpdateManyWithoutUserNestedInput
+  tasteItems?: Prisma.TasteItemUncheckedUpdateManyWithoutUserNestedInput
+  musicGenres?: Prisma.UserMusicGenreUncheckedUpdateManyWithoutUserNestedInput
+  favoriteArtists?: Prisma.UserArtistUncheckedUpdateManyWithoutUserNestedInput
+  movieGenres?: Prisma.UserMovieGenreUncheckedUpdateManyWithoutUserNestedInput
+  favoriteMovies?: Prisma.UserMovieUncheckedUpdateManyWithoutUserNestedInput
+  conversationsAsOne?: Prisma.ConversationUncheckedUpdateManyWithoutParticipantOneNestedInput
+  conversationsAsTwo?: Prisma.ConversationUncheckedUpdateManyWithoutParticipantTwoNestedInput
+  sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  emailVerification?: Prisma.EmailVerificationCodeUncheckedUpdateOneWithoutUserNestedInput
+  blocksReceived?: Prisma.UserBlockUncheckedUpdateManyWithoutBlockedNestedInput
+}
+
+export type UserUpsertWithoutBlocksReceivedInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutBlocksReceivedInput, Prisma.UserUncheckedUpdateWithoutBlocksReceivedInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutBlocksReceivedInput, Prisma.UserUncheckedCreateWithoutBlocksReceivedInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutBlocksReceivedInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutBlocksReceivedInput, Prisma.UserUncheckedUpdateWithoutBlocksReceivedInput>
+}
+
+export type UserUpdateWithoutBlocksReceivedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDiscoverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  housingPreference?: Prisma.HousingPreferenceUpdateOneWithoutUserNestedInput
+  lifestyleProfile?: Prisma.LifestyleProfileUpdateOneWithoutUserNestedInput
+  testAttempts?: Prisma.TestAttemptUpdateManyWithoutUserNestedInput
+  integrations?: Prisma.ExternalIntegrationUpdateManyWithoutUserNestedInput
+  tasteItems?: Prisma.TasteItemUpdateManyWithoutUserNestedInput
+  musicGenres?: Prisma.UserMusicGenreUpdateManyWithoutUserNestedInput
+  favoriteArtists?: Prisma.UserArtistUpdateManyWithoutUserNestedInput
+  movieGenres?: Prisma.UserMovieGenreUpdateManyWithoutUserNestedInput
+  favoriteMovies?: Prisma.UserMovieUpdateManyWithoutUserNestedInput
+  conversationsAsOne?: Prisma.ConversationUpdateManyWithoutParticipantOneNestedInput
+  conversationsAsTwo?: Prisma.ConversationUpdateManyWithoutParticipantTwoNestedInput
+  sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  emailVerification?: Prisma.EmailVerificationCodeUpdateOneWithoutUserNestedInput
+  blocksInitiated?: Prisma.UserBlockUpdateManyWithoutBlockerNestedInput
+}
+
+export type UserUncheckedUpdateWithoutBlocksReceivedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDiscoverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  housingPreference?: Prisma.HousingPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  lifestyleProfile?: Prisma.LifestyleProfileUncheckedUpdateOneWithoutUserNestedInput
+  testAttempts?: Prisma.TestAttemptUncheckedUpdateManyWithoutUserNestedInput
+  integrations?: Prisma.ExternalIntegrationUncheckedUpdateManyWithoutUserNestedInput
+  tasteItems?: Prisma.TasteItemUncheckedUpdateManyWithoutUserNestedInput
+  musicGenres?: Prisma.UserMusicGenreUncheckedUpdateManyWithoutUserNestedInput
+  favoriteArtists?: Prisma.UserArtistUncheckedUpdateManyWithoutUserNestedInput
+  movieGenres?: Prisma.UserMovieGenreUncheckedUpdateManyWithoutUserNestedInput
+  favoriteMovies?: Prisma.UserMovieUncheckedUpdateManyWithoutUserNestedInput
+  conversationsAsOne?: Prisma.ConversationUncheckedUpdateManyWithoutParticipantOneNestedInput
+  conversationsAsTwo?: Prisma.ConversationUncheckedUpdateManyWithoutParticipantTwoNestedInput
+  sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  emailVerification?: Prisma.EmailVerificationCodeUncheckedUpdateOneWithoutUserNestedInput
+  blocksInitiated?: Prisma.UserBlockUncheckedUpdateManyWithoutBlockerNestedInput
+}
+
 export type UserCreateWithoutEmailVerificationInput = {
   id: string
   email: string
@@ -836,6 +1158,8 @@ export type UserCreateWithoutEmailVerificationInput = {
   conversationsAsOne?: Prisma.ConversationCreateNestedManyWithoutParticipantOneInput
   conversationsAsTwo?: Prisma.ConversationCreateNestedManyWithoutParticipantTwoInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  blocksInitiated?: Prisma.UserBlockCreateNestedManyWithoutBlockerInput
+  blocksReceived?: Prisma.UserBlockCreateNestedManyWithoutBlockedInput
 }
 
 export type UserUncheckedCreateWithoutEmailVerificationInput = {
@@ -865,6 +1189,8 @@ export type UserUncheckedCreateWithoutEmailVerificationInput = {
   conversationsAsOne?: Prisma.ConversationUncheckedCreateNestedManyWithoutParticipantOneInput
   conversationsAsTwo?: Prisma.ConversationUncheckedCreateNestedManyWithoutParticipantTwoInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  blocksInitiated?: Prisma.UserBlockUncheckedCreateNestedManyWithoutBlockerInput
+  blocksReceived?: Prisma.UserBlockUncheckedCreateNestedManyWithoutBlockedInput
 }
 
 export type UserCreateOrConnectWithoutEmailVerificationInput = {
@@ -910,6 +1236,8 @@ export type UserUpdateWithoutEmailVerificationInput = {
   conversationsAsOne?: Prisma.ConversationUpdateManyWithoutParticipantOneNestedInput
   conversationsAsTwo?: Prisma.ConversationUpdateManyWithoutParticipantTwoNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  blocksInitiated?: Prisma.UserBlockUpdateManyWithoutBlockerNestedInput
+  blocksReceived?: Prisma.UserBlockUpdateManyWithoutBlockedNestedInput
 }
 
 export type UserUncheckedUpdateWithoutEmailVerificationInput = {
@@ -939,6 +1267,8 @@ export type UserUncheckedUpdateWithoutEmailVerificationInput = {
   conversationsAsOne?: Prisma.ConversationUncheckedUpdateManyWithoutParticipantOneNestedInput
   conversationsAsTwo?: Prisma.ConversationUncheckedUpdateManyWithoutParticipantTwoNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  blocksInitiated?: Prisma.UserBlockUncheckedUpdateManyWithoutBlockerNestedInput
+  blocksReceived?: Prisma.UserBlockUncheckedUpdateManyWithoutBlockedNestedInput
 }
 
 export type UserCreateWithoutConversationsAsOneInput = {
@@ -968,6 +1298,8 @@ export type UserCreateWithoutConversationsAsOneInput = {
   conversationsAsTwo?: Prisma.ConversationCreateNestedManyWithoutParticipantTwoInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
   emailVerification?: Prisma.EmailVerificationCodeCreateNestedOneWithoutUserInput
+  blocksInitiated?: Prisma.UserBlockCreateNestedManyWithoutBlockerInput
+  blocksReceived?: Prisma.UserBlockCreateNestedManyWithoutBlockedInput
 }
 
 export type UserUncheckedCreateWithoutConversationsAsOneInput = {
@@ -997,6 +1329,8 @@ export type UserUncheckedCreateWithoutConversationsAsOneInput = {
   conversationsAsTwo?: Prisma.ConversationUncheckedCreateNestedManyWithoutParticipantTwoInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
   emailVerification?: Prisma.EmailVerificationCodeUncheckedCreateNestedOneWithoutUserInput
+  blocksInitiated?: Prisma.UserBlockUncheckedCreateNestedManyWithoutBlockerInput
+  blocksReceived?: Prisma.UserBlockUncheckedCreateNestedManyWithoutBlockedInput
 }
 
 export type UserCreateOrConnectWithoutConversationsAsOneInput = {
@@ -1031,6 +1365,8 @@ export type UserCreateWithoutConversationsAsTwoInput = {
   conversationsAsOne?: Prisma.ConversationCreateNestedManyWithoutParticipantOneInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
   emailVerification?: Prisma.EmailVerificationCodeCreateNestedOneWithoutUserInput
+  blocksInitiated?: Prisma.UserBlockCreateNestedManyWithoutBlockerInput
+  blocksReceived?: Prisma.UserBlockCreateNestedManyWithoutBlockedInput
 }
 
 export type UserUncheckedCreateWithoutConversationsAsTwoInput = {
@@ -1060,6 +1396,8 @@ export type UserUncheckedCreateWithoutConversationsAsTwoInput = {
   conversationsAsOne?: Prisma.ConversationUncheckedCreateNestedManyWithoutParticipantOneInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
   emailVerification?: Prisma.EmailVerificationCodeUncheckedCreateNestedOneWithoutUserInput
+  blocksInitiated?: Prisma.UserBlockUncheckedCreateNestedManyWithoutBlockerInput
+  blocksReceived?: Prisma.UserBlockUncheckedCreateNestedManyWithoutBlockedInput
 }
 
 export type UserCreateOrConnectWithoutConversationsAsTwoInput = {
@@ -1105,6 +1443,8 @@ export type UserUpdateWithoutConversationsAsOneInput = {
   conversationsAsTwo?: Prisma.ConversationUpdateManyWithoutParticipantTwoNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
   emailVerification?: Prisma.EmailVerificationCodeUpdateOneWithoutUserNestedInput
+  blocksInitiated?: Prisma.UserBlockUpdateManyWithoutBlockerNestedInput
+  blocksReceived?: Prisma.UserBlockUpdateManyWithoutBlockedNestedInput
 }
 
 export type UserUncheckedUpdateWithoutConversationsAsOneInput = {
@@ -1134,6 +1474,8 @@ export type UserUncheckedUpdateWithoutConversationsAsOneInput = {
   conversationsAsTwo?: Prisma.ConversationUncheckedUpdateManyWithoutParticipantTwoNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
   emailVerification?: Prisma.EmailVerificationCodeUncheckedUpdateOneWithoutUserNestedInput
+  blocksInitiated?: Prisma.UserBlockUncheckedUpdateManyWithoutBlockerNestedInput
+  blocksReceived?: Prisma.UserBlockUncheckedUpdateManyWithoutBlockedNestedInput
 }
 
 export type UserUpsertWithoutConversationsAsTwoInput = {
@@ -1174,6 +1516,8 @@ export type UserUpdateWithoutConversationsAsTwoInput = {
   conversationsAsOne?: Prisma.ConversationUpdateManyWithoutParticipantOneNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
   emailVerification?: Prisma.EmailVerificationCodeUpdateOneWithoutUserNestedInput
+  blocksInitiated?: Prisma.UserBlockUpdateManyWithoutBlockerNestedInput
+  blocksReceived?: Prisma.UserBlockUpdateManyWithoutBlockedNestedInput
 }
 
 export type UserUncheckedUpdateWithoutConversationsAsTwoInput = {
@@ -1203,6 +1547,8 @@ export type UserUncheckedUpdateWithoutConversationsAsTwoInput = {
   conversationsAsOne?: Prisma.ConversationUncheckedUpdateManyWithoutParticipantOneNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
   emailVerification?: Prisma.EmailVerificationCodeUncheckedUpdateOneWithoutUserNestedInput
+  blocksInitiated?: Prisma.UserBlockUncheckedUpdateManyWithoutBlockerNestedInput
+  blocksReceived?: Prisma.UserBlockUncheckedUpdateManyWithoutBlockedNestedInput
 }
 
 export type UserCreateWithoutSentMessagesInput = {
@@ -1232,6 +1578,8 @@ export type UserCreateWithoutSentMessagesInput = {
   conversationsAsOne?: Prisma.ConversationCreateNestedManyWithoutParticipantOneInput
   conversationsAsTwo?: Prisma.ConversationCreateNestedManyWithoutParticipantTwoInput
   emailVerification?: Prisma.EmailVerificationCodeCreateNestedOneWithoutUserInput
+  blocksInitiated?: Prisma.UserBlockCreateNestedManyWithoutBlockerInput
+  blocksReceived?: Prisma.UserBlockCreateNestedManyWithoutBlockedInput
 }
 
 export type UserUncheckedCreateWithoutSentMessagesInput = {
@@ -1261,6 +1609,8 @@ export type UserUncheckedCreateWithoutSentMessagesInput = {
   conversationsAsOne?: Prisma.ConversationUncheckedCreateNestedManyWithoutParticipantOneInput
   conversationsAsTwo?: Prisma.ConversationUncheckedCreateNestedManyWithoutParticipantTwoInput
   emailVerification?: Prisma.EmailVerificationCodeUncheckedCreateNestedOneWithoutUserInput
+  blocksInitiated?: Prisma.UserBlockUncheckedCreateNestedManyWithoutBlockerInput
+  blocksReceived?: Prisma.UserBlockUncheckedCreateNestedManyWithoutBlockedInput
 }
 
 export type UserCreateOrConnectWithoutSentMessagesInput = {
@@ -1306,6 +1656,8 @@ export type UserUpdateWithoutSentMessagesInput = {
   conversationsAsOne?: Prisma.ConversationUpdateManyWithoutParticipantOneNestedInput
   conversationsAsTwo?: Prisma.ConversationUpdateManyWithoutParticipantTwoNestedInput
   emailVerification?: Prisma.EmailVerificationCodeUpdateOneWithoutUserNestedInput
+  blocksInitiated?: Prisma.UserBlockUpdateManyWithoutBlockerNestedInput
+  blocksReceived?: Prisma.UserBlockUpdateManyWithoutBlockedNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSentMessagesInput = {
@@ -1335,6 +1687,8 @@ export type UserUncheckedUpdateWithoutSentMessagesInput = {
   conversationsAsOne?: Prisma.ConversationUncheckedUpdateManyWithoutParticipantOneNestedInput
   conversationsAsTwo?: Prisma.ConversationUncheckedUpdateManyWithoutParticipantTwoNestedInput
   emailVerification?: Prisma.EmailVerificationCodeUncheckedUpdateOneWithoutUserNestedInput
+  blocksInitiated?: Prisma.UserBlockUncheckedUpdateManyWithoutBlockerNestedInput
+  blocksReceived?: Prisma.UserBlockUncheckedUpdateManyWithoutBlockedNestedInput
 }
 
 export type UserCreateWithoutHousingPreferenceInput = {
@@ -1364,6 +1718,8 @@ export type UserCreateWithoutHousingPreferenceInput = {
   conversationsAsTwo?: Prisma.ConversationCreateNestedManyWithoutParticipantTwoInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
   emailVerification?: Prisma.EmailVerificationCodeCreateNestedOneWithoutUserInput
+  blocksInitiated?: Prisma.UserBlockCreateNestedManyWithoutBlockerInput
+  blocksReceived?: Prisma.UserBlockCreateNestedManyWithoutBlockedInput
 }
 
 export type UserUncheckedCreateWithoutHousingPreferenceInput = {
@@ -1393,6 +1749,8 @@ export type UserUncheckedCreateWithoutHousingPreferenceInput = {
   conversationsAsTwo?: Prisma.ConversationUncheckedCreateNestedManyWithoutParticipantTwoInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
   emailVerification?: Prisma.EmailVerificationCodeUncheckedCreateNestedOneWithoutUserInput
+  blocksInitiated?: Prisma.UserBlockUncheckedCreateNestedManyWithoutBlockerInput
+  blocksReceived?: Prisma.UserBlockUncheckedCreateNestedManyWithoutBlockedInput
 }
 
 export type UserCreateOrConnectWithoutHousingPreferenceInput = {
@@ -1438,6 +1796,8 @@ export type UserUpdateWithoutHousingPreferenceInput = {
   conversationsAsTwo?: Prisma.ConversationUpdateManyWithoutParticipantTwoNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
   emailVerification?: Prisma.EmailVerificationCodeUpdateOneWithoutUserNestedInput
+  blocksInitiated?: Prisma.UserBlockUpdateManyWithoutBlockerNestedInput
+  blocksReceived?: Prisma.UserBlockUpdateManyWithoutBlockedNestedInput
 }
 
 export type UserUncheckedUpdateWithoutHousingPreferenceInput = {
@@ -1467,6 +1827,8 @@ export type UserUncheckedUpdateWithoutHousingPreferenceInput = {
   conversationsAsTwo?: Prisma.ConversationUncheckedUpdateManyWithoutParticipantTwoNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
   emailVerification?: Prisma.EmailVerificationCodeUncheckedUpdateOneWithoutUserNestedInput
+  blocksInitiated?: Prisma.UserBlockUncheckedUpdateManyWithoutBlockerNestedInput
+  blocksReceived?: Prisma.UserBlockUncheckedUpdateManyWithoutBlockedNestedInput
 }
 
 export type UserCreateWithoutLifestyleProfileInput = {
@@ -1496,6 +1858,8 @@ export type UserCreateWithoutLifestyleProfileInput = {
   conversationsAsTwo?: Prisma.ConversationCreateNestedManyWithoutParticipantTwoInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
   emailVerification?: Prisma.EmailVerificationCodeCreateNestedOneWithoutUserInput
+  blocksInitiated?: Prisma.UserBlockCreateNestedManyWithoutBlockerInput
+  blocksReceived?: Prisma.UserBlockCreateNestedManyWithoutBlockedInput
 }
 
 export type UserUncheckedCreateWithoutLifestyleProfileInput = {
@@ -1525,6 +1889,8 @@ export type UserUncheckedCreateWithoutLifestyleProfileInput = {
   conversationsAsTwo?: Prisma.ConversationUncheckedCreateNestedManyWithoutParticipantTwoInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
   emailVerification?: Prisma.EmailVerificationCodeUncheckedCreateNestedOneWithoutUserInput
+  blocksInitiated?: Prisma.UserBlockUncheckedCreateNestedManyWithoutBlockerInput
+  blocksReceived?: Prisma.UserBlockUncheckedCreateNestedManyWithoutBlockedInput
 }
 
 export type UserCreateOrConnectWithoutLifestyleProfileInput = {
@@ -1570,6 +1936,8 @@ export type UserUpdateWithoutLifestyleProfileInput = {
   conversationsAsTwo?: Prisma.ConversationUpdateManyWithoutParticipantTwoNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
   emailVerification?: Prisma.EmailVerificationCodeUpdateOneWithoutUserNestedInput
+  blocksInitiated?: Prisma.UserBlockUpdateManyWithoutBlockerNestedInput
+  blocksReceived?: Prisma.UserBlockUpdateManyWithoutBlockedNestedInput
 }
 
 export type UserUncheckedUpdateWithoutLifestyleProfileInput = {
@@ -1599,6 +1967,8 @@ export type UserUncheckedUpdateWithoutLifestyleProfileInput = {
   conversationsAsTwo?: Prisma.ConversationUncheckedUpdateManyWithoutParticipantTwoNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
   emailVerification?: Prisma.EmailVerificationCodeUncheckedUpdateOneWithoutUserNestedInput
+  blocksInitiated?: Prisma.UserBlockUncheckedUpdateManyWithoutBlockerNestedInput
+  blocksReceived?: Prisma.UserBlockUncheckedUpdateManyWithoutBlockedNestedInput
 }
 
 export type UserCreateWithoutTestAttemptsInput = {
@@ -1628,6 +1998,8 @@ export type UserCreateWithoutTestAttemptsInput = {
   conversationsAsTwo?: Prisma.ConversationCreateNestedManyWithoutParticipantTwoInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
   emailVerification?: Prisma.EmailVerificationCodeCreateNestedOneWithoutUserInput
+  blocksInitiated?: Prisma.UserBlockCreateNestedManyWithoutBlockerInput
+  blocksReceived?: Prisma.UserBlockCreateNestedManyWithoutBlockedInput
 }
 
 export type UserUncheckedCreateWithoutTestAttemptsInput = {
@@ -1657,6 +2029,8 @@ export type UserUncheckedCreateWithoutTestAttemptsInput = {
   conversationsAsTwo?: Prisma.ConversationUncheckedCreateNestedManyWithoutParticipantTwoInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
   emailVerification?: Prisma.EmailVerificationCodeUncheckedCreateNestedOneWithoutUserInput
+  blocksInitiated?: Prisma.UserBlockUncheckedCreateNestedManyWithoutBlockerInput
+  blocksReceived?: Prisma.UserBlockUncheckedCreateNestedManyWithoutBlockedInput
 }
 
 export type UserCreateOrConnectWithoutTestAttemptsInput = {
@@ -1702,6 +2076,8 @@ export type UserUpdateWithoutTestAttemptsInput = {
   conversationsAsTwo?: Prisma.ConversationUpdateManyWithoutParticipantTwoNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
   emailVerification?: Prisma.EmailVerificationCodeUpdateOneWithoutUserNestedInput
+  blocksInitiated?: Prisma.UserBlockUpdateManyWithoutBlockerNestedInput
+  blocksReceived?: Prisma.UserBlockUpdateManyWithoutBlockedNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTestAttemptsInput = {
@@ -1731,6 +2107,8 @@ export type UserUncheckedUpdateWithoutTestAttemptsInput = {
   conversationsAsTwo?: Prisma.ConversationUncheckedUpdateManyWithoutParticipantTwoNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
   emailVerification?: Prisma.EmailVerificationCodeUncheckedUpdateOneWithoutUserNestedInput
+  blocksInitiated?: Prisma.UserBlockUncheckedUpdateManyWithoutBlockerNestedInput
+  blocksReceived?: Prisma.UserBlockUncheckedUpdateManyWithoutBlockedNestedInput
 }
 
 export type UserCreateWithoutIntegrationsInput = {
@@ -1760,6 +2138,8 @@ export type UserCreateWithoutIntegrationsInput = {
   conversationsAsTwo?: Prisma.ConversationCreateNestedManyWithoutParticipantTwoInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
   emailVerification?: Prisma.EmailVerificationCodeCreateNestedOneWithoutUserInput
+  blocksInitiated?: Prisma.UserBlockCreateNestedManyWithoutBlockerInput
+  blocksReceived?: Prisma.UserBlockCreateNestedManyWithoutBlockedInput
 }
 
 export type UserUncheckedCreateWithoutIntegrationsInput = {
@@ -1789,6 +2169,8 @@ export type UserUncheckedCreateWithoutIntegrationsInput = {
   conversationsAsTwo?: Prisma.ConversationUncheckedCreateNestedManyWithoutParticipantTwoInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
   emailVerification?: Prisma.EmailVerificationCodeUncheckedCreateNestedOneWithoutUserInput
+  blocksInitiated?: Prisma.UserBlockUncheckedCreateNestedManyWithoutBlockerInput
+  blocksReceived?: Prisma.UserBlockUncheckedCreateNestedManyWithoutBlockedInput
 }
 
 export type UserCreateOrConnectWithoutIntegrationsInput = {
@@ -1834,6 +2216,8 @@ export type UserUpdateWithoutIntegrationsInput = {
   conversationsAsTwo?: Prisma.ConversationUpdateManyWithoutParticipantTwoNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
   emailVerification?: Prisma.EmailVerificationCodeUpdateOneWithoutUserNestedInput
+  blocksInitiated?: Prisma.UserBlockUpdateManyWithoutBlockerNestedInput
+  blocksReceived?: Prisma.UserBlockUpdateManyWithoutBlockedNestedInput
 }
 
 export type UserUncheckedUpdateWithoutIntegrationsInput = {
@@ -1863,6 +2247,8 @@ export type UserUncheckedUpdateWithoutIntegrationsInput = {
   conversationsAsTwo?: Prisma.ConversationUncheckedUpdateManyWithoutParticipantTwoNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
   emailVerification?: Prisma.EmailVerificationCodeUncheckedUpdateOneWithoutUserNestedInput
+  blocksInitiated?: Prisma.UserBlockUncheckedUpdateManyWithoutBlockerNestedInput
+  blocksReceived?: Prisma.UserBlockUncheckedUpdateManyWithoutBlockedNestedInput
 }
 
 export type UserCreateWithoutTasteItemsInput = {
@@ -1892,6 +2278,8 @@ export type UserCreateWithoutTasteItemsInput = {
   conversationsAsTwo?: Prisma.ConversationCreateNestedManyWithoutParticipantTwoInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
   emailVerification?: Prisma.EmailVerificationCodeCreateNestedOneWithoutUserInput
+  blocksInitiated?: Prisma.UserBlockCreateNestedManyWithoutBlockerInput
+  blocksReceived?: Prisma.UserBlockCreateNestedManyWithoutBlockedInput
 }
 
 export type UserUncheckedCreateWithoutTasteItemsInput = {
@@ -1921,6 +2309,8 @@ export type UserUncheckedCreateWithoutTasteItemsInput = {
   conversationsAsTwo?: Prisma.ConversationUncheckedCreateNestedManyWithoutParticipantTwoInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
   emailVerification?: Prisma.EmailVerificationCodeUncheckedCreateNestedOneWithoutUserInput
+  blocksInitiated?: Prisma.UserBlockUncheckedCreateNestedManyWithoutBlockerInput
+  blocksReceived?: Prisma.UserBlockUncheckedCreateNestedManyWithoutBlockedInput
 }
 
 export type UserCreateOrConnectWithoutTasteItemsInput = {
@@ -1966,6 +2356,8 @@ export type UserUpdateWithoutTasteItemsInput = {
   conversationsAsTwo?: Prisma.ConversationUpdateManyWithoutParticipantTwoNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
   emailVerification?: Prisma.EmailVerificationCodeUpdateOneWithoutUserNestedInput
+  blocksInitiated?: Prisma.UserBlockUpdateManyWithoutBlockerNestedInput
+  blocksReceived?: Prisma.UserBlockUpdateManyWithoutBlockedNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTasteItemsInput = {
@@ -1995,6 +2387,8 @@ export type UserUncheckedUpdateWithoutTasteItemsInput = {
   conversationsAsTwo?: Prisma.ConversationUncheckedUpdateManyWithoutParticipantTwoNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
   emailVerification?: Prisma.EmailVerificationCodeUncheckedUpdateOneWithoutUserNestedInput
+  blocksInitiated?: Prisma.UserBlockUncheckedUpdateManyWithoutBlockerNestedInput
+  blocksReceived?: Prisma.UserBlockUncheckedUpdateManyWithoutBlockedNestedInput
 }
 
 export type UserCreateWithoutMusicGenresInput = {
@@ -2024,6 +2418,8 @@ export type UserCreateWithoutMusicGenresInput = {
   conversationsAsTwo?: Prisma.ConversationCreateNestedManyWithoutParticipantTwoInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
   emailVerification?: Prisma.EmailVerificationCodeCreateNestedOneWithoutUserInput
+  blocksInitiated?: Prisma.UserBlockCreateNestedManyWithoutBlockerInput
+  blocksReceived?: Prisma.UserBlockCreateNestedManyWithoutBlockedInput
 }
 
 export type UserUncheckedCreateWithoutMusicGenresInput = {
@@ -2053,6 +2449,8 @@ export type UserUncheckedCreateWithoutMusicGenresInput = {
   conversationsAsTwo?: Prisma.ConversationUncheckedCreateNestedManyWithoutParticipantTwoInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
   emailVerification?: Prisma.EmailVerificationCodeUncheckedCreateNestedOneWithoutUserInput
+  blocksInitiated?: Prisma.UserBlockUncheckedCreateNestedManyWithoutBlockerInput
+  blocksReceived?: Prisma.UserBlockUncheckedCreateNestedManyWithoutBlockedInput
 }
 
 export type UserCreateOrConnectWithoutMusicGenresInput = {
@@ -2098,6 +2496,8 @@ export type UserUpdateWithoutMusicGenresInput = {
   conversationsAsTwo?: Prisma.ConversationUpdateManyWithoutParticipantTwoNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
   emailVerification?: Prisma.EmailVerificationCodeUpdateOneWithoutUserNestedInput
+  blocksInitiated?: Prisma.UserBlockUpdateManyWithoutBlockerNestedInput
+  blocksReceived?: Prisma.UserBlockUpdateManyWithoutBlockedNestedInput
 }
 
 export type UserUncheckedUpdateWithoutMusicGenresInput = {
@@ -2127,6 +2527,8 @@ export type UserUncheckedUpdateWithoutMusicGenresInput = {
   conversationsAsTwo?: Prisma.ConversationUncheckedUpdateManyWithoutParticipantTwoNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
   emailVerification?: Prisma.EmailVerificationCodeUncheckedUpdateOneWithoutUserNestedInput
+  blocksInitiated?: Prisma.UserBlockUncheckedUpdateManyWithoutBlockerNestedInput
+  blocksReceived?: Prisma.UserBlockUncheckedUpdateManyWithoutBlockedNestedInput
 }
 
 export type UserCreateWithoutFavoriteArtistsInput = {
@@ -2156,6 +2558,8 @@ export type UserCreateWithoutFavoriteArtistsInput = {
   conversationsAsTwo?: Prisma.ConversationCreateNestedManyWithoutParticipantTwoInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
   emailVerification?: Prisma.EmailVerificationCodeCreateNestedOneWithoutUserInput
+  blocksInitiated?: Prisma.UserBlockCreateNestedManyWithoutBlockerInput
+  blocksReceived?: Prisma.UserBlockCreateNestedManyWithoutBlockedInput
 }
 
 export type UserUncheckedCreateWithoutFavoriteArtistsInput = {
@@ -2185,6 +2589,8 @@ export type UserUncheckedCreateWithoutFavoriteArtistsInput = {
   conversationsAsTwo?: Prisma.ConversationUncheckedCreateNestedManyWithoutParticipantTwoInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
   emailVerification?: Prisma.EmailVerificationCodeUncheckedCreateNestedOneWithoutUserInput
+  blocksInitiated?: Prisma.UserBlockUncheckedCreateNestedManyWithoutBlockerInput
+  blocksReceived?: Prisma.UserBlockUncheckedCreateNestedManyWithoutBlockedInput
 }
 
 export type UserCreateOrConnectWithoutFavoriteArtistsInput = {
@@ -2230,6 +2636,8 @@ export type UserUpdateWithoutFavoriteArtistsInput = {
   conversationsAsTwo?: Prisma.ConversationUpdateManyWithoutParticipantTwoNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
   emailVerification?: Prisma.EmailVerificationCodeUpdateOneWithoutUserNestedInput
+  blocksInitiated?: Prisma.UserBlockUpdateManyWithoutBlockerNestedInput
+  blocksReceived?: Prisma.UserBlockUpdateManyWithoutBlockedNestedInput
 }
 
 export type UserUncheckedUpdateWithoutFavoriteArtistsInput = {
@@ -2259,6 +2667,8 @@ export type UserUncheckedUpdateWithoutFavoriteArtistsInput = {
   conversationsAsTwo?: Prisma.ConversationUncheckedUpdateManyWithoutParticipantTwoNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
   emailVerification?: Prisma.EmailVerificationCodeUncheckedUpdateOneWithoutUserNestedInput
+  blocksInitiated?: Prisma.UserBlockUncheckedUpdateManyWithoutBlockerNestedInput
+  blocksReceived?: Prisma.UserBlockUncheckedUpdateManyWithoutBlockedNestedInput
 }
 
 export type UserCreateWithoutMovieGenresInput = {
@@ -2288,6 +2698,8 @@ export type UserCreateWithoutMovieGenresInput = {
   conversationsAsTwo?: Prisma.ConversationCreateNestedManyWithoutParticipantTwoInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
   emailVerification?: Prisma.EmailVerificationCodeCreateNestedOneWithoutUserInput
+  blocksInitiated?: Prisma.UserBlockCreateNestedManyWithoutBlockerInput
+  blocksReceived?: Prisma.UserBlockCreateNestedManyWithoutBlockedInput
 }
 
 export type UserUncheckedCreateWithoutMovieGenresInput = {
@@ -2317,6 +2729,8 @@ export type UserUncheckedCreateWithoutMovieGenresInput = {
   conversationsAsTwo?: Prisma.ConversationUncheckedCreateNestedManyWithoutParticipantTwoInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
   emailVerification?: Prisma.EmailVerificationCodeUncheckedCreateNestedOneWithoutUserInput
+  blocksInitiated?: Prisma.UserBlockUncheckedCreateNestedManyWithoutBlockerInput
+  blocksReceived?: Prisma.UserBlockUncheckedCreateNestedManyWithoutBlockedInput
 }
 
 export type UserCreateOrConnectWithoutMovieGenresInput = {
@@ -2362,6 +2776,8 @@ export type UserUpdateWithoutMovieGenresInput = {
   conversationsAsTwo?: Prisma.ConversationUpdateManyWithoutParticipantTwoNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
   emailVerification?: Prisma.EmailVerificationCodeUpdateOneWithoutUserNestedInput
+  blocksInitiated?: Prisma.UserBlockUpdateManyWithoutBlockerNestedInput
+  blocksReceived?: Prisma.UserBlockUpdateManyWithoutBlockedNestedInput
 }
 
 export type UserUncheckedUpdateWithoutMovieGenresInput = {
@@ -2391,6 +2807,8 @@ export type UserUncheckedUpdateWithoutMovieGenresInput = {
   conversationsAsTwo?: Prisma.ConversationUncheckedUpdateManyWithoutParticipantTwoNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
   emailVerification?: Prisma.EmailVerificationCodeUncheckedUpdateOneWithoutUserNestedInput
+  blocksInitiated?: Prisma.UserBlockUncheckedUpdateManyWithoutBlockerNestedInput
+  blocksReceived?: Prisma.UserBlockUncheckedUpdateManyWithoutBlockedNestedInput
 }
 
 export type UserCreateWithoutFavoriteMoviesInput = {
@@ -2420,6 +2838,8 @@ export type UserCreateWithoutFavoriteMoviesInput = {
   conversationsAsTwo?: Prisma.ConversationCreateNestedManyWithoutParticipantTwoInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
   emailVerification?: Prisma.EmailVerificationCodeCreateNestedOneWithoutUserInput
+  blocksInitiated?: Prisma.UserBlockCreateNestedManyWithoutBlockerInput
+  blocksReceived?: Prisma.UserBlockCreateNestedManyWithoutBlockedInput
 }
 
 export type UserUncheckedCreateWithoutFavoriteMoviesInput = {
@@ -2449,6 +2869,8 @@ export type UserUncheckedCreateWithoutFavoriteMoviesInput = {
   conversationsAsTwo?: Prisma.ConversationUncheckedCreateNestedManyWithoutParticipantTwoInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
   emailVerification?: Prisma.EmailVerificationCodeUncheckedCreateNestedOneWithoutUserInput
+  blocksInitiated?: Prisma.UserBlockUncheckedCreateNestedManyWithoutBlockerInput
+  blocksReceived?: Prisma.UserBlockUncheckedCreateNestedManyWithoutBlockedInput
 }
 
 export type UserCreateOrConnectWithoutFavoriteMoviesInput = {
@@ -2494,6 +2916,8 @@ export type UserUpdateWithoutFavoriteMoviesInput = {
   conversationsAsTwo?: Prisma.ConversationUpdateManyWithoutParticipantTwoNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
   emailVerification?: Prisma.EmailVerificationCodeUpdateOneWithoutUserNestedInput
+  blocksInitiated?: Prisma.UserBlockUpdateManyWithoutBlockerNestedInput
+  blocksReceived?: Prisma.UserBlockUpdateManyWithoutBlockedNestedInput
 }
 
 export type UserUncheckedUpdateWithoutFavoriteMoviesInput = {
@@ -2523,6 +2947,8 @@ export type UserUncheckedUpdateWithoutFavoriteMoviesInput = {
   conversationsAsTwo?: Prisma.ConversationUncheckedUpdateManyWithoutParticipantTwoNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
   emailVerification?: Prisma.EmailVerificationCodeUncheckedUpdateOneWithoutUserNestedInput
+  blocksInitiated?: Prisma.UserBlockUncheckedUpdateManyWithoutBlockerNestedInput
+  blocksReceived?: Prisma.UserBlockUncheckedUpdateManyWithoutBlockedNestedInput
 }
 
 
@@ -2541,6 +2967,8 @@ export type UserCountOutputType = {
   conversationsAsOne: number
   conversationsAsTwo: number
   sentMessages: number
+  blocksInitiated: number
+  blocksReceived: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2554,6 +2982,8 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   conversationsAsOne?: boolean | UserCountOutputTypeCountConversationsAsOneArgs
   conversationsAsTwo?: boolean | UserCountOutputTypeCountConversationsAsTwoArgs
   sentMessages?: boolean | UserCountOutputTypeCountSentMessagesArgs
+  blocksInitiated?: boolean | UserCountOutputTypeCountBlocksInitiatedArgs
+  blocksReceived?: boolean | UserCountOutputTypeCountBlocksReceivedArgs
 }
 
 /**
@@ -2636,6 +3066,20 @@ export type UserCountOutputTypeCountSentMessagesArgs<ExtArgs extends runtime.Typ
   where?: Prisma.MessageWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountBlocksInitiatedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.UserBlockWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountBlocksReceivedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.UserBlockWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -2665,6 +3109,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   conversationsAsTwo?: boolean | Prisma.User$conversationsAsTwoArgs<ExtArgs>
   sentMessages?: boolean | Prisma.User$sentMessagesArgs<ExtArgs>
   emailVerification?: boolean | Prisma.User$emailVerificationArgs<ExtArgs>
+  blocksInitiated?: boolean | Prisma.User$blocksInitiatedArgs<ExtArgs>
+  blocksReceived?: boolean | Prisma.User$blocksReceivedArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -2734,6 +3180,8 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   conversationsAsTwo?: boolean | Prisma.User$conversationsAsTwoArgs<ExtArgs>
   sentMessages?: boolean | Prisma.User$sentMessagesArgs<ExtArgs>
   emailVerification?: boolean | Prisma.User$emailVerificationArgs<ExtArgs>
+  blocksInitiated?: boolean | Prisma.User$blocksInitiatedArgs<ExtArgs>
+  blocksReceived?: boolean | Prisma.User$blocksReceivedArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -2755,6 +3203,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     conversationsAsTwo: Prisma.$ConversationPayload<ExtArgs>[]
     sentMessages: Prisma.$MessagePayload<ExtArgs>[]
     emailVerification: Prisma.$EmailVerificationCodePayload<ExtArgs> | null
+    blocksInitiated: Prisma.$UserBlockPayload<ExtArgs>[]
+    blocksReceived: Prisma.$UserBlockPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -3178,6 +3628,8 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   conversationsAsTwo<T extends Prisma.User$conversationsAsTwoArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$conversationsAsTwoArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   sentMessages<T extends Prisma.User$sentMessagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sentMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   emailVerification<T extends Prisma.User$emailVerificationArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$emailVerificationArgs<ExtArgs>>): Prisma.Prisma__EmailVerificationCodeClient<runtime.Types.Result.GetResult<Prisma.$EmailVerificationCodePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  blocksInitiated<T extends Prisma.User$blocksInitiatedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$blocksInitiatedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserBlockPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  blocksReceived<T extends Prisma.User$blocksReceivedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$blocksReceivedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserBlockPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3908,6 +4360,54 @@ export type User$emailVerificationArgs<ExtArgs extends runtime.Types.Extensions.
    */
   include?: Prisma.EmailVerificationCodeInclude<ExtArgs> | null
   where?: Prisma.EmailVerificationCodeWhereInput
+}
+
+/**
+ * User.blocksInitiated
+ */
+export type User$blocksInitiatedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserBlock
+   */
+  select?: Prisma.UserBlockSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the UserBlock
+   */
+  omit?: Prisma.UserBlockOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserBlockInclude<ExtArgs> | null
+  where?: Prisma.UserBlockWhereInput
+  orderBy?: Prisma.UserBlockOrderByWithRelationInput | Prisma.UserBlockOrderByWithRelationInput[]
+  cursor?: Prisma.UserBlockWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.UserBlockScalarFieldEnum | Prisma.UserBlockScalarFieldEnum[]
+}
+
+/**
+ * User.blocksReceived
+ */
+export type User$blocksReceivedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserBlock
+   */
+  select?: Prisma.UserBlockSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the UserBlock
+   */
+  omit?: Prisma.UserBlockOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserBlockInclude<ExtArgs> | null
+  where?: Prisma.UserBlockWhereInput
+  orderBy?: Prisma.UserBlockOrderByWithRelationInput | Prisma.UserBlockOrderByWithRelationInput[]
+  cursor?: Prisma.UserBlockWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.UserBlockScalarFieldEnum | Prisma.UserBlockScalarFieldEnum[]
 }
 
 /**

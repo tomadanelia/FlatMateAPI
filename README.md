@@ -40,6 +40,9 @@ The migrations create users, housing/lifestyle profiles, versioned tests and que
 - `POST /api/auth/login` — authenticate a verified account with email/password and receive a JWT; no code is required again.
 - `PUT /api/users/profile` — create/update onboarding, rent and lifestyle data.
 - `PATCH /api/users/me/avatar` — save, replace or clear the authenticated user's profile image URL.
+- `GET /api/users/:id` — view a safe public profile with personality, tastes, housing, and lifestyle preferences (JWT required).
+- `POST /api/users/:id/block` / `DELETE /api/users/:id/block` — block or unblock another user (JWT required).
+- `GET /api/users/me/blocks` — list users blocked by the current user (JWT required).
 - `GET /api/tests` and `GET /api/tests/:slug` — available tests/questions.
 - `POST /api/tests/submissions` — score and store a completed test.
 - `POST /api/integrations/connect` — record a Spotify or Letterboxd identity.

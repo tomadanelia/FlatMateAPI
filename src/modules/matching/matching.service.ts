@@ -208,6 +208,8 @@ export class MatchingService {
 
     return {
       id: { not: subject.id },
+      blocksInitiated: { none: { blockedId: subject.id } },
+      blocksReceived: { none: { blockerId: subject.id } },
       isDiscoverable: true,
       onboardingComplete: true,
       gender: { in: preference.preferredRoommateGenders },
