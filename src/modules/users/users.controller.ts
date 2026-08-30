@@ -35,6 +35,12 @@ export class UsersController {
     return this.users.updateAvatar(request.user.id, dto.avatarUrl);
   }
 
+  @Get("me")
+  @UseGuards(JwtAuthGuard)
+  getMe(@Req() request: AuthenticatedRequest) {
+    return this.users.findPrivateProfile(request.user.id);
+  }
+
   @Get("me/blocks")
   @UseGuards(JwtAuthGuard)
   listBlocks(@Req() request: AuthenticatedRequest) {

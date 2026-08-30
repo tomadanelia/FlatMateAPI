@@ -106,6 +106,51 @@ describe("UsersService", () => {
     );
   });
 
+  it("returns the authenticated user's private onboarding profile", async () => {
+    prisma.user.findUnique.mockResolvedValue({
+      id: "user-id",
+      email: "user@example.test",
+      role: "USER",
+      displayName: "User",
+      birthDate: null,
+      gender: null,
+      bio: null,
+      avatarUrl: null,
+      isDiscoverable: true,
+      onboardingComplete: true,
+      createdAt: new Date("2026-08-30T00:00:00Z"),
+      updatedAt: new Date("2026-08-30T00:00:00Z"),
+      housingPreference: null,
+      lifestyleProfile: null,
+      integrations: [],
+    });
+
+    const result = await service.findPrivateProfile("user-id");
+
+    expect(prisma.user.findUnique).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: { id: "user-id" },
+        select: expect.objectContaining({
+          email: true,
+          onboardingComplete: true,
+          isDiscoverable: true,
+          housingPreference: true,
+          lifestyleProfile: true,
+        }),
+      }),
+    );
+    expect(result.onboardingComplete).toBe(true);
+    expect(result).not.toHaveProperty("passwordHash");
+  });
+
+  it("rejects a missing authenticated user profile", async () => {
+    prisma.user.findUnique.mockResolvedValue(null);
+
+    await expect(service.findPrivateProfile("missing-user")).rejects.toThrow(
+      "User not found",
+    );
+  });
+
   it("loads only a visible profile when neither user has blocked the other", async () => {
     prisma.user.findFirst.mockResolvedValue({
       id: "profile-id",

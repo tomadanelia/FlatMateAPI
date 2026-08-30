@@ -416,6 +416,14 @@ Example response:
 
 Errors: `400` for a missing `avatarUrl` or a URL that is not HTTP(S); `401` for a missing or invalid JWT; `404` with `"User not found"` when the authenticated user no longer exists.
 
+### Get the authenticated user's private profile
+
+`GET /api/users/me` — JWT required — HTTP `200`
+
+The user is derived from the JWT; no user ID or request body is accepted. The response is the private application profile used for onboarding and account screens. It includes `email`, `role`, `birthDate`, `isDiscoverable`, `onboardingComplete`, timestamps, housing/lifestyle records, and safe integration summaries. It never includes `passwordHash`, verification codes, or integration tokens.
+
+Errors: `401` for a missing or invalid JWT; `404` with `"User not found"` when the token's user no longer exists.
+
 ## 4. Get a user and profile
 
 `GET /api/users/:id` — JWT required — HTTP `200`

@@ -137,6 +137,39 @@ export class UsersService {
       include: { housingPreference: true, lifestyleProfile: true },
     });
   }
+
+  async findPrivateProfile(id: string) {
+    const profile = await this.prisma.user.findUnique({
+      where: { id },
+      select: {
+        id: true,
+        email: true,
+        role: true,
+        displayName: true,
+        birthDate: true,
+        gender: true,
+        bio: true,
+        avatarUrl: true,
+        isDiscoverable: true,
+        onboardingComplete: true,
+        createdAt: true,
+        updatedAt: true,
+        housingPreference: true,
+        lifestyleProfile: true,
+        integrations: {
+          select: {
+            provider: true,
+            username: true,
+            status: true,
+            lastSyncedAt: true,
+          },
+        },
+      },
+    });
+    if (!profile) throw new NotFoundException("User not found");
+    return profile;
+  }
+
   async findPublicProfile(viewerId: string, profileId: string) {
     const profile = await this.prisma.user.findFirst({
       where: {
