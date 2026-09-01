@@ -506,11 +506,15 @@ Response schema:
 
 An empty array means no active test definitions exist.
 
+The seeded response contains both `big-five-v1` (short, 10 items) and
+`big-five-v2` (long, 50 items), ordered by version so the frontend can let the
+user choose. Both definitions accept new submissions.
+
 ## 6. Get a test and its questions
 
 `GET /api/tests/:slug` — public — HTTP `200`
 
-Path parameter: `slug`, for example `big-five-v1`.
+Path parameter: `slug`, for example `big-five-v1` (short) or `big-five-v2` (long).
 
 Request body: none.
 
@@ -602,7 +606,7 @@ The service does not filter by `isActive` here. An unknown slug returns HTTP `20
 
 `POST /api/tests/submissions` — currently public — HTTP `201`
 
-The request must answer every question in the selected test definition exactly once. Values are numbers from 1 through 5 at DTO validation time and must also fall within each question's configured range. Scores are normalized to approximately `0..1` using the configured question weights and reverse scoring.
+The request must target an active test definition and answer every question in it exactly once. Values are numbers from 1 through 5 at DTO validation time and must also fall within each question's configured range. Scores are normalized to `0..1` using the configured question weights and reverse scoring. Every submission is retained. A user who completed the short version can later submit the long version; that newer attempt and its newly calculated trait scores become the result used by profiles and matching.
 
 Request schema:
 

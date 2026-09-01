@@ -160,7 +160,7 @@ Example single-algorithm request:
 
 The backend intentionally exposes a provider-neutral taste ingestion endpoint; Spotify OAuth callbacks, token encryption/refresh, and Letterboxd scraping/API ingestion should be implemented as provider adapters around it. Letterboxd has no general public API, so confirm its current terms before choosing an ingestion method. Never store provider tokens unencrypted.
 
-The authentication endpoints issue signed JWTs containing `sub` (the user ID), `email`, and `role`. Every admin route requires a valid `Authorization: Bearer <token>` header and the `ADMIN` role. Before exposing all other user-scoped endpoints publicly, apply JWT authentication there too and derive `userId` from the verified token instead of trusting IDs in request bodies. The included 10-question Big Five seed is only a development questionnaire, not a validated psychological instrument.
+The authentication endpoints issue signed JWTs containing `sub` (the user ID), `email`, and `role`. Every admin route requires a valid `Authorization: Bearer <token>` header and the `ADMIN` role. Before exposing all other user-scoped endpoints publicly, apply JWT authentication there too and derive `userId` from the verified token instead of trusting IDs in request bodies. Both Big Five questionnaires are active: `big-five-v1` is the short 10-item option and `big-five-v2` is the longer 50-item IPIP factor-marker inventory. The frontend can offer either version; if a user completes the long version after the short one, the new attempt becomes the personality result used by profiles and matching while the short attempt remains in history.
 
 ## Verification
 

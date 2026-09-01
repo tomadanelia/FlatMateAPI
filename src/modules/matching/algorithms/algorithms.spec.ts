@@ -25,6 +25,40 @@ describe("matching algorithms", () => {
     });
     expect(new PersonalityAlgorithm().score(p, p)?.score).toBe(1);
   });
+
+  it("averages normalized distance across all shared Big Five traits", () => {
+    const a = profile({
+      testAttempts: [
+        {
+          traitScores: [
+            { trait: "extraversion", score: 0 },
+            { trait: "agreeableness", score: 0.25 },
+            { trait: "conscientiousness", score: 0.5 },
+            { trait: "neuroticism", score: 0.75 },
+            { trait: "openness", score: 1 },
+          ],
+        },
+      ],
+    });
+    const b = profile({
+      testAttempts: [
+        {
+          traitScores: [
+            { trait: "extraversion", score: 1 },
+            { trait: "agreeableness", score: 0.75 },
+            { trait: "conscientiousness", score: 0.5 },
+            { trait: "neuroticism", score: 0.25 },
+            { trait: "openness", score: 0 },
+          ],
+        },
+      ],
+    });
+
+    const result = new PersonalityAlgorithm().score(a, b);
+
+    expect(result?.score).toBeCloseTo(0.4);
+    expect(result?.explanation).toMatchObject({ sharedTraits: 5 });
+  });
   it("makes a pet incompatibility a zero lifestyle score", () => {
     const base = {
       cleanliness: 3,

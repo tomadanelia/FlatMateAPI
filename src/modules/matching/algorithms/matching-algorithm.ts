@@ -9,7 +9,7 @@ export const matchProfileInclude = {
   favoriteMovies: { include: { movie: true } },
   testAttempts: {
     where: { completedAt: { not: null } },
-    orderBy: { completedAt: "desc" },
+    orderBy: [{ completedAt: "desc" }, { createdAt: "desc" }],
     take: 1,
     include: { traitScores: true },
   },

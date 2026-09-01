@@ -214,7 +214,7 @@ export class UsersService {
         },
         testAttempts: {
           where: { completedAt: { not: null } },
-          orderBy: { completedAt: "desc" },
+          orderBy: [{ completedAt: "desc" }, { createdAt: "desc" }],
           take: 1,
           select: {
             completedAt: true,

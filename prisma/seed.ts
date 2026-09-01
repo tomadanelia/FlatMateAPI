@@ -7,6 +7,7 @@ import {
   PrismaClient,
   TestType,
 } from "../src/generated/prisma/client";
+import { bigFiveV2Questions } from "./big-five-v2";
 const connectionString = process.env.DATABASE_URL;
 if (!connectionString) throw new Error("DATABASE_URL is required");
 const prisma = new PrismaClient({
@@ -33,7 +34,7 @@ const questions = [
   ["N1", "I often feel stressed.", "neuroticism", false],
   ["N2", "I remain calm under pressure.", "neuroticism", true],
 ] as const;
-async function main() {
+async function seedTasteAndAlgorithms() {
   for (const name of tasteData.musicGenres)
     await prisma.musicGenre.upsert({
       where: { name },
@@ -98,16 +99,25 @@ async function main() {
         weight: key === AlgorithmKey.LIFESTYLE ? 1.25 : 1,
       },
     });
+}
+
+async function seedPersonalityTests() {
   await prisma.testDefinition.upsert({
     where: { slug: "big-five-v1" },
-    update: {},
+    update: {
+      name: "Big Five (Short, 10-item)",
+      isActive: true,
+      description:
+        "Short 10-item Big Five questionnaire for a quick initial personality profile.",
+    },
     create: {
       slug: "big-five-v1",
-      name: "Big Five",
+      name: "Big Five (Short, 10-item)",
       type: TestType.BIG_FIVE,
       version: 1,
+      isActive: true,
       description:
-        "Short starter Big Five inventory; replace with a validated/licensed questionnaire before production.",
+        "Short 10-item Big Five questionnaire for a quick initial personality profile.",
       questions: {
         create: questions.map(
           ([code, prompt, trait, reverseScored], position) => ({
@@ -130,5 +140,78 @@ async function main() {
       },
     },
   });
+
+  // Both versions stay active: users may start with the short questionnaire
+  // and later submit the longer one for a more detailed set of trait scores.
+  const bigFiveV2 = await prisma.testDefinition.upsert({
+    where: { slug: "big-five-v2" },
+    update: {
+      name: "Big Five (IPIP 50-item)",
+      type: TestType.BIG_FIVE,
+      version: 2,
+      isActive: true,
+      description:
+        "IPIP 50-item Big-Five factor markers. Rate how accurately each statement describes you now from 1 (Very Inaccurate) to 5 (Very Accurate).",
+    },
+    create: {
+      slug: "big-five-v2",
+      name: "Big Five (IPIP 50-item)",
+      type: TestType.BIG_FIVE,
+      version: 2,
+      isActive: true,
+      description:
+        "IPIP 50-item Big-Five factor markers. Rate how accurately each statement describes you now from 1 (Very Inaccurate) to 5 (Very Accurate).",
+    },
+  });
+  const accuracyOptions = [
+    { value: 1, label: "Very Inaccurate" },
+    { value: 2, label: "Moderately Inaccurate" },
+    { value: 3, label: "Neither Accurate Nor Inaccurate" },
+    { value: 4, label: "Moderately Accurate" },
+    { value: 5, label: "Very Accurate" },
+  ];
+  for (const [
+    position,
+    [code, prompt, trait, reverseScored],
+  ] of bigFiveV2Questions.entries()) {
+    await prisma.question.upsert({
+      where: {
+        testDefinitionId_code: {
+          testDefinitionId: bigFiveV2.id,
+          code,
+        },
+      },
+      update: {
+        prompt,
+        trait,
+        reverseScored,
+        position: position + 1,
+        minValue: 1,
+        maxValue: 5,
+        options: accuracyOptions,
+      },
+      create: {
+        testDefinitionId: bigFiveV2.id,
+        code,
+        prompt,
+        trait,
+        reverseScored,
+        position: position + 1,
+        minValue: 1,
+        maxValue: 5,
+        options: accuracyOptions,
+      },
+    });
+  }
 }
+
+async function main() {
+  // Seed the small, essential questionnaire first so it is not held up by the
+  // much larger taste catalog on slow remote database connections.
+  await seedPersonalityTests();
+  if (!process.argv.includes("--personality-only")) {
+    await seedTasteAndAlgorithms();
+  }
+}
+
 main().finally(() => prisma.$disconnect());
