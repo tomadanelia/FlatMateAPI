@@ -12,7 +12,7 @@ Current strategies:
 - `TASTE`: Jaccard similarity across normalized Spotify/Letterboxd titles, artists and genres.
 - `LIFESTYLE`: compatibility across cleanliness, schedule, sociability, noise, guests, pets and smoking.
 
-Country/city, currency, overlapping rent budgets, reciprocal gender preferences, discoverability, onboarding, and (when supplied) move-in dates within 30 days are hard candidate filters. Matching is calculated from current profile data on demand. A cheap budget/date/lifestyle pass selects at most 50 candidates before personality and taste run, and at most 20 matches are returned. Missing optional data omits that strategy for that pair and the remaining weights are normalized, so it does not unfairly become a zero.
+Country/city, currency, overlapping rent budgets, reciprocal gender preferences, discoverability, and onboarding are hard candidate filters. Matching is calculated from current profile data on demand. A cheap budget/lifestyle pass selects at most 50 candidates before personality and taste run, and at most 20 matches are returned. Missing optional data omits that strategy for that pair and the remaining weights are normalized, so it does not unfairly become a zero. Stored move-in dates are retained for compatibility but are not used by matching.
 
 To add or replace an algorithm, implement `MatchingAlgorithm`, register the class in `MatchingModule` and add it to `AlgorithmRegistry`. Algorithm scores and explanations are returned to the caller but are not persisted.
 

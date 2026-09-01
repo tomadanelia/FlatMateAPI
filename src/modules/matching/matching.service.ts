@@ -10,7 +10,6 @@ import {
 import { FindMatchesDto } from "./dto/find-matches.dto";
 
 export const MATCH_SHORTLIST_SIZE = 50;
-export const MOVE_IN_WINDOW_DAYS = 30;
 
 type EnabledConfig = {
   key: AlgorithmKey;
@@ -73,8 +72,6 @@ export class MatchingService {
     const shortlistIds = candidates
       .map((candidate) => {
         const quickScores = [this.budgetScore(subject, candidate)];
-        const moveInScore = this.moveInScore(subject, candidate);
-        if (moveInScore !== null) quickScores.push(moveInScore);
 
         if (lifestyleConfig && lifestyleAlgorithm) {
           const result = lifestyleAlgorithm.score(
@@ -198,14 +195,6 @@ export class MatchingService {
         : {}),
     };
 
-    if (preference.moveInDate) {
-      const milliseconds = MOVE_IN_WINDOW_DAYS * 24 * 60 * 60 * 1000;
-      housingPreference.moveInDate = {
-        gte: new Date(preference.moveInDate.getTime() - milliseconds),
-        lte: new Date(preference.moveInDate.getTime() + milliseconds),
-      };
-    }
-
     return {
       id: { not: subject.id },
       blocksInitiated: { none: { blockedId: subject.id } },
@@ -230,18 +219,6 @@ export class MatchingService {
       Math.max(left.maxMonthlyBudget, right.maxMonthlyBudget) -
       Math.min(left.minMonthlyBudget, right.minMonthlyBudget);
     return union === 0 ? 1 : Math.max(0, overlap / union);
-  }
-
-  private moveInScore(
-    subject: Pick<MatchProfile, "housingPreference">,
-    candidate: Pick<MatchProfile, "housingPreference">,
-  ) {
-    const left = subject.housingPreference?.moveInDate;
-    const right = candidate.housingPreference?.moveInDate;
-    if (!left || !right) return null;
-    const differenceDays =
-      Math.abs(left.getTime() - right.getTime()) / (24 * 60 * 60 * 1000);
-    return Math.max(0, 1 - differenceDays / MOVE_IN_WINDOW_DAYS);
   }
 
   private settings(config: EnabledConfig) {

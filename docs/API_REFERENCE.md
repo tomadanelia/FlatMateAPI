@@ -240,7 +240,7 @@ Request schema:
         { "type": "string", "format": "date" },
         { "type": "string", "format": "date-time" }
       ],
-      "description": "ISO date or date-time."
+      "description": "Optional legacy field. ISO date or date-time; omitted values are accepted and existing stored values are preserved. This field is not used by matching."
     },
     "preferredAreas": { "type": "array", "items": { "type": "string" } },
     "preferredRoommateGenders": {
@@ -819,9 +819,9 @@ Returns the same response shape as the connect endpoint from stored data without
 
 `POST /api/matches/search` — currently public — HTTP `201`
 
-Results are calculated from current profile data for every request and are not persisted. Hard filters require candidates to be discoverable, onboarded, in the same country and city (city is case-insensitive), use the same currency, have overlapping budget ranges, and satisfy both users' roommate-gender preferences. When the searching user has a move-in date, candidates must have a date within 30 days.
+Results are calculated from current profile data for every request and are not persisted. Hard filters require candidates to be discoverable, onboarded, in the same country and city (city is case-insensitive), use the same currency, have overlapping budget ranges, and satisfy both users' roommate-gender preferences. Stored move-in dates are ignored.
 
-After hard filtering, a cheap budget/date/lifestyle score selects at most 50 candidates. Personality and taste algorithms run only for that shortlist, and at most 20 results are returned. `algorithms` optionally restricts which enabled strategies run. Omit it or pass `[]` to use all enabled strategies. A strategy is omitted for a pair when required data is missing; remaining weights are renormalized. Candidates for which no strategy can produce a score are omitted.
+After hard filtering, a cheap budget/lifestyle score selects at most 50 candidates. Personality and taste algorithms run only for that shortlist, and at most 20 results are returned. `algorithms` optionally restricts which enabled strategies run. Omit it or pass `[]` to use all enabled strategies. A strategy is omitted for a pair when required data is missing; remaining weights are renormalized. Candidates for which no strategy can produce a score are omitted.
 
 Request schema:
 

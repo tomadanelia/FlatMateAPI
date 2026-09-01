@@ -1,10 +1,6 @@
 import { NotFoundException } from "@nestjs/common";
 import { AlgorithmKey, Gender } from "../../generated/prisma/client";
-import {
-  MATCH_SHORTLIST_SIZE,
-  MOVE_IN_WINDOW_DAYS,
-  MatchingService,
-} from "./matching.service";
+import { MATCH_SHORTLIST_SIZE, MatchingService } from "./matching.service";
 
 const housingPreference = (overrides: Record<string, unknown> = {}) => ({
   id: "housing",
@@ -114,11 +110,6 @@ describe("MatchingService", () => {
     ).resolves.toEqual({ matches: [] });
 
     const broadQuery = user.findMany.mock.calls[0][0];
-    const earliest = new Date("2026-10-15T00:00:00.000Z");
-    earliest.setUTCDate(earliest.getUTCDate() - MOVE_IN_WINDOW_DAYS);
-    const latest = new Date("2026-10-15T00:00:00.000Z");
-    latest.setUTCDate(latest.getUTCDate() + MOVE_IN_WINDOW_DAYS);
-
     expect(broadQuery).toEqual({
       where: {
         id: { not: "subject" },
@@ -133,7 +124,6 @@ describe("MatchingService", () => {
           currency: "EUR",
           minMonthlyBudget: { lte: 1_200 },
           maxMonthlyBudget: { gte: 800 },
-          moveInDate: { gte: earliest, lte: latest },
           preferredRoommateGenders: { has: Gender.WOMAN },
         },
       },

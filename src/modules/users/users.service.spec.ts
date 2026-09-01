@@ -241,4 +241,36 @@ describe("UsersService", () => {
       unblocked: false,
     });
   });
+
+  it("accepts an omitted move-in date without clearing an existing value", () => {
+    prisma.user.upsert.mockResolvedValue({});
+
+    service.upsert({
+      id: "6df1c6f7-b86a-4d96-a5e0-e56fbf10ba33",
+      email: "person@example.test",
+      displayName: "Person",
+      gender: Gender.WOMAN,
+      city: "Berlin",
+      countryCode: "de",
+      minMonthlyBudget: 800,
+      maxMonthlyBudget: 1_200,
+      currency: "eur",
+      cleanliness: 3,
+      socialLevel: 3,
+      sleepSchedule: 3,
+      noiseTolerance: 3,
+      guestsFrequency: 3,
+      smokingAllowed: false,
+      petsAllowed: true,
+      hasPets: false,
+    });
+
+    const query = prisma.user.upsert.mock.calls[0][0];
+    expect(query.update.housingPreference.upsert.update).not.toHaveProperty(
+      "moveInDate",
+    );
+    expect(
+      query.update.housingPreference.upsert.create.moveInDate,
+    ).toBeUndefined();
+  });
 });
