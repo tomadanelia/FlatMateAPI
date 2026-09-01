@@ -60,7 +60,9 @@ The migrations create users, housing/lifestyle profiles, versioned tests and que
 - `GET/PATCH /api/admin/algorithms[/:key]` — list or update matching algorithms (admin only).
 - `POST /api/admin/tests/:testDefinitionId/questions` — bulk-create questions (admin only).
 - `PATCH /api/admin/questions/:id` — edit a question (admin only).
+- `GET /api/admin/users` — list user display names and IDs in sorted order (admin only).
 - `PATCH /api/admin/users/:id/role` — grant or revoke a user's admin role (admin only).
+- `DELETE /api/admin/users/:id` — delete a user and all user-owned data through database cascades (admin only).
 - `DELETE /api/admin/messages` — delete every message and retain empty conversations (admin only).
 
 Signup request (the response tells the client to show its code-entry screen):

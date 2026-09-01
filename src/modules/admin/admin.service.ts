@@ -49,6 +49,26 @@ export class AdminService {
     });
   }
 
+  listUsers() {
+    return this.prisma.user.findMany({
+      select: { id: true, displayName: true },
+      orderBy: [{ displayName: 'asc' }, { id: 'asc' }],
+    });
+  }
+
+  async deleteUser(id: string) {
+    const user = await this.prisma.user.findUnique({
+      where: { id },
+      select: { id: true, email: true },
+    });
+    if (!user) throw new NotFoundException('User not found');
+
+    const deleted = await this.prisma.user.deleteMany({ where: { id } });
+    if (deleted.count === 0) throw new NotFoundException('User not found');
+
+    return { ...user, deleted: true };
+  }
+
   async clearMessages() {
     return this.prisma.$transaction(async (tx) => {
       // Lock/reset conversations first so a concurrent sender either finishes

@@ -1228,6 +1228,54 @@ Response schema:
 
 Errors: `400` validation failure; `404` with `"User not found"`. Role changes do not invalidate already-issued JWTs.
 
+## 17. List users for administration
+
+`GET /api/admin/users` — admin only — HTTP `200`
+
+Returns the minimal user data needed to choose a user for an ID-based admin operation. Results are sorted by `displayName` ascending and then by `id`; users without a display name appear last.
+
+Response schema:
+
+```json
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["id", "displayName"],
+    "properties": {
+      "id": { "type": "string", "format": "uuid" },
+      "displayName": { "type": ["string", "null"] }
+    }
+  }
+}
+```
+
+## 18. Delete a user
+
+`DELETE /api/admin/users/:id` — admin only — HTTP `200`
+
+Path parameter: `id` must be a user UUID. Deleting the user also deletes their profile, preferences, verification code, test attempts and results, integrations, taste selections, blocks, conversations, and messages through database-enforced cascading foreign keys. Shared catalog records such as artists, genres, and movies are retained.
+
+Response schema:
+
+```json
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "email", "deleted"],
+  "properties": {
+    "id": { "type": "string", "format": "uuid" },
+    "email": { "type": "string", "format": "email" },
+    "deleted": { "const": true }
+  }
+}
+```
+
+Errors: `400` when `id` is not a UUID; `404` with `"User not found"` when no user has that ID. The client should discard any token belonging to the deleted user; existing JWTs are stateless and remain cryptographically valid until they expire.
+
 ## Messaging API
 
 All messaging endpoints require `Authorization: Bearer <accessToken>` and derive the user ID from that token.

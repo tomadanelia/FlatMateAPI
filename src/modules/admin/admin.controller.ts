@@ -5,6 +5,7 @@ import {
   Get,
   Header,
   Param,
+  ParseUUIDPipe,
   Patch,
   Post,
   UseGuards,
@@ -58,6 +59,16 @@ export class AdminController {
   @Patch('users/:id/role')
   updateUserRole(@Param('id') id: string, @Body() dto: UpdateUserRoleDto) {
     return this.admin.updateUserRole(id, dto.role);
+  }
+
+  @Get('users')
+  listUsers() {
+    return this.admin.listUsers();
+  }
+
+  @Delete('users/:id')
+  deleteUser(@Param('id', new ParseUUIDPipe()) id: string) {
+    return this.admin.deleteUser(id);
   }
 
   @Delete('messages')
