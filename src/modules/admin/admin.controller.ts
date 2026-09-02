@@ -5,6 +5,7 @@ import {
   Get,
   Header,
   Param,
+  ParseEnumPipe,
   ParseUUIDPipe,
   Patch,
   Post,
@@ -15,6 +16,7 @@ import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
 import { RolesGuard } from '../../common/guards/roles.guard';
 import { AlgorithmKey, UserRole } from '../../generated/prisma/client';
 import { AdminService } from './admin.service';
+import { PersonalityTestFilter } from './dto/personality-test-filter.dto';
 import { UpdateAlgorithmDto } from './dto/update-algorithm.dto';
 import { UpdateQuestionDto, UploadQuestionsDto } from './dto/question.dto';
 import { UpdateUserRoleDto } from './dto/update-user-role.dto';
@@ -64,6 +66,14 @@ export class AdminController {
   @Get('users')
   listUsers() {
     return this.admin.listUsers();
+  }
+
+  @Get('users/by-test-status/:status')
+  listUsersByTestStatus(
+    @Param('status', new ParseEnumPipe(PersonalityTestFilter))
+    status: PersonalityTestFilter,
+  ) {
+    return this.admin.listUsersByTestStatus(status);
   }
 
   @Get('users/:id/completion-status')

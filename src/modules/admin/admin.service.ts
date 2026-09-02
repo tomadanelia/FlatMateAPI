@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 import { AlgorithmKey, Prisma, UserRole } from '../../generated/prisma/client';
 import { PrismaService } from '../../prisma/prisma.service';
+import { PersonalityTestFilter } from './dto/personality-test-filter.dto';
 import { UpdateAlgorithmDto } from './dto/update-algorithm.dto';
 import {
   CreateQuestionDto,
@@ -52,6 +53,44 @@ export class AdminService {
   listUsers() {
     return this.prisma.user.findMany({
       select: { id: true, displayName: true },
+      orderBy: [{ displayName: 'asc' }, { id: 'asc' }],
+    });
+  }
+
+  listUsersByTestStatus(status: PersonalityTestFilter) {
+    const completedAttemptFor = (
+      slug: 'big-five-v1' | 'big-five-v2',
+    ): Prisma.TestAttemptWhereInput => ({
+      completedAt: { not: null },
+      testDefinition: { slug },
+    });
+    const completedShort = completedAttemptFor('big-five-v1');
+    const completedLong = completedAttemptFor('big-five-v2');
+    const where: Prisma.UserWhereInput =
+      status === PersonalityTestFilter.SHORT_ONLY
+        ? {
+            AND: [
+              { testAttempts: { some: completedShort } },
+              { testAttempts: { none: completedLong } },
+            ],
+          }
+        : status === PersonalityTestFilter.LONG_ONLY
+          ? {
+              AND: [
+                { testAttempts: { some: completedLong } },
+                { testAttempts: { none: completedShort } },
+              ],
+            }
+          : {
+              AND: [
+                { testAttempts: { some: completedShort } },
+                { testAttempts: { some: completedLong } },
+              ],
+            };
+
+    return this.prisma.user.findMany({
+      where,
+      select: { id: true, displayName: true, email: true },
       orderBy: [{ displayName: 'asc' }, { id: 'asc' }],
     });
   }

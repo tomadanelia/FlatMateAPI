@@ -1,5 +1,6 @@
 import { NotFoundException } from '@nestjs/common';
 import { AdminService } from './admin.service';
+import { PersonalityTestFilter } from './dto/personality-test-filter.dto';
 
 describe('AdminService', () => {
   const prisma = {
@@ -31,6 +32,56 @@ describe('AdminService', () => {
       select: { id: true, displayName: true },
       orderBy: [{ displayName: 'asc' }, { id: 'asc' }],
     });
+  });
+
+  it.each([
+    {
+      status: PersonalityTestFilter.SHORT_ONLY,
+      expectedRelations: ['some', 'none'],
+      expectedSlugs: ['big-five-v1', 'big-five-v2'],
+    },
+    {
+      status: PersonalityTestFilter.LONG_ONLY,
+      expectedRelations: ['some', 'none'],
+      expectedSlugs: ['big-five-v2', 'big-five-v1'],
+    },
+    {
+      status: PersonalityTestFilter.BOTH,
+      expectedRelations: ['some', 'some'],
+      expectedSlugs: ['big-five-v1', 'big-five-v2'],
+    },
+  ])('filters users with completed tests for $status', async (scenario) => {
+    const users = [
+      {
+        id: '00000000-0000-4000-8000-000000000001',
+        displayName: 'Alex',
+        email: 'alex@example.com',
+      },
+    ];
+    prisma.user.findMany.mockResolvedValue(users);
+
+    await expect(
+      service.listUsersByTestStatus(scenario.status),
+    ).resolves.toEqual(users);
+    const query = prisma.user.findMany.mock.calls[0][0];
+    expect(query.select).toEqual({
+      id: true,
+      displayName: true,
+      email: true,
+    });
+    expect(query.where.AND).toHaveLength(2);
+    query.where.AND.forEach(
+      (
+        condition: Record<string, { [key: string]: unknown }>,
+        index: number,
+      ) => {
+        const relation = scenario.expectedRelations[index];
+        expect(condition.testAttempts[relation]).toEqual({
+          completedAt: { not: null },
+          testDefinition: { slug: scenario.expectedSlugs[index] },
+        });
+      },
+    );
   });
 
   it.each([

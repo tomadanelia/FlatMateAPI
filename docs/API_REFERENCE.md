@@ -1256,7 +1256,56 @@ Response schema:
 }
 ```
 
-## 18. Get a user's test and taste completion status
+## 18. Filter users by completed personality tests
+
+`GET /api/admin/users/by-test-status/:status` — admin only — HTTP `200`
+
+Path parameter `status` accepts exactly one of:
+
+- `SHORT_ONLY`: completed the short test and has not completed the long test.
+- `LONG_ONLY`: completed the long test and has not completed the short test.
+- `BOTH`: completed both the short and long tests.
+
+Only attempts with a non-null `completedAt` value count. Request body: none.
+Results are sorted by `displayName` ascending and then by `id`; users without a
+display name appear last.
+
+Response schema:
+
+```json
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["id", "displayName", "email"],
+    "properties": {
+      "id": { "type": "string", "format": "uuid" },
+      "displayName": { "type": ["string", "null"] },
+      "email": { "type": "string", "format": "email" }
+    }
+  }
+}
+```
+
+Example response:
+
+```json
+[
+  {
+    "id": "00000000-0000-4000-8000-000000000001",
+    "displayName": "Alex",
+    "email": "alex@example.com"
+  }
+]
+```
+
+An empty array means no users match the selected status. Errors: `400` for an
+unsupported or incorrectly-cased status; `401` for missing or invalid
+authentication; `403` for a non-admin user.
+
+## 19. Get a user's test and taste completion status
 
 `GET /api/admin/users/:id/completion-status` — admin only — HTTP `200`
 
@@ -1344,7 +1393,7 @@ Errors: `400` when `id` is not a UUID; `401` for missing or invalid
 authentication; `403` for a non-admin user; `404` with `"User not found"` when
 the user does not exist.
 
-## 19. Delete a user
+## 20. Delete a user
 
 `DELETE /api/admin/users/:id` — admin only — HTTP `200`
 

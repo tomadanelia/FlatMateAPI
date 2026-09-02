@@ -61,6 +61,7 @@ The migrations create users, housing/lifestyle profiles, versioned tests and que
 - `POST /api/admin/tests/:testDefinitionId/questions` — bulk-create questions (admin only).
 - `PATCH /api/admin/questions/:id` — edit a question (admin only).
 - `GET /api/admin/users` — list user display names and IDs in sorted order (admin only).
+- `GET /api/admin/users/by-test-status/:status` — list user IDs, names, and emails filtered by `SHORT_ONLY`, `LONG_ONLY`, or `BOTH` completed-test status (admin only).
 - `GET /api/admin/users/:id/completion-status` — show whether a user completed the short test, long test, both, or neither, plus taste-selection counts (admin only).
 - `PATCH /api/admin/users/:id/role` — grant or revoke a user's admin role (admin only).
 - `DELETE /api/admin/users/:id` — delete a user and all user-owned data through database cascades (admin only).
