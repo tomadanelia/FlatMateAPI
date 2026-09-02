@@ -1,5 +1,9 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { AlgorithmKey, Prisma } from "../../generated/prisma/client";
+import {
+  visibleToGenderWhere,
+  wantedGenderWhere,
+} from "../../common/looking-for.policy";
 import { PrismaService } from "../../prisma/prisma.service";
 import { AlgorithmRegistry } from "./algorithm.registry";
 import {
@@ -184,6 +188,7 @@ export class MatchingService {
 
   private candidateWhere(subject: MatchProfile): Prisma.UserWhereInput {
     const preference = subject.housingPreference!;
+    const wantedGender = wantedGenderWhere(subject.lookingFor);
     const housingPreference: Prisma.HousingPreferenceWhereInput = {
       countryCode: preference.countryCode,
       city: { equals: preference.city, mode: "insensitive" },
@@ -201,6 +206,10 @@ export class MatchingService {
       blocksReceived: { none: { blockerId: subject.id } },
       isDiscoverable: true,
       onboardingComplete: true,
+      AND: [
+        visibleToGenderWhere(subject.gender),
+        ...(wantedGender ? [wantedGender] : []),
+      ],
       gender: { in: preference.preferredRoommateGenders },
       housingPreference,
     };

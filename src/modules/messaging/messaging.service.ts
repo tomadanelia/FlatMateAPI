@@ -3,8 +3,9 @@ import {
   ForbiddenException,
   Injectable,
   NotFoundException,
-} from '@nestjs/common';
-import { PrismaService } from '../../prisma/prisma.service';
+} from "@nestjs/common";
+import { permitsGender } from "../../common/looking-for.policy";
+import { PrismaService } from "../../prisma/prisma.service";
 
 const publicUserSelect = {
   id: true,
@@ -18,14 +19,22 @@ export class MessagingService {
 
   async getOrCreateConversation(userId: string, recipientId: string) {
     if (userId === recipientId) {
-      throw new BadRequestException('You cannot message yourself');
+      throw new BadRequestException("You cannot message yourself");
     }
 
-    const recipient = await this.prisma.user.findUnique({
-      where: { id: recipientId },
-      select: { id: true },
+    const participants = await this.prisma.user.findMany({
+      where: { id: { in: [userId, recipientId] } },
+      select: { id: true, gender: true, lookingFor: true },
     });
-    if (!recipient) throw new NotFoundException('Recipient not found');
+    const sender = participants.find(({ id }) => id === userId);
+    const recipient = participants.find(({ id }) => id === recipientId);
+    if (!recipient) throw new NotFoundException("Recipient not found");
+    if (!sender) throw new NotFoundException("User not found");
+    if (!permitsGender(recipient.lookingFor, sender.gender)) {
+      throw new ForbiddenException(
+        "Recipient does not accept messages from your gender",
+      );
+    }
 
     const [participantOneId, participantTwoId] = [userId, recipient.id].sort();
     return this.prisma.conversation.upsert({
@@ -49,11 +58,11 @@ export class MessagingService {
       where: {
         OR: [{ participantOneId: userId }, { participantTwoId: userId }],
       },
-      orderBy: [{ lastMessageAt: 'desc' }, { createdAt: 'desc' }],
+      orderBy: [{ lastMessageAt: "desc" }, { createdAt: "desc" }],
       include: {
         participantOne: { select: publicUserSelect },
         participantTwo: { select: publicUserSelect },
-        messages: { orderBy: { createdAt: 'desc' }, take: 1 },
+        messages: { orderBy: { createdAt: "desc" }, take: 1 },
         _count: {
           select: {
             messages: { where: { senderId: { not: userId }, readAt: null } },
@@ -76,13 +85,13 @@ export class MessagingService {
         select: { conversationId: true },
       });
       if (cursorMessage?.conversationId !== conversationId) {
-        throw new BadRequestException('Invalid message cursor');
+        throw new BadRequestException("Invalid message cursor");
       }
     }
 
     const rows = await this.prisma.message.findMany({
       where: { conversationId },
-      orderBy: [{ createdAt: 'desc' }, { id: 'desc' }],
+      orderBy: [{ createdAt: "desc" }, { id: "desc" }],
       take: limit + 1,
       ...(cursor ? { cursor: { id: cursor }, skip: 1 } : {}),
       include: { sender: { select: publicUserSelect } },
@@ -96,9 +105,9 @@ export class MessagingService {
   }
 
   async sendMessage(userId: string, conversationId: string, rawBody: string) {
-    const conversation = await this.assertParticipant(userId, conversationId);
+    const conversation = await this.assertCanSend(userId, conversationId);
     const body = rawBody.trim();
-    if (!body) throw new BadRequestException('Message cannot be empty');
+    if (!body) throw new BadRequestException("Message cannot be empty");
 
     return this.prisma.$transaction(async (tx) => {
       const message = await tx.message.create({
@@ -111,6 +120,38 @@ export class MessagingService {
       });
       return { message, participantIds: this.participantIds(conversation) };
     });
+  }
+
+  private async assertCanSend(userId: string, conversationId: string) {
+    const conversation = await this.prisma.conversation.findUnique({
+      where: { id: conversationId },
+      select: {
+        id: true,
+        participantOneId: true,
+        participantTwoId: true,
+        participantOne: { select: { gender: true, lookingFor: true } },
+        participantTwo: { select: { gender: true, lookingFor: true } },
+      },
+    });
+    const participantConversation = this.assertIsParticipant(
+      conversation,
+      userId,
+    );
+
+    const sender =
+      participantConversation.participantOneId === userId
+        ? participantConversation.participantOne
+        : participantConversation.participantTwo;
+    const recipient =
+      participantConversation.participantOneId === userId
+        ? participantConversation.participantTwo
+        : participantConversation.participantOne;
+    if (!permitsGender(recipient.lookingFor, sender.gender)) {
+      throw new ForbiddenException(
+        "Recipient does not accept messages from your gender",
+      );
+    }
+    return participantConversation;
   }
 
   async markRead(userId: string, conversationId: string) {
@@ -138,12 +179,21 @@ export class MessagingService {
       where: { id: conversationId },
       select: { id: true, participantOneId: true, participantTwoId: true },
     });
-    if (!conversation) throw new NotFoundException('Conversation not found');
+    return this.assertIsParticipant(conversation, userId);
+  }
+
+  private assertIsParticipant<
+    T extends {
+      participantOneId: string;
+      participantTwoId: string;
+    },
+  >(conversation: T | null, userId: string): T {
+    if (!conversation) throw new NotFoundException("Conversation not found");
     if (
       conversation.participantOneId !== userId &&
       conversation.participantTwoId !== userId
     ) {
-      throw new ForbiddenException('You are not part of this conversation');
+      throw new ForbiddenException("You are not part of this conversation");
     }
     return conversation;
   }

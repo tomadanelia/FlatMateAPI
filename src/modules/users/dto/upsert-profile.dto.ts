@@ -1,4 +1,4 @@
-import { Gender } from "../../../generated/prisma/client";
+import { Gender, LookingFor } from "../../../generated/prisma/client";
 import {
   IsArray,
   IsBoolean,
@@ -20,6 +20,7 @@ export class UpsertProfileDto {
   @IsString() @Length(1, 80) displayName: string;
   @IsOptional() @IsDateString() birthDate?: string;
   @IsOptional() @IsEnum(Gender) gender?: Gender;
+  @IsOptional() @IsEnum(LookingFor) lookingFor?: LookingFor;
   @IsOptional() @IsString() @Length(0, 1000) bio?: string;
   @IsString() @Length(1, 100) city: string;
   @IsString() @Length(2, 2) countryCode: string;

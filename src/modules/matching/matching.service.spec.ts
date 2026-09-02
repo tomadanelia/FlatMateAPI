@@ -1,5 +1,9 @@
 import { NotFoundException } from "@nestjs/common";
-import { AlgorithmKey, Gender } from "../../generated/prisma/client";
+import {
+  AlgorithmKey,
+  Gender,
+  LookingFor,
+} from "../../generated/prisma/client";
 import { MATCH_SHORTLIST_SIZE, MatchingService } from "./matching.service";
 
 const housingPreference = (overrides: Record<string, unknown> = {}) => ({
@@ -37,6 +41,7 @@ const profile = (id: string, overrides: Record<string, unknown> = {}) =>
     avatarUrl: null,
     bio: null,
     gender: Gender.WOMAN,
+    lookingFor: LookingFor.all,
     housingPreference: housingPreference({ userId: id }),
     lifestyleProfile: { ...lifestyleProfile, userId: id },
     testAttempts: [],
@@ -117,6 +122,13 @@ describe("MatchingService", () => {
         blocksReceived: { none: { blockerId: "subject" } },
         isDiscoverable: true,
         onboardingComplete: true,
+        AND: [
+          {
+            lookingFor: {
+              in: [LookingFor.female, LookingFor.all],
+            },
+          },
+        ],
         gender: { in: [Gender.MAN] },
         housingPreference: {
           countryCode: "DE",
@@ -176,6 +188,20 @@ describe("MatchingService", () => {
       "include.testAttempts",
     );
     expect(user.findMany.mock.calls[0][0]).not.toHaveProperty("include");
+  });
+
+  it("applies the subject's lookingFor choice before scoring candidates", async () => {
+    user.findUnique.mockResolvedValue(
+      profile("subject", { lookingFor: LookingFor.female }),
+    );
+    algorithmConfig.findMany.mockResolvedValue([]);
+    user.findMany.mockResolvedValue([]);
+
+    await service.find({ userId: "subject", limit: 20 });
+
+    expect(user.findMany.mock.calls[0][0].where.AND).toContainEqual({
+      gender: Gender.WOMAN,
+    });
   });
 
   it("re-queries current users on every request so new candidates appear immediately", async () => {

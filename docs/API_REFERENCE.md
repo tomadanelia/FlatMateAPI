@@ -178,7 +178,7 @@ Errors: `400` validation failure; `401` with `"Invalid email or password"`; `403
 
 `PUT /api/users/profile` — currently public — HTTP `200`
 
-Creates the user and both related profiles when the supplied `id` does not exist, or updates them when it does. It marks onboarding complete. `countryCode` and `currency` are uppercased. Budget values are integer currency units, not cents.
+Creates the user and both related profiles when the supplied `id` does not exist, or updates them when it does. It marks onboarding complete. `countryCode` and `currency` are uppercased. Budget values are integer currency units, not cents. Optional `lookingFor` accepts `male`, `female`, or `all`; omitted values default to `all` for new users and preserve the stored value on updates.
 
 Request schema:
 
@@ -219,6 +219,7 @@ Request schema:
     "gender": {
       "enum": ["WOMAN", "MAN", "NON_BINARY", "OTHER", "PREFER_NOT_TO_SAY"]
     },
+    "lookingFor": { "enum": ["male", "female", "all"], "default": "all" },
     "bio": { "type": "string", "maxLength": 1000 },
     "city": { "type": "string", "minLength": 1, "maxLength": 100 },
     "countryCode": {
@@ -340,6 +341,7 @@ Response schema:
     "displayName",
     "birthDate",
     "gender",
+    "lookingFor",
     "bio",
     "avatarUrl",
     "isDiscoverable",
@@ -364,6 +366,7 @@ Response schema:
         { "type": "null" }
       ]
     },
+    "lookingFor": { "enum": ["male", "female", "all"] },
     "bio": { "type": ["string", "null"] },
     "avatarUrl": { "type": ["string", "null"] },
     "isDiscoverable": { "type": "boolean" },
@@ -434,7 +437,7 @@ Request body: none.
 
 The response contains only public identity fields, calculated `age` (never the exact birth date), housing and lifestyle preferences, the latest completed personality test and trait scores, and manual/imported tastes. It never contains email, password hash, role, integration credentials, or timestamps from the user record.
 
-Other users are visible only when discoverable and fully onboarded. A block in either direction makes the profile unavailable and also removes that pair from matching. Missing, private, and blocked profiles all return `404` with `"Profile not found"` to avoid revealing account or block state. Invalid IDs return `400`; a missing or invalid token returns `401`.
+Other users are visible only when discoverable, fully onboarded, and their `lookingFor` audience permits the viewer's gender. `female` permits viewers whose gender is `WOMAN`, `male` permits `MAN`, and `all` permits every gender. A block in either direction makes the profile unavailable and also removes that pair from matching. Missing, private, audience-restricted, and blocked profiles all return `404` with `"Profile not found"` to avoid revealing account or restriction state. Invalid IDs return `400`; a missing or invalid token returns `401`.
 
 ### Profile blocking
 
@@ -823,7 +826,7 @@ Returns the same response shape as the connect endpoint from stored data without
 
 `POST /api/matches/search` — currently public — HTTP `201`
 
-Results are calculated from current profile data for every request and are not persisted. Hard filters require candidates to be discoverable, onboarded, in the same country and city (city is case-insensitive), use the same currency, have overlapping budget ranges, and satisfy both users' roommate-gender preferences. Stored move-in dates are ignored.
+Results are calculated from current profile data for every request and are not persisted. Hard filters require candidates to be discoverable, onboarded, in the same country and city (city is case-insensitive), use the same currency, have overlapping budget ranges, and satisfy both users' roommate-gender preferences and `lookingFor` audience choices. These restrictions are applied in the candidate database query before scoring. Stored move-in dates are ignored.
 
 After hard filtering, a cheap budget/lifestyle score selects at most 50 candidates. Personality and taste algorithms run only for that shortlist, and at most 20 results are returned. `algorithms` optionally restricts which enabled strategies run. Omit it or pass `[]` to use all enabled strategies. A strategy is omitted for a pair when required data is missing; remaining weights are renormalized. Candidates for which no strategy can produce a score are omitted.
 
@@ -1421,10 +1424,10 @@ Errors: `400` when `id` is not a UUID; `404` with `"User not found"` when no use
 
 All messaging endpoints require `Authorization: Bearer <accessToken>` and derive the user ID from that token.
 
-- `POST /api/messages/conversations` with `{ "recipientId": "<uuid>" }` gets or creates the unique direct conversation.
+- `POST /api/messages/conversations` with `{ "recipientId": "<uuid>" }` gets or creates the unique direct conversation when the recipient's current `lookingFor` choice permits the sender's gender.
 - `GET /api/messages/conversations` lists conversations, participants, the latest message, and unread counts.
 - `GET /api/messages/conversations/:id?limit=50&cursor=<messageUuid>` returns newest-first `{ items, nextCursor }` history.
-- `POST /api/messages/conversations/:id` with `{ "body": "Hello" }` stores a message and broadcasts `message:new`.
+- `POST /api/messages/conversations/:id` with `{ "body": "Hello" }` rechecks the recipient's current `lookingFor` choice, then stores the message and broadcasts `message:new`. A disallowed sender receives `403` even when the conversation already exists.
 - `PATCH /api/messages/conversations/:id/read` marks unread messages from the other participant as read and broadcasts `conversation:read`.
 - `DELETE /api/admin/messages` requires an admin JWT and deletes all messages while retaining empty conversations.
 

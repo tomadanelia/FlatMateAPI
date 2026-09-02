@@ -1,5 +1,5 @@
 import { NotFoundException } from "@nestjs/common";
-import { Gender } from "../../generated/prisma/client";
+import { Gender, LookingFor } from "../../generated/prisma/client";
 import { UsersService } from "./users.service";
 
 describe("UsersService", () => {
@@ -106,6 +106,35 @@ describe("UsersService", () => {
     );
   });
 
+  it("stores lookingFor on both profile creation and update", () => {
+    prisma.user.upsert.mockResolvedValue({});
+
+    service.upsert({
+      id: "00000000-0000-4000-8000-000000000001",
+      email: "user@example.test",
+      displayName: "User",
+      gender: Gender.WOMAN,
+      lookingFor: LookingFor.female,
+      city: "Berlin",
+      countryCode: "de",
+      minMonthlyBudget: 800,
+      maxMonthlyBudget: 1_200,
+      currency: "eur",
+      cleanliness: 3,
+      socialLevel: 3,
+      sleepSchedule: 3,
+      noiseTolerance: 3,
+      guestsFrequency: 3,
+      smokingAllowed: false,
+      petsAllowed: true,
+      hasPets: false,
+    });
+
+    const query = prisma.user.upsert.mock.calls[0][0];
+    expect(query.create.lookingFor).toBe(LookingFor.female);
+    expect(query.update.lookingFor).toBe(LookingFor.female);
+  });
+
   it("returns the authenticated user's private onboarding profile", async () => {
     prisma.user.findUnique.mockResolvedValue({
       id: "user-id",
@@ -152,11 +181,13 @@ describe("UsersService", () => {
   });
 
   it("loads only a visible profile when neither user has blocked the other", async () => {
+    prisma.user.findUnique.mockResolvedValue({ gender: Gender.WOMAN });
     prisma.user.findFirst.mockResolvedValue({
       id: "profile-id",
       displayName: "Taylor",
       birthDate: null,
       gender: Gender.NON_BINARY,
+      lookingFor: LookingFor.female,
       bio: "Hello",
       avatarUrl: null,
       housingPreference: null,
@@ -177,6 +208,7 @@ describe("UsersService", () => {
           id: "profile-id",
           isDiscoverable: true,
           onboardingComplete: true,
+          lookingFor: { in: [LookingFor.female, LookingFor.all] },
           blocksInitiated: { none: { blockedId: "viewer-id" } },
           blocksReceived: { none: { blockerId: "viewer-id" } },
         }),
@@ -197,11 +229,28 @@ describe("UsersService", () => {
   });
 
   it("hides missing, private, and blocked profiles behind the same error", async () => {
+    prisma.user.findUnique.mockResolvedValue({ gender: Gender.MAN });
     prisma.user.findFirst.mockResolvedValue(null);
 
     await expect(
       service.findPublicProfile("viewer-id", "profile-id"),
     ).rejects.toThrow("Profile not found");
+  });
+
+  it("does not query a profile outside its configured audience", async () => {
+    prisma.user.findUnique.mockResolvedValue({ gender: Gender.MAN });
+    prisma.user.findFirst.mockResolvedValue(null);
+
+    await expect(
+      service.findPublicProfile("male-viewer", "female-only-profile"),
+    ).rejects.toThrow("Profile not found");
+    expect(prisma.user.findFirst).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: expect.objectContaining({
+          lookingFor: { in: [LookingFor.male, LookingFor.all] },
+        }),
+      }),
+    );
   });
 
   it("creates a block idempotently", async () => {

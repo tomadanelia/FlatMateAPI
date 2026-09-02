@@ -2339,6 +2339,7 @@ export const UserScalarFieldEnum = {
   displayName: 'displayName',
   birthDate: 'birthDate',
   gender: 'gender',
+  lookingFor: 'lookingFor',
   bio: 'bio',
   avatarUrl: 'avatarUrl',
   isDiscoverable: 'isDiscoverable',
@@ -2724,6 +2725,20 @@ export type EnumGenderFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaMod
  * Reference to a field of type 'Gender[]'
  */
 export type ListEnumGenderFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Gender[]'>
+    
+
+
+/**
+ * Reference to a field of type 'LookingFor'
+ */
+export type EnumLookingForFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LookingFor'>
+    
+
+
+/**
+ * Reference to a field of type 'LookingFor[]'
+ */
+export type ListEnumLookingForFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LookingFor[]'>
     
 
 

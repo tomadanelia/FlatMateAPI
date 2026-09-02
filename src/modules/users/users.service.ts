@@ -3,6 +3,7 @@ import {
   Injectable,
   NotFoundException,
 } from "@nestjs/common";
+import { visibleToGenderWhere } from "../../common/looking-for.policy";
 import { PrismaService } from "../../prisma/prisma.service";
 import { UpsertProfileDto } from "./dto/upsert-profile.dto";
 
@@ -84,6 +85,7 @@ export class UsersService {
         displayName: user.displayName,
         bio: user.bio,
         gender: user.gender,
+        lookingFor: user.lookingFor,
         birthDate: dto.birthDate ? new Date(dto.birthDate) : undefined,
         onboardingComplete: true,
         housingPreference: {
@@ -149,6 +151,7 @@ export class UsersService {
         displayName: true,
         birthDate: true,
         gender: true,
+        lookingFor: true,
         bio: true,
         avatarUrl: true,
         isDiscoverable: true,
@@ -172,12 +175,27 @@ export class UsersService {
   }
 
   async findPublicProfile(viewerId: string, profileId: string) {
+    const viewer =
+      viewerId === profileId
+        ? null
+        : await this.prisma.user.findUnique({
+            where: { id: viewerId },
+            select: { gender: true },
+          });
+    if (viewerId !== profileId && !viewer) {
+      throw new NotFoundException("Profile not found");
+    }
+
     const profile = await this.prisma.user.findFirst({
       where: {
         id: profileId,
         ...(viewerId === profileId
           ? {}
-          : { isDiscoverable: true, onboardingComplete: true }),
+          : {
+              isDiscoverable: true,
+              onboardingComplete: true,
+              ...visibleToGenderWhere(viewer?.gender),
+            }),
         blocksInitiated: { none: { blockedId: viewerId } },
         blocksReceived: { none: { blockerId: viewerId } },
       },
@@ -186,6 +204,7 @@ export class UsersService {
         displayName: true,
         birthDate: true,
         gender: true,
+        lookingFor: true,
         bio: true,
         avatarUrl: true,
         housingPreference: {

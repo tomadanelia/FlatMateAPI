@@ -81,6 +81,13 @@ export type EnumGenderNullableFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumGenderNullableFilter<$PrismaModel> | $Enums.Gender | null
 }
 
+export type EnumLookingForFilter<$PrismaModel = never> = {
+  equals?: $Enums.LookingFor | Prisma.EnumLookingForFieldRefInput<$PrismaModel>
+  in?: $Enums.LookingFor[] | Prisma.ListEnumLookingForFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LookingFor[] | Prisma.ListEnumLookingForFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLookingForFilter<$PrismaModel> | $Enums.LookingFor
+}
+
 export type BoolFilter<$PrismaModel = never> = {
   equals?: boolean | Prisma.BooleanFieldRefInput<$PrismaModel>
   not?: Prisma.NestedBoolFilter<$PrismaModel> | boolean
@@ -185,6 +192,16 @@ export type EnumGenderNullableWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _min?: Prisma.NestedEnumGenderNullableFilter<$PrismaModel>
   _max?: Prisma.NestedEnumGenderNullableFilter<$PrismaModel>
+}
+
+export type EnumLookingForWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.LookingFor | Prisma.EnumLookingForFieldRefInput<$PrismaModel>
+  in?: $Enums.LookingFor[] | Prisma.ListEnumLookingForFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LookingFor[] | Prisma.ListEnumLookingForFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLookingForWithAggregatesFilter<$PrismaModel> | $Enums.LookingFor
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumLookingForFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumLookingForFilter<$PrismaModel>
 }
 
 export type BoolWithAggregatesFilter<$PrismaModel = never> = {
@@ -541,6 +558,13 @@ export type NestedEnumGenderNullableFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumGenderNullableFilter<$PrismaModel> | $Enums.Gender | null
 }
 
+export type NestedEnumLookingForFilter<$PrismaModel = never> = {
+  equals?: $Enums.LookingFor | Prisma.EnumLookingForFieldRefInput<$PrismaModel>
+  in?: $Enums.LookingFor[] | Prisma.ListEnumLookingForFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LookingFor[] | Prisma.ListEnumLookingForFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLookingForFilter<$PrismaModel> | $Enums.LookingFor
+}
+
 export type NestedBoolFilter<$PrismaModel = never> = {
   equals?: boolean | Prisma.BooleanFieldRefInput<$PrismaModel>
   not?: Prisma.NestedBoolFilter<$PrismaModel> | boolean
@@ -659,6 +683,16 @@ export type NestedEnumGenderNullableWithAggregatesFilter<$PrismaModel = never> =
   _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _min?: Prisma.NestedEnumGenderNullableFilter<$PrismaModel>
   _max?: Prisma.NestedEnumGenderNullableFilter<$PrismaModel>
+}
+
+export type NestedEnumLookingForWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.LookingFor | Prisma.EnumLookingForFieldRefInput<$PrismaModel>
+  in?: $Enums.LookingFor[] | Prisma.ListEnumLookingForFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LookingFor[] | Prisma.ListEnumLookingForFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLookingForWithAggregatesFilter<$PrismaModel> | $Enums.LookingFor
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumLookingForFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumLookingForFilter<$PrismaModel>
 }
 
 export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {

@@ -33,6 +33,7 @@ export type UserMinAggregateOutputType = {
   displayName: string | null
   birthDate: Date | null
   gender: $Enums.Gender | null
+  lookingFor: $Enums.LookingFor | null
   bio: string | null
   avatarUrl: string | null
   isDiscoverable: boolean | null
@@ -50,6 +51,7 @@ export type UserMaxAggregateOutputType = {
   displayName: string | null
   birthDate: Date | null
   gender: $Enums.Gender | null
+  lookingFor: $Enums.LookingFor | null
   bio: string | null
   avatarUrl: string | null
   isDiscoverable: boolean | null
@@ -67,6 +69,7 @@ export type UserCountAggregateOutputType = {
   displayName: number
   birthDate: number
   gender: number
+  lookingFor: number
   bio: number
   avatarUrl: number
   isDiscoverable: number
@@ -86,6 +89,7 @@ export type UserMinAggregateInputType = {
   displayName?: true
   birthDate?: true
   gender?: true
+  lookingFor?: true
   bio?: true
   avatarUrl?: true
   isDiscoverable?: true
@@ -103,6 +107,7 @@ export type UserMaxAggregateInputType = {
   displayName?: true
   birthDate?: true
   gender?: true
+  lookingFor?: true
   bio?: true
   avatarUrl?: true
   isDiscoverable?: true
@@ -120,6 +125,7 @@ export type UserCountAggregateInputType = {
   displayName?: true
   birthDate?: true
   gender?: true
+  lookingFor?: true
   bio?: true
   avatarUrl?: true
   isDiscoverable?: true
@@ -210,6 +216,7 @@ export type UserGroupByOutputType = {
   displayName: string | null
   birthDate: Date | null
   gender: $Enums.Gender | null
+  lookingFor: $Enums.LookingFor
   bio: string | null
   avatarUrl: string | null
   isDiscoverable: boolean
@@ -248,6 +255,7 @@ export type UserWhereInput = {
   displayName?: Prisma.StringNullableFilter<"User"> | string | null
   birthDate?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   gender?: Prisma.EnumGenderNullableFilter<"User"> | $Enums.Gender | null
+  lookingFor?: Prisma.EnumLookingForFilter<"User"> | $Enums.LookingFor
   bio?: Prisma.StringNullableFilter<"User"> | string | null
   avatarUrl?: Prisma.StringNullableFilter<"User"> | string | null
   isDiscoverable?: Prisma.BoolFilter<"User"> | boolean
@@ -280,6 +288,7 @@ export type UserOrderByWithRelationInput = {
   displayName?: Prisma.SortOrderInput | Prisma.SortOrder
   birthDate?: Prisma.SortOrderInput | Prisma.SortOrder
   gender?: Prisma.SortOrderInput | Prisma.SortOrder
+  lookingFor?: Prisma.SortOrder
   bio?: Prisma.SortOrderInput | Prisma.SortOrder
   avatarUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   isDiscoverable?: Prisma.SortOrder
@@ -315,6 +324,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   displayName?: Prisma.StringNullableFilter<"User"> | string | null
   birthDate?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   gender?: Prisma.EnumGenderNullableFilter<"User"> | $Enums.Gender | null
+  lookingFor?: Prisma.EnumLookingForFilter<"User"> | $Enums.LookingFor
   bio?: Prisma.StringNullableFilter<"User"> | string | null
   avatarUrl?: Prisma.StringNullableFilter<"User"> | string | null
   isDiscoverable?: Prisma.BoolFilter<"User"> | boolean
@@ -347,6 +357,7 @@ export type UserOrderByWithAggregationInput = {
   displayName?: Prisma.SortOrderInput | Prisma.SortOrder
   birthDate?: Prisma.SortOrderInput | Prisma.SortOrder
   gender?: Prisma.SortOrderInput | Prisma.SortOrder
+  lookingFor?: Prisma.SortOrder
   bio?: Prisma.SortOrderInput | Prisma.SortOrder
   avatarUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   isDiscoverable?: Prisma.SortOrder
@@ -370,6 +381,7 @@ export type UserScalarWhereWithAggregatesInput = {
   displayName?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   birthDate?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   gender?: Prisma.EnumGenderNullableWithAggregatesFilter<"User"> | $Enums.Gender | null
+  lookingFor?: Prisma.EnumLookingForWithAggregatesFilter<"User"> | $Enums.LookingFor
   bio?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   avatarUrl?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   isDiscoverable?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
@@ -387,6 +399,7 @@ export type UserCreateInput = {
   displayName?: string | null
   birthDate?: Date | string | null
   gender?: $Enums.Gender | null
+  lookingFor?: $Enums.LookingFor
   bio?: string | null
   avatarUrl?: string | null
   isDiscoverable?: boolean
@@ -419,6 +432,7 @@ export type UserUncheckedCreateInput = {
   displayName?: string | null
   birthDate?: Date | string | null
   gender?: $Enums.Gender | null
+  lookingFor?: $Enums.LookingFor
   bio?: string | null
   avatarUrl?: string | null
   isDiscoverable?: boolean
@@ -451,6 +465,7 @@ export type UserUpdateInput = {
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  lookingFor?: Prisma.EnumLookingForFieldUpdateOperationsInput | $Enums.LookingFor
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDiscoverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -483,6 +498,7 @@ export type UserUncheckedUpdateInput = {
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  lookingFor?: Prisma.EnumLookingForFieldUpdateOperationsInput | $Enums.LookingFor
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDiscoverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -515,6 +531,7 @@ export type UserCreateManyInput = {
   displayName?: string | null
   birthDate?: Date | string | null
   gender?: $Enums.Gender | null
+  lookingFor?: $Enums.LookingFor
   bio?: string | null
   avatarUrl?: string | null
   isDiscoverable?: boolean
@@ -532,6 +549,7 @@ export type UserUpdateManyMutationInput = {
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  lookingFor?: Prisma.EnumLookingForFieldUpdateOperationsInput | $Enums.LookingFor
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDiscoverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -549,6 +567,7 @@ export type UserUncheckedUpdateManyInput = {
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  lookingFor?: Prisma.EnumLookingForFieldUpdateOperationsInput | $Enums.LookingFor
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDiscoverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -566,6 +585,7 @@ export type UserCountOrderByAggregateInput = {
   displayName?: Prisma.SortOrder
   birthDate?: Prisma.SortOrder
   gender?: Prisma.SortOrder
+  lookingFor?: Prisma.SortOrder
   bio?: Prisma.SortOrder
   avatarUrl?: Prisma.SortOrder
   isDiscoverable?: Prisma.SortOrder
@@ -583,6 +603,7 @@ export type UserMaxOrderByAggregateInput = {
   displayName?: Prisma.SortOrder
   birthDate?: Prisma.SortOrder
   gender?: Prisma.SortOrder
+  lookingFor?: Prisma.SortOrder
   bio?: Prisma.SortOrder
   avatarUrl?: Prisma.SortOrder
   isDiscoverable?: Prisma.SortOrder
@@ -600,6 +621,7 @@ export type UserMinOrderByAggregateInput = {
   displayName?: Prisma.SortOrder
   birthDate?: Prisma.SortOrder
   gender?: Prisma.SortOrder
+  lookingFor?: Prisma.SortOrder
   bio?: Prisma.SortOrder
   avatarUrl?: Prisma.SortOrder
   isDiscoverable?: Prisma.SortOrder
@@ -631,6 +653,10 @@ export type EnumUserRoleFieldUpdateOperationsInput = {
 
 export type NullableEnumGenderFieldUpdateOperationsInput = {
   set?: $Enums.Gender | null
+}
+
+export type EnumLookingForFieldUpdateOperationsInput = {
+  set?: $Enums.LookingFor
 }
 
 export type BoolFieldUpdateOperationsInput = {
@@ -860,6 +886,7 @@ export type UserCreateWithoutBlocksInitiatedInput = {
   displayName?: string | null
   birthDate?: Date | string | null
   gender?: $Enums.Gender | null
+  lookingFor?: $Enums.LookingFor
   bio?: string | null
   avatarUrl?: string | null
   isDiscoverable?: boolean
@@ -891,6 +918,7 @@ export type UserUncheckedCreateWithoutBlocksInitiatedInput = {
   displayName?: string | null
   birthDate?: Date | string | null
   gender?: $Enums.Gender | null
+  lookingFor?: $Enums.LookingFor
   bio?: string | null
   avatarUrl?: string | null
   isDiscoverable?: boolean
@@ -927,6 +955,7 @@ export type UserCreateWithoutBlocksReceivedInput = {
   displayName?: string | null
   birthDate?: Date | string | null
   gender?: $Enums.Gender | null
+  lookingFor?: $Enums.LookingFor
   bio?: string | null
   avatarUrl?: string | null
   isDiscoverable?: boolean
@@ -958,6 +987,7 @@ export type UserUncheckedCreateWithoutBlocksReceivedInput = {
   displayName?: string | null
   birthDate?: Date | string | null
   gender?: $Enums.Gender | null
+  lookingFor?: $Enums.LookingFor
   bio?: string | null
   avatarUrl?: string | null
   isDiscoverable?: boolean
@@ -1005,6 +1035,7 @@ export type UserUpdateWithoutBlocksInitiatedInput = {
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  lookingFor?: Prisma.EnumLookingForFieldUpdateOperationsInput | $Enums.LookingFor
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDiscoverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1036,6 +1067,7 @@ export type UserUncheckedUpdateWithoutBlocksInitiatedInput = {
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  lookingFor?: Prisma.EnumLookingForFieldUpdateOperationsInput | $Enums.LookingFor
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDiscoverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1078,6 +1110,7 @@ export type UserUpdateWithoutBlocksReceivedInput = {
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  lookingFor?: Prisma.EnumLookingForFieldUpdateOperationsInput | $Enums.LookingFor
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDiscoverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1109,6 +1142,7 @@ export type UserUncheckedUpdateWithoutBlocksReceivedInput = {
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  lookingFor?: Prisma.EnumLookingForFieldUpdateOperationsInput | $Enums.LookingFor
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDiscoverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1140,6 +1174,7 @@ export type UserCreateWithoutEmailVerificationInput = {
   displayName?: string | null
   birthDate?: Date | string | null
   gender?: $Enums.Gender | null
+  lookingFor?: $Enums.LookingFor
   bio?: string | null
   avatarUrl?: string | null
   isDiscoverable?: boolean
@@ -1171,6 +1206,7 @@ export type UserUncheckedCreateWithoutEmailVerificationInput = {
   displayName?: string | null
   birthDate?: Date | string | null
   gender?: $Enums.Gender | null
+  lookingFor?: $Enums.LookingFor
   bio?: string | null
   avatarUrl?: string | null
   isDiscoverable?: boolean
@@ -1218,6 +1254,7 @@ export type UserUpdateWithoutEmailVerificationInput = {
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  lookingFor?: Prisma.EnumLookingForFieldUpdateOperationsInput | $Enums.LookingFor
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDiscoverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1249,6 +1286,7 @@ export type UserUncheckedUpdateWithoutEmailVerificationInput = {
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  lookingFor?: Prisma.EnumLookingForFieldUpdateOperationsInput | $Enums.LookingFor
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDiscoverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1280,6 +1318,7 @@ export type UserCreateWithoutConversationsAsOneInput = {
   displayName?: string | null
   birthDate?: Date | string | null
   gender?: $Enums.Gender | null
+  lookingFor?: $Enums.LookingFor
   bio?: string | null
   avatarUrl?: string | null
   isDiscoverable?: boolean
@@ -1311,6 +1350,7 @@ export type UserUncheckedCreateWithoutConversationsAsOneInput = {
   displayName?: string | null
   birthDate?: Date | string | null
   gender?: $Enums.Gender | null
+  lookingFor?: $Enums.LookingFor
   bio?: string | null
   avatarUrl?: string | null
   isDiscoverable?: boolean
@@ -1347,6 +1387,7 @@ export type UserCreateWithoutConversationsAsTwoInput = {
   displayName?: string | null
   birthDate?: Date | string | null
   gender?: $Enums.Gender | null
+  lookingFor?: $Enums.LookingFor
   bio?: string | null
   avatarUrl?: string | null
   isDiscoverable?: boolean
@@ -1378,6 +1419,7 @@ export type UserUncheckedCreateWithoutConversationsAsTwoInput = {
   displayName?: string | null
   birthDate?: Date | string | null
   gender?: $Enums.Gender | null
+  lookingFor?: $Enums.LookingFor
   bio?: string | null
   avatarUrl?: string | null
   isDiscoverable?: boolean
@@ -1425,6 +1467,7 @@ export type UserUpdateWithoutConversationsAsOneInput = {
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  lookingFor?: Prisma.EnumLookingForFieldUpdateOperationsInput | $Enums.LookingFor
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDiscoverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1456,6 +1499,7 @@ export type UserUncheckedUpdateWithoutConversationsAsOneInput = {
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  lookingFor?: Prisma.EnumLookingForFieldUpdateOperationsInput | $Enums.LookingFor
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDiscoverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1498,6 +1542,7 @@ export type UserUpdateWithoutConversationsAsTwoInput = {
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  lookingFor?: Prisma.EnumLookingForFieldUpdateOperationsInput | $Enums.LookingFor
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDiscoverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1529,6 +1574,7 @@ export type UserUncheckedUpdateWithoutConversationsAsTwoInput = {
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  lookingFor?: Prisma.EnumLookingForFieldUpdateOperationsInput | $Enums.LookingFor
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDiscoverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1560,6 +1606,7 @@ export type UserCreateWithoutSentMessagesInput = {
   displayName?: string | null
   birthDate?: Date | string | null
   gender?: $Enums.Gender | null
+  lookingFor?: $Enums.LookingFor
   bio?: string | null
   avatarUrl?: string | null
   isDiscoverable?: boolean
@@ -1591,6 +1638,7 @@ export type UserUncheckedCreateWithoutSentMessagesInput = {
   displayName?: string | null
   birthDate?: Date | string | null
   gender?: $Enums.Gender | null
+  lookingFor?: $Enums.LookingFor
   bio?: string | null
   avatarUrl?: string | null
   isDiscoverable?: boolean
@@ -1638,6 +1686,7 @@ export type UserUpdateWithoutSentMessagesInput = {
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  lookingFor?: Prisma.EnumLookingForFieldUpdateOperationsInput | $Enums.LookingFor
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDiscoverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1669,6 +1718,7 @@ export type UserUncheckedUpdateWithoutSentMessagesInput = {
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  lookingFor?: Prisma.EnumLookingForFieldUpdateOperationsInput | $Enums.LookingFor
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDiscoverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1700,6 +1750,7 @@ export type UserCreateWithoutHousingPreferenceInput = {
   displayName?: string | null
   birthDate?: Date | string | null
   gender?: $Enums.Gender | null
+  lookingFor?: $Enums.LookingFor
   bio?: string | null
   avatarUrl?: string | null
   isDiscoverable?: boolean
@@ -1731,6 +1782,7 @@ export type UserUncheckedCreateWithoutHousingPreferenceInput = {
   displayName?: string | null
   birthDate?: Date | string | null
   gender?: $Enums.Gender | null
+  lookingFor?: $Enums.LookingFor
   bio?: string | null
   avatarUrl?: string | null
   isDiscoverable?: boolean
@@ -1778,6 +1830,7 @@ export type UserUpdateWithoutHousingPreferenceInput = {
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  lookingFor?: Prisma.EnumLookingForFieldUpdateOperationsInput | $Enums.LookingFor
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDiscoverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1809,6 +1862,7 @@ export type UserUncheckedUpdateWithoutHousingPreferenceInput = {
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  lookingFor?: Prisma.EnumLookingForFieldUpdateOperationsInput | $Enums.LookingFor
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDiscoverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1840,6 +1894,7 @@ export type UserCreateWithoutLifestyleProfileInput = {
   displayName?: string | null
   birthDate?: Date | string | null
   gender?: $Enums.Gender | null
+  lookingFor?: $Enums.LookingFor
   bio?: string | null
   avatarUrl?: string | null
   isDiscoverable?: boolean
@@ -1871,6 +1926,7 @@ export type UserUncheckedCreateWithoutLifestyleProfileInput = {
   displayName?: string | null
   birthDate?: Date | string | null
   gender?: $Enums.Gender | null
+  lookingFor?: $Enums.LookingFor
   bio?: string | null
   avatarUrl?: string | null
   isDiscoverable?: boolean
@@ -1918,6 +1974,7 @@ export type UserUpdateWithoutLifestyleProfileInput = {
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  lookingFor?: Prisma.EnumLookingForFieldUpdateOperationsInput | $Enums.LookingFor
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDiscoverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1949,6 +2006,7 @@ export type UserUncheckedUpdateWithoutLifestyleProfileInput = {
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  lookingFor?: Prisma.EnumLookingForFieldUpdateOperationsInput | $Enums.LookingFor
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDiscoverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1980,6 +2038,7 @@ export type UserCreateWithoutTestAttemptsInput = {
   displayName?: string | null
   birthDate?: Date | string | null
   gender?: $Enums.Gender | null
+  lookingFor?: $Enums.LookingFor
   bio?: string | null
   avatarUrl?: string | null
   isDiscoverable?: boolean
@@ -2011,6 +2070,7 @@ export type UserUncheckedCreateWithoutTestAttemptsInput = {
   displayName?: string | null
   birthDate?: Date | string | null
   gender?: $Enums.Gender | null
+  lookingFor?: $Enums.LookingFor
   bio?: string | null
   avatarUrl?: string | null
   isDiscoverable?: boolean
@@ -2058,6 +2118,7 @@ export type UserUpdateWithoutTestAttemptsInput = {
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  lookingFor?: Prisma.EnumLookingForFieldUpdateOperationsInput | $Enums.LookingFor
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDiscoverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2089,6 +2150,7 @@ export type UserUncheckedUpdateWithoutTestAttemptsInput = {
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  lookingFor?: Prisma.EnumLookingForFieldUpdateOperationsInput | $Enums.LookingFor
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDiscoverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2120,6 +2182,7 @@ export type UserCreateWithoutIntegrationsInput = {
   displayName?: string | null
   birthDate?: Date | string | null
   gender?: $Enums.Gender | null
+  lookingFor?: $Enums.LookingFor
   bio?: string | null
   avatarUrl?: string | null
   isDiscoverable?: boolean
@@ -2151,6 +2214,7 @@ export type UserUncheckedCreateWithoutIntegrationsInput = {
   displayName?: string | null
   birthDate?: Date | string | null
   gender?: $Enums.Gender | null
+  lookingFor?: $Enums.LookingFor
   bio?: string | null
   avatarUrl?: string | null
   isDiscoverable?: boolean
@@ -2198,6 +2262,7 @@ export type UserUpdateWithoutIntegrationsInput = {
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  lookingFor?: Prisma.EnumLookingForFieldUpdateOperationsInput | $Enums.LookingFor
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDiscoverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2229,6 +2294,7 @@ export type UserUncheckedUpdateWithoutIntegrationsInput = {
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  lookingFor?: Prisma.EnumLookingForFieldUpdateOperationsInput | $Enums.LookingFor
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDiscoverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2260,6 +2326,7 @@ export type UserCreateWithoutTasteItemsInput = {
   displayName?: string | null
   birthDate?: Date | string | null
   gender?: $Enums.Gender | null
+  lookingFor?: $Enums.LookingFor
   bio?: string | null
   avatarUrl?: string | null
   isDiscoverable?: boolean
@@ -2291,6 +2358,7 @@ export type UserUncheckedCreateWithoutTasteItemsInput = {
   displayName?: string | null
   birthDate?: Date | string | null
   gender?: $Enums.Gender | null
+  lookingFor?: $Enums.LookingFor
   bio?: string | null
   avatarUrl?: string | null
   isDiscoverable?: boolean
@@ -2338,6 +2406,7 @@ export type UserUpdateWithoutTasteItemsInput = {
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  lookingFor?: Prisma.EnumLookingForFieldUpdateOperationsInput | $Enums.LookingFor
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDiscoverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2369,6 +2438,7 @@ export type UserUncheckedUpdateWithoutTasteItemsInput = {
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  lookingFor?: Prisma.EnumLookingForFieldUpdateOperationsInput | $Enums.LookingFor
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDiscoverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2400,6 +2470,7 @@ export type UserCreateWithoutMusicGenresInput = {
   displayName?: string | null
   birthDate?: Date | string | null
   gender?: $Enums.Gender | null
+  lookingFor?: $Enums.LookingFor
   bio?: string | null
   avatarUrl?: string | null
   isDiscoverable?: boolean
@@ -2431,6 +2502,7 @@ export type UserUncheckedCreateWithoutMusicGenresInput = {
   displayName?: string | null
   birthDate?: Date | string | null
   gender?: $Enums.Gender | null
+  lookingFor?: $Enums.LookingFor
   bio?: string | null
   avatarUrl?: string | null
   isDiscoverable?: boolean
@@ -2478,6 +2550,7 @@ export type UserUpdateWithoutMusicGenresInput = {
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  lookingFor?: Prisma.EnumLookingForFieldUpdateOperationsInput | $Enums.LookingFor
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDiscoverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2509,6 +2582,7 @@ export type UserUncheckedUpdateWithoutMusicGenresInput = {
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  lookingFor?: Prisma.EnumLookingForFieldUpdateOperationsInput | $Enums.LookingFor
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDiscoverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2540,6 +2614,7 @@ export type UserCreateWithoutFavoriteArtistsInput = {
   displayName?: string | null
   birthDate?: Date | string | null
   gender?: $Enums.Gender | null
+  lookingFor?: $Enums.LookingFor
   bio?: string | null
   avatarUrl?: string | null
   isDiscoverable?: boolean
@@ -2571,6 +2646,7 @@ export type UserUncheckedCreateWithoutFavoriteArtistsInput = {
   displayName?: string | null
   birthDate?: Date | string | null
   gender?: $Enums.Gender | null
+  lookingFor?: $Enums.LookingFor
   bio?: string | null
   avatarUrl?: string | null
   isDiscoverable?: boolean
@@ -2618,6 +2694,7 @@ export type UserUpdateWithoutFavoriteArtistsInput = {
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  lookingFor?: Prisma.EnumLookingForFieldUpdateOperationsInput | $Enums.LookingFor
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDiscoverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2649,6 +2726,7 @@ export type UserUncheckedUpdateWithoutFavoriteArtistsInput = {
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  lookingFor?: Prisma.EnumLookingForFieldUpdateOperationsInput | $Enums.LookingFor
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDiscoverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2680,6 +2758,7 @@ export type UserCreateWithoutMovieGenresInput = {
   displayName?: string | null
   birthDate?: Date | string | null
   gender?: $Enums.Gender | null
+  lookingFor?: $Enums.LookingFor
   bio?: string | null
   avatarUrl?: string | null
   isDiscoverable?: boolean
@@ -2711,6 +2790,7 @@ export type UserUncheckedCreateWithoutMovieGenresInput = {
   displayName?: string | null
   birthDate?: Date | string | null
   gender?: $Enums.Gender | null
+  lookingFor?: $Enums.LookingFor
   bio?: string | null
   avatarUrl?: string | null
   isDiscoverable?: boolean
@@ -2758,6 +2838,7 @@ export type UserUpdateWithoutMovieGenresInput = {
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  lookingFor?: Prisma.EnumLookingForFieldUpdateOperationsInput | $Enums.LookingFor
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDiscoverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2789,6 +2870,7 @@ export type UserUncheckedUpdateWithoutMovieGenresInput = {
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  lookingFor?: Prisma.EnumLookingForFieldUpdateOperationsInput | $Enums.LookingFor
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDiscoverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2820,6 +2902,7 @@ export type UserCreateWithoutFavoriteMoviesInput = {
   displayName?: string | null
   birthDate?: Date | string | null
   gender?: $Enums.Gender | null
+  lookingFor?: $Enums.LookingFor
   bio?: string | null
   avatarUrl?: string | null
   isDiscoverable?: boolean
@@ -2851,6 +2934,7 @@ export type UserUncheckedCreateWithoutFavoriteMoviesInput = {
   displayName?: string | null
   birthDate?: Date | string | null
   gender?: $Enums.Gender | null
+  lookingFor?: $Enums.LookingFor
   bio?: string | null
   avatarUrl?: string | null
   isDiscoverable?: boolean
@@ -2898,6 +2982,7 @@ export type UserUpdateWithoutFavoriteMoviesInput = {
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  lookingFor?: Prisma.EnumLookingForFieldUpdateOperationsInput | $Enums.LookingFor
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDiscoverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2929,6 +3014,7 @@ export type UserUncheckedUpdateWithoutFavoriteMoviesInput = {
   displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   birthDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  lookingFor?: Prisma.EnumLookingForFieldUpdateOperationsInput | $Enums.LookingFor
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDiscoverable?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3090,6 +3176,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   displayName?: boolean
   birthDate?: boolean
   gender?: boolean
+  lookingFor?: boolean
   bio?: boolean
   avatarUrl?: boolean
   isDiscoverable?: boolean
@@ -3123,6 +3210,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   displayName?: boolean
   birthDate?: boolean
   gender?: boolean
+  lookingFor?: boolean
   bio?: boolean
   avatarUrl?: boolean
   isDiscoverable?: boolean
@@ -3140,6 +3228,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   displayName?: boolean
   birthDate?: boolean
   gender?: boolean
+  lookingFor?: boolean
   bio?: boolean
   avatarUrl?: boolean
   isDiscoverable?: boolean
@@ -3157,6 +3246,7 @@ export type UserSelectScalar = {
   displayName?: boolean
   birthDate?: boolean
   gender?: boolean
+  lookingFor?: boolean
   bio?: boolean
   avatarUrl?: boolean
   isDiscoverable?: boolean
@@ -3165,7 +3255,7 @@ export type UserSelectScalar = {
   updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "passwordHash" | "emailVerifiedAt" | "role" | "displayName" | "birthDate" | "gender" | "bio" | "avatarUrl" | "isDiscoverable" | "onboardingComplete" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "passwordHash" | "emailVerifiedAt" | "role" | "displayName" | "birthDate" | "gender" | "lookingFor" | "bio" | "avatarUrl" | "isDiscoverable" | "onboardingComplete" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   housingPreference?: boolean | Prisma.User$housingPreferenceArgs<ExtArgs>
   lifestyleProfile?: boolean | Prisma.User$lifestyleProfileArgs<ExtArgs>
@@ -3215,6 +3305,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     displayName: string | null
     birthDate: Date | null
     gender: $Enums.Gender | null
+    lookingFor: $Enums.LookingFor
     bio: string | null
     avatarUrl: string | null
     isDiscoverable: boolean
@@ -3667,6 +3758,7 @@ export interface UserFieldRefs {
   readonly displayName: Prisma.FieldRef<"User", 'String'>
   readonly birthDate: Prisma.FieldRef<"User", 'DateTime'>
   readonly gender: Prisma.FieldRef<"User", 'Gender'>
+  readonly lookingFor: Prisma.FieldRef<"User", 'LookingFor'>
   readonly bio: Prisma.FieldRef<"User", 'String'>
   readonly avatarUrl: Prisma.FieldRef<"User", 'String'>
   readonly isDiscoverable: Prisma.FieldRef<"User", 'Boolean'>

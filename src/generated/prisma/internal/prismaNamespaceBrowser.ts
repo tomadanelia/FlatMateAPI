@@ -103,6 +103,7 @@ export const UserScalarFieldEnum = {
   displayName: 'displayName',
   birthDate: 'birthDate',
   gender: 'gender',
+  lookingFor: 'lookingFor',
   bio: 'bio',
   avatarUrl: 'avatarUrl',
   isDiscoverable: 'isDiscoverable',

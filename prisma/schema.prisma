@@ -23,6 +23,12 @@ enum Gender {
   PREFER_NOT_TO_SAY
 }
 
+enum LookingFor {
+  male
+  female
+  all
+}
+
 enum TestType {
   BIG_FIVE
   HEXACO
@@ -66,6 +72,7 @@ model User {
   displayName        String?                @map("display_name")
   birthDate          DateTime?              @map("birth_date") @db.Date
   gender             Gender?
+  lookingFor         LookingFor             @default(all) @map("looking_for")
   bio                String?
   avatarUrl          String?                @map("avatar_url")
   isDiscoverable     Boolean                @default(true) @map("is_discoverable")
@@ -85,10 +92,10 @@ model User {
   conversationsAsTwo Conversation[]         @relation("ConversationParticipantTwo")
   sentMessages       Message[]              @relation("MessageSender")
   emailVerification  EmailVerificationCode?
-  blocksInitiated    UserBlock[]             @relation("Blocker")
-  blocksReceived     UserBlock[]             @relation("Blocked")
+  blocksInitiated    UserBlock[]            @relation("Blocker")
+  blocksReceived     UserBlock[]            @relation("Blocked")
 
-  @@index([isDiscoverable, onboardingComplete, gender])
+  @@index([isDiscoverable, onboardingComplete, lookingFor, gender])
   @@map("users")
 }
 

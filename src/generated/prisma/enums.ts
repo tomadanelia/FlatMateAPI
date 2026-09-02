@@ -28,6 +28,15 @@ export const Gender = {
 export type Gender = (typeof Gender)[keyof typeof Gender]
 
 
+export const LookingFor = {
+  male: 'male',
+  female: 'female',
+  all: 'all'
+} as const
+
+export type LookingFor = (typeof LookingFor)[keyof typeof LookingFor]
+
+
 export const TestType = {
   BIG_FIVE: 'BIG_FIVE',
   HEXACO: 'HEXACO',
