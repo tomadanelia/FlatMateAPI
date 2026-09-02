@@ -33,6 +33,95 @@ describe('AdminService', () => {
     });
   });
 
+  it.each([
+    {
+      slugs: [],
+      status: 'NONE',
+      completedShort: false,
+      completedLong: false,
+    },
+    {
+      slugs: ['big-five-v1'],
+      status: 'SHORT_ONLY',
+      completedShort: true,
+      completedLong: false,
+    },
+    {
+      slugs: ['big-five-v2'],
+      status: 'LONG_ONLY',
+      completedShort: false,
+      completedLong: true,
+    },
+    {
+      slugs: ['big-five-v1', 'big-five-v2'],
+      status: 'BOTH',
+      completedShort: true,
+      completedLong: true,
+    },
+  ])('reports completed personality tests as $status', async (scenario) => {
+    prisma.user.findUnique.mockResolvedValue({
+      id: '00000000-0000-4000-8000-000000000001',
+      testAttempts: scenario.slugs.map((slug) => ({
+        testDefinition: { slug },
+      })),
+      _count: {
+        musicGenres: 0,
+        favoriteArtists: 0,
+        movieGenres: 0,
+        favoriteMovies: 0,
+        tasteItems: 0,
+      },
+    });
+
+    await expect(
+      service.getUserCompletionStatus('00000000-0000-4000-8000-000000000001'),
+    ).resolves.toMatchObject({
+      personalityTests: {
+        status: scenario.status,
+        completedShort: scenario.completedShort,
+        completedLong: scenario.completedLong,
+      },
+      tastes: { selected: false },
+    });
+  });
+
+  it('reports taste selections and imported taste data', async () => {
+    prisma.user.findUnique.mockResolvedValue({
+      id: '00000000-0000-4000-8000-000000000001',
+      testAttempts: [],
+      _count: {
+        musicGenres: 2,
+        favoriteArtists: 1,
+        movieGenres: 0,
+        favoriteMovies: 3,
+        tasteItems: 4,
+      },
+    });
+
+    await expect(
+      service.getUserCompletionStatus('00000000-0000-4000-8000-000000000001'),
+    ).resolves.toMatchObject({
+      tastes: {
+        selected: true,
+        counts: {
+          musicGenres: 2,
+          favoriteArtists: 1,
+          movieGenres: 0,
+          favoriteMovies: 3,
+          importedItems: 4,
+        },
+      },
+    });
+  });
+
+  it('rejects completion status lookup for an unknown user', async () => {
+    prisma.user.findUnique.mockResolvedValue(null);
+
+    await expect(
+      service.getUserCompletionStatus('00000000-0000-4000-8000-000000000001'),
+    ).rejects.toBeInstanceOf(NotFoundException);
+  });
+
   it('deletes a user and returns a deletion receipt', async () => {
     prisma.user.findUnique.mockResolvedValue({
       id: '00000000-0000-4000-8000-000000000001',

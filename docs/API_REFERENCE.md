@@ -1256,7 +1256,95 @@ Response schema:
 }
 ```
 
-## 18. Delete a user
+## 18. Get a user's test and taste completion status
+
+`GET /api/admin/users/:id/completion-status` — admin only — HTTP `200`
+
+Path parameter: `id` must be a user UUID. Request body: none. Only completed
+test attempts are considered. Repeated completions do not change the status.
+Taste selection is true when the user has at least one manual catalog selection
+or imported taste item.
+
+Response schema:
+
+```json
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["userId", "personalityTests", "tastes"],
+  "properties": {
+    "userId": { "type": "string", "format": "uuid" },
+    "personalityTests": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "completedShort", "completedLong"],
+      "properties": {
+        "status": {
+          "enum": ["NONE", "SHORT_ONLY", "LONG_ONLY", "BOTH"]
+        },
+        "completedShort": { "type": "boolean" },
+        "completedLong": { "type": "boolean" }
+      }
+    },
+    "tastes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["selected", "counts"],
+      "properties": {
+        "selected": { "type": "boolean" },
+        "counts": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "musicGenres",
+            "favoriteArtists",
+            "movieGenres",
+            "favoriteMovies",
+            "importedItems"
+          ],
+          "properties": {
+            "musicGenres": { "type": "integer", "minimum": 0 },
+            "favoriteArtists": { "type": "integer", "minimum": 0 },
+            "movieGenres": { "type": "integer", "minimum": 0 },
+            "favoriteMovies": { "type": "integer", "minimum": 0 },
+            "importedItems": { "type": "integer", "minimum": 0 }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+Example response:
+
+```json
+{
+  "userId": "00000000-0000-4000-8000-000000000001",
+  "personalityTests": {
+    "status": "BOTH",
+    "completedShort": true,
+    "completedLong": true
+  },
+  "tastes": {
+    "selected": true,
+    "counts": {
+      "musicGenres": 3,
+      "favoriteArtists": 2,
+      "movieGenres": 4,
+      "favoriteMovies": 1,
+      "importedItems": 0
+    }
+  }
+}
+```
+
+Errors: `400` when `id` is not a UUID; `401` for missing or invalid
+authentication; `403` for a non-admin user; `404` with `"User not found"` when
+the user does not exist.
+
+## 19. Delete a user
 
 `DELETE /api/admin/users/:id` — admin only — HTTP `200`
 

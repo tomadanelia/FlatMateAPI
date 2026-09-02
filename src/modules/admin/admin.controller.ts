@@ -66,6 +66,11 @@ export class AdminController {
     return this.admin.listUsers();
   }
 
+  @Get('users/:id/completion-status')
+  getUserCompletionStatus(@Param('id', new ParseUUIDPipe()) id: string) {
+    return this.admin.getUserCompletionStatus(id);
+  }
+
   @Delete('users/:id')
   deleteUser(@Param('id', new ParseUUIDPipe()) id: string) {
     return this.admin.deleteUser(id);

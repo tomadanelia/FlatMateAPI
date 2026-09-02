@@ -56,6 +56,70 @@ export class AdminService {
     });
   }
 
+  async getUserCompletionStatus(id: string) {
+    const user = await this.prisma.user.findUnique({
+      where: { id },
+      select: {
+        id: true,
+        testAttempts: {
+          where: {
+            completedAt: { not: null },
+            testDefinition: {
+              slug: { in: ['big-five-v1', 'big-five-v2'] },
+            },
+          },
+          select: { testDefinition: { select: { slug: true } } },
+        },
+        _count: {
+          select: {
+            musicGenres: true,
+            favoriteArtists: true,
+            movieGenres: true,
+            favoriteMovies: true,
+            tasteItems: true,
+          },
+        },
+      },
+    });
+    if (!user) throw new NotFoundException('User not found');
+
+    const completedSlugs = new Set(
+      user.testAttempts.map(({ testDefinition }) => testDefinition.slug),
+    );
+    const completedShort = completedSlugs.has('big-five-v1');
+    const completedLong = completedSlugs.has('big-five-v2');
+    const testStatus = completedShort
+      ? completedLong
+        ? 'BOTH'
+        : 'SHORT_ONLY'
+      : completedLong
+        ? 'LONG_ONLY'
+        : 'NONE';
+    const tasteCount = Object.values(user._count).reduce(
+      (total, count) => total + count,
+      0,
+    );
+
+    return {
+      userId: user.id,
+      personalityTests: {
+        status: testStatus,
+        completedShort,
+        completedLong,
+      },
+      tastes: {
+        selected: tasteCount > 0,
+        counts: {
+          musicGenres: user._count.musicGenres,
+          favoriteArtists: user._count.favoriteArtists,
+          movieGenres: user._count.movieGenres,
+          favoriteMovies: user._count.favoriteMovies,
+          importedItems: user._count.tasteItems,
+        },
+      },
+    };
+  }
+
   async deleteUser(id: string) {
     const user = await this.prisma.user.findUnique({
       where: { id },
