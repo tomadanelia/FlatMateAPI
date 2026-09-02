@@ -19,14 +19,14 @@ const movieGenre = (id: string, name: string) => ({ movieGenre: { id, name } });
 const movie = (id: string, title: string) => ({ movie: { id, title } });
 
 describe("matching algorithms", () => {
-  it("scores identical personality traits as 1", () => {
+  it("scores identical similarity-based personality traits as 1", () => {
     const p = profile({
       testAttempts: [{ traitScores: [{ trait: "openness", score: 0.8 }] }],
     });
     expect(new PersonalityAlgorithm().score(p, p)?.score).toBe(1);
   });
 
-  it("averages normalized distance across all shared Big Five traits", () => {
+  it("uses weighted, trait-dependent Big Five compatibility", () => {
     const a = profile({
       testAttempts: [
         {
@@ -56,8 +56,86 @@ describe("matching algorithms", () => {
 
     const result = new PersonalityAlgorithm().score(a, b);
 
-    expect(result?.score).toBeCloseTo(0.4);
-    expect(result?.explanation).toMatchObject({ sharedTraits: 5 });
+    // C: 1, N: .5, A: .5, E: 0, O: 0, with 30/25/20/15/10 weights.
+    expect(result?.score).toBeCloseTo(0.525);
+    expect(result?.explanation).toMatchObject({
+      sharedTraits: 5,
+      traitModels: {
+        conscientiousness: "similarity",
+        neuroticism: "low-stress",
+        agreeableness: "cooperative",
+      },
+    });
+  });
+
+  it("prefers low-low neuroticism and makes high-high worse than a mismatch", () => {
+    const withNeuroticism = (score: number) =>
+      profile({
+        testAttempts: [{ traitScores: [{ trait: "neuroticism", score }] }],
+      });
+    const algorithm = new PersonalityAlgorithm();
+
+    expect(algorithm.score(withNeuroticism(0), withNeuroticism(0))?.score).toBe(
+      1,
+    );
+    expect(algorithm.score(withNeuroticism(1), withNeuroticism(1))?.score).toBe(
+      0.25,
+    );
+    expect(algorithm.score(withNeuroticism(0), withNeuroticism(1))?.score).toBe(
+      0.375,
+    );
+  });
+
+  it("rewards agreeable pairs without assuming moderate is always optimal", () => {
+    const withAgreeableness = (score: number) =>
+      profile({
+        testAttempts: [{ traitScores: [{ trait: "agreeableness", score }] }],
+      });
+    const algorithm = new PersonalityAlgorithm();
+
+    expect(
+      algorithm.score(withAgreeableness(1), withAgreeableness(1))?.score,
+    ).toBe(1);
+    expect(
+      algorithm.score(withAgreeableness(0.5), withAgreeableness(0.5))?.score,
+    ).toBeCloseTo(0.7);
+    expect(
+      algorithm.score(withAgreeableness(0), withAgreeableness(0))?.score,
+    ).toBeCloseTo(0.4);
+  });
+
+  it("renormalizes configurable weights over mutually available traits", () => {
+    const a = profile({
+      testAttempts: [
+        {
+          traitScores: [
+            { trait: "conscientiousness", score: 0 },
+            { trait: "openness", score: 1 },
+          ],
+        },
+      ],
+    });
+    const b = profile({
+      testAttempts: [
+        {
+          traitScores: [
+            { trait: "conscientiousness", score: 1 },
+            { trait: "openness", score: 1 },
+          ],
+        },
+      ],
+    });
+
+    const result = new PersonalityAlgorithm().score(a, b, {
+      conscientiousnessWeight: 0,
+      opennessWeight: 4,
+    });
+
+    expect(result?.score).toBe(1);
+    expect(result?.explanation).toMatchObject({
+      sharedTraits: 1,
+      traitWeights: { openness: 4 },
+    });
   });
   it("makes a pet incompatibility a zero lifestyle score", () => {
     const base = {

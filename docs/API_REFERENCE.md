@@ -879,6 +879,19 @@ Response schema:
                     "minimum": 0,
                     "maximum": 1
                   }
+                },
+                "traitWeights": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "number",
+                    "minimum": 0
+                  }
+                },
+                "traitModels": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "enum": ["similarity", "low-stress", "cooperative"]
+                  }
                 }
               }
             },
@@ -967,6 +980,17 @@ Response schema:
 ```
 
 `score` is the weighted mean of the available strategy scores. A pets conflict produces lifestyle score `0`; a smoking preference mismatch produces `0.2`. A successful search can return `matches: []`; it does not create database records. Errors: `404` with `"User or housing preference not found"`.
+
+Personality v2 uses trait-dependent compatibility. Conscientiousness,
+extraversion, and openness use score similarity. Neuroticism primarily
+penalizes the pair's average level and applies a smaller mismatch penalty.
+Agreeableness blends the pair's average level with similarity. Default trait
+weights are `0.30`, `0.25`, `0.20`, `0.15`, and `0.10` for conscientiousness,
+neuroticism, agreeableness, extraversion, and openness. Admins may override
+them with the non-negative algorithm settings `conscientiousnessWeight`,
+`neuroticismWeight`, `agreeablenessWeight`, `extraversionWeight`, and
+`opennessWeight`; zero disables that trait and available weights are
+renormalized.
 
 ## Admin endpoints
 

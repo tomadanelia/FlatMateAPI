@@ -97,6 +97,7 @@ async function seedTasteAndAlgorithms() {
         key,
         enabled: true,
         weight: key === AlgorithmKey.LIFESTYLE ? 1.25 : 1,
+        version: key === AlgorithmKey.PERSONALITY ? "2.0.0" : "1.0.0",
       },
     });
 }

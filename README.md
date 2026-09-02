@@ -8,7 +8,7 @@ The matching engine uses the Strategy pattern. Each implementation in `src/modul
 
 Current strategies:
 
-- `PERSONALITY`: similarity between the latest completed test's normalized trait scores.
+- `PERSONALITY`: trait-dependent compatibility from the latest completed test. Conscientiousness, extraversion, and openness use similarity; neuroticism favors low-stress pairs; agreeableness blends cooperation level with similarity. Trait weights default to 30%, 15%, 10%, 25%, and 20%, respectively, and can be tuned in algorithm settings.
 - `TASTE`: Jaccard similarity across normalized Spotify/Letterboxd titles, artists and genres.
 - `LIFESTYLE`: compatibility across cleanliness, schedule, sociability, noise, guests, pets and smoking.
 
