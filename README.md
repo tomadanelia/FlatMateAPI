@@ -4,7 +4,7 @@ NestJS + TypeScript API for finding compatible roommates. PostgreSQL is hosted b
 
 ## Architecture
 
-The matching engine uses the Strategy pattern. Each implementation in `src/modules/matching/algorithms` has one job and returns a normalized `0..1` score plus an explanation. `AlgorithmRegistry` resolves implementations and `MatchingService` combines only the enabled strategies using database-configured weights.
+The matching engine uses the Strategy pattern. Each implementation in `src/modules/matching/algorithms` has one job and returns a normalized `0..1` score plus an explanation. `AlgorithmRegistry` resolves implementations and `MatchingService` combines enabled strategies using database-configured weights, alongside the built-in budget compatibility score (weight `2`).
 
 Current strategies:
 
@@ -12,7 +12,7 @@ Current strategies:
 - `TASTE`: Jaccard similarity across normalized Spotify/Letterboxd titles, artists and genres.
 - `LIFESTYLE`: compatibility across cleanliness, schedule, sociability, noise, guests, pets and smoking.
 
-Country/city, currency, overlapping rent budgets, reciprocal gender preferences, reciprocal `lookingFor` audience rules, discoverability, and onboarding are hard database-level candidate filters. `lookingFor` accepts `male`, `female`, or `all` and defaults to `all` for existing and new profiles when omitted. The same audience rule protects public profile viewing and direct messages. Matching is calculated from current profile data on demand. A cheap budget/lifestyle pass selects at most 50 candidates before personality and taste run, and at most 20 matches are returned. Missing optional data omits that strategy for that pair and the remaining weights are normalized, so it does not unfairly become a zero. Stored move-in dates are retained for compatibility but are not used by matching.
+Country/city, currency, reciprocal gender preferences, reciprocal `lookingFor` audience rules, discoverability, and onboarding are hard database-level candidate filters. Budget compatibility is an important weighted score, not a hard filter, so people with non-overlapping rent ranges can still appear lower in the matching options. `lookingFor` accepts `male`, `female`, or `all` and defaults to `all` for existing and new profiles when omitted. The same audience rule protects public profile viewing and direct messages. Matching is calculated from current profile data on demand. A cheap budget/lifestyle pass selects at most 50 candidates before personality and taste run, and at most 20 matches are returned. Missing optional data omits that strategy for that pair and the remaining weights are normalized, so it does not unfairly become a zero. Stored move-in dates are retained for compatibility but are not used by matching.
 
 To add or replace an algorithm, implement `MatchingAlgorithm`, register the class in `MatchingModule` and add it to `AlgorithmRegistry`. Algorithm scores and explanations are returned to the caller but are not persisted.
 

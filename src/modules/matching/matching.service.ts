@@ -14,6 +14,9 @@ import {
 import { FindMatchesDto } from "./dto/find-matches.dto";
 
 export const MATCH_SHORTLIST_SIZE = 50;
+export const BUDGET_WEIGHT = 2;
+
+const BUDGET_KEY = "BUDGET" as const;
 
 type EnabledConfig = {
   key: AlgorithmKey;
@@ -23,7 +26,7 @@ type EnabledConfig = {
 };
 
 type ScoreBreakdown = AlgorithmScore & {
-  key: AlgorithmKey;
+  key: AlgorithmKey | typeof BUDGET_KEY;
   weight: number;
   version: string;
 };
@@ -125,29 +128,39 @@ export class MatchingService {
 
     const ranked = shortlistedCandidates
       .map((candidate) => {
-        const scores = configs.flatMap((config) => {
-          if (config.key === AlgorithmKey.LIFESTYLE) {
-            const cached = cachedLifestyle.get(candidate.id);
-            return cached ? [cached] : [];
-          }
-          const algorithm = this.registry.get(config.key);
-          const result = algorithm?.score(
-            subject,
-            candidate,
-            this.settings(config),
-          );
-          return algorithm && result
-            ? [
-                {
-                  key: config.key,
-                  score: result.score,
-                  weight: config.weight,
-                  version: config.version || algorithm.version,
-                  explanation: result.explanation,
-                },
-              ]
-            : [];
-        });
+        const budgetScore = this.budgetScore(subject, candidate);
+        const scores: ScoreBreakdown[] = [
+          {
+            key: BUDGET_KEY,
+            score: budgetScore,
+            weight: BUDGET_WEIGHT,
+            version: "1.0.0",
+            explanation: this.budgetExplanation(subject, candidate),
+          },
+          ...configs.flatMap((config): ScoreBreakdown[] => {
+            if (config.key === AlgorithmKey.LIFESTYLE) {
+              const cached = cachedLifestyle.get(candidate.id);
+              return cached ? [cached] : [];
+            }
+            const algorithm = this.registry.get(config.key);
+            const result = algorithm?.score(
+              subject,
+              candidate,
+              this.settings(config),
+            );
+            return algorithm && result
+              ? [
+                  {
+                    key: config.key,
+                    score: result.score,
+                    weight: config.weight,
+                    version: config.version || algorithm.version,
+                    explanation: result.explanation,
+                  },
+                ]
+              : [];
+          }),
+        ];
         const totalWeight = scores.reduce(
           (sum, score) => sum + score.weight,
           0,
@@ -163,7 +176,6 @@ export class MatchingService {
             : 0,
         };
       })
-      .filter(({ scores }) => scores.length > 0)
       .sort(
         (left, right) =>
           right.totalScore - left.totalScore ||
@@ -193,8 +205,6 @@ export class MatchingService {
       countryCode: preference.countryCode,
       city: { equals: preference.city, mode: "insensitive" },
       currency: preference.currency,
-      minMonthlyBudget: { lte: preference.maxMonthlyBudget },
-      maxMonthlyBudget: { gte: preference.minMonthlyBudget },
       ...(subject.gender
         ? { preferredRoommateGenders: { has: subject.gender } }
         : {}),
@@ -228,6 +238,22 @@ export class MatchingService {
       Math.max(left.maxMonthlyBudget, right.maxMonthlyBudget) -
       Math.min(left.minMonthlyBudget, right.minMonthlyBudget);
     return union === 0 ? 1 : Math.max(0, overlap / union);
+  }
+
+  private budgetExplanation(
+    subject: Pick<MatchProfile, "housingPreference">,
+    candidate: Pick<MatchProfile, "housingPreference">,
+  ) {
+    const left = subject.housingPreference!;
+    const right = candidate.housingPreference!;
+    return {
+      overlaps:
+        Math.max(left.minMonthlyBudget, right.minMonthlyBudget) <=
+        Math.min(left.maxMonthlyBudget, right.maxMonthlyBudget),
+      subjectRange: [left.minMonthlyBudget, left.maxMonthlyBudget],
+      candidateRange: [right.minMonthlyBudget, right.maxMonthlyBudget],
+      currency: left.currency,
+    };
   }
 
   private settings(config: EnabledConfig) {

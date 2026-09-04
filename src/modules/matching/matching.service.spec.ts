@@ -4,7 +4,11 @@ import {
   Gender,
   LookingFor,
 } from "../../generated/prisma/client";
-import { MATCH_SHORTLIST_SIZE, MatchingService } from "./matching.service";
+import {
+  BUDGET_WEIGHT,
+  MATCH_SHORTLIST_SIZE,
+  MatchingService,
+} from "./matching.service";
 
 const housingPreference = (overrides: Record<string, unknown> = {}) => ({
   id: "housing",
@@ -105,7 +109,7 @@ describe("MatchingService", () => {
     ).rejects.toBeInstanceOf(NotFoundException);
   });
 
-  it("pushes all cheap eligibility rules into the database query", async () => {
+  it("pushes hard eligibility rules into the database query but keeps budget soft", async () => {
     user.findUnique.mockResolvedValue(profile("subject"));
     algorithmConfig.findMany.mockResolvedValue([]);
     user.findMany.mockResolvedValue([]);
@@ -134,8 +138,6 @@ describe("MatchingService", () => {
           countryCode: "DE",
           city: { equals: "Berlin", mode: "insensitive" },
           currency: "EUR",
-          minMonthlyBudget: { lte: 1_200 },
-          maxMonthlyBudget: { gte: 800 },
           preferredRoommateGenders: { has: Gender.WOMAN },
         },
       },
@@ -148,6 +150,51 @@ describe("MatchingService", () => {
     expect(prisma).not.toHaveProperty("matchRun");
     expect(prisma).not.toHaveProperty("matchResult");
     expect(prisma).not.toHaveProperty("matchAlgorithmScore");
+  });
+
+  it("keeps candidates outside the budget range and ranks budget-compatible candidates higher", async () => {
+    const compatible = profile("compatible");
+    const outsideBudget = profile("outside-budget", {
+      housingPreference: housingPreference({
+        userId: "outside-budget",
+        minMonthlyBudget: 1_500,
+        maxMonthlyBudget: 1_800,
+      }),
+    });
+    user.findUnique.mockResolvedValue(profile("subject"));
+    algorithmConfig.findMany.mockResolvedValue([
+      {
+        key: AlgorithmKey.PERSONALITY,
+        weight: 1,
+        version: "1.0.0",
+        settings: {},
+      },
+    ]);
+    user.findMany
+      .mockResolvedValueOnce([
+        thinCandidate("outside-budget"),
+        thinCandidate("compatible"),
+      ])
+      .mockResolvedValueOnce([outsideBudget, compatible]);
+
+    const result = await service.find({ userId: "subject", limit: 20 });
+
+    expect(result.matches.map(({ user: match }) => match.id)).toEqual([
+      "compatible",
+      "outside-budget",
+    ]);
+    expect(result.matches[1].breakdown).toContainEqual({
+      key: "BUDGET",
+      score: 0,
+      weight: BUDGET_WEIGHT,
+      version: "1.0.0",
+      explanation: {
+        overlaps: false,
+        subjectRange: [800, 1_200],
+        candidateRange: [1_500, 1_800],
+        currency: "EUR",
+      },
+    });
   });
 
   it("runs cheap lifestyle scoring broadly but expensive scoring for only 50 candidates", async () => {

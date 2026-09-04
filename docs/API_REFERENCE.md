@@ -826,9 +826,9 @@ Returns the same response shape as the connect endpoint from stored data without
 
 `POST /api/matches/search` — currently public — HTTP `201`
 
-Results are calculated from current profile data for every request and are not persisted. Hard filters require candidates to be discoverable, onboarded, in the same country and city (city is case-insensitive), use the same currency, have overlapping budget ranges, and satisfy both users' roommate-gender preferences and `lookingFor` audience choices. These restrictions are applied in the candidate database query before scoring. Stored move-in dates are ignored.
+Results are calculated from current profile data for every request and are not persisted. Hard filters require candidates to be discoverable, onboarded, in the same country and city (city is case-insensitive), use the same currency, and satisfy both users' roommate-gender preferences and `lookingFor` audience choices. Budget-range compatibility is a strongly weighted score rather than a hard filter, so a candidate with a non-overlapping range remains eligible but ranks lower. These restrictions are applied in the candidate database query before scoring. Stored move-in dates are ignored.
 
-After hard filtering, a cheap budget/lifestyle score selects at most 50 candidates. Personality and taste algorithms run only for that shortlist, and at most 20 results are returned. `algorithms` optionally restricts which enabled strategies run. Omit it or pass `[]` to use all enabled strategies. A strategy is omitted for a pair when required data is missing; remaining weights are renormalized. Candidates for which no strategy can produce a score are omitted.
+After hard filtering, a cheap budget/lifestyle score selects at most 50 candidates. Personality and taste algorithms run only for that shortlist, and at most 20 results are returned. Budget is always included in the final score with weight `2`; its breakdown key is `BUDGET`. `algorithms` optionally restricts which configurable strategies run. Omit it or pass `[]` to use all enabled strategies. A configurable strategy is omitted for a pair when required data is missing; remaining weights are renormalized.
 
 Request schema:
 
@@ -860,7 +860,7 @@ Response schema:
       "additionalProperties": false,
       "required": ["key", "score", "weight", "version", "explanation"],
       "properties": {
-        "key": { "enum": ["PERSONALITY", "TASTE", "LIFESTYLE"] },
+        "key": { "enum": ["BUDGET", "PERSONALITY", "TASTE", "LIFESTYLE"] },
         "score": { "type": "number", "minimum": 0, "maximum": 1 },
         "weight": { "type": "number", "minimum": 0 },
         "version": { "type": "string" },
@@ -979,7 +979,7 @@ Response schema:
 }
 ```
 
-`score` is the weighted mean of the available strategy scores. A pets conflict produces lifestyle score `0`; a smoking preference mismatch produces `0.2`. A successful search can return `matches: []`; it does not create database records. Errors: `404` with `"User or housing preference not found"`.
+`score` is the weighted mean of budget compatibility and the available configurable strategy scores. Budget has a fixed weight of `2`; a non-overlapping range scores `0` but does not remove the candidate. A pets conflict produces lifestyle score `0`; a smoking preference mismatch produces `0.2`. A successful search can return `matches: []`; it does not create database records. Errors: `404` with `"User or housing preference not found"`.
 
 Personality v2 uses trait-dependent compatibility. Conscientiousness,
 extraversion, and openness use score similarity. Neuroticism primarily
